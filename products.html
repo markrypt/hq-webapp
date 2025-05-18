@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Markrypt - Product Categories</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-bg: #fff;
+      --text-color: #111;
+      --text-secondary: #555;
+      --accent-color: #1e90ff;
+      --secondary-color: #6cb4ee;
+      --bg-transparent: rgba(30, 144, 255, 0.07);
+      --shadow: 0 4px 24px 0 rgba(30,144,255,0.08);
+      --radius: 16px;
+      --border-color: #e0e6ef;
+      --hero-gradient: linear-gradient(120deg, #eaf6ff 0%, #fff 100%);
+    }
+    html {
+      overflow: hidden;
+      height: 100%;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: var(--primary-bg);
+      color: var(--text-color);
+      height: 100%;
+      overflow: hidden;
+    }
+    .app-container {
+      height: 100%;
+      width: 100%;
+      position: relative;
+      background: var(--primary-bg);
+    }
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1rem;
+      z-index: 100;
+      background: var(--primary-bg);
+      border-bottom: 1px solid #e0e6ef;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+    .logo span:first-child { color: var(--text-color); }
+    .logo span:last-child { color: var(--accent-color); }
+    .header-controls { display: flex; gap: 1rem; position: relative; }
+    .search-icon, .menu-icon { font-size: 1.2rem; cursor: pointer; color: var(--accent-color); }
+    .menu-dropdown {
+      display: none;
+      position: absolute;
+      top: 2.5rem;
+      right: 0;
+      background: #fff;
+      border: 1px solid #e0e6ef;
+      border-radius: 10px;
+      box-shadow: 0 4px 24px 0 rgba(30,144,255,0.10);
+      min-width: 210px;
+      z-index: 200;
+      padding: 0.5rem 0;
+    }
+    .menu-dropdown.active {
+      display: block;
+      animation: fadeIn 0.18s;
+    }
+    .menu-dropdown a {
+      display: block;
+      padding: 0.7rem 1.2rem;
+      color: var(--text-color);
+      text-decoration: none;
+      font-size: 1rem;
+      transition: background 0.13s, color 0.13s;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+    .menu-dropdown a:hover {
+      background: var(--bg-transparent);
+      color: var(--accent-color);
+    }
+    .menu-dropdown .dropdown-title {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      font-weight: 700;
+      padding: 0.5rem 1.2rem 0.2rem 1.2rem;
+      letter-spacing: 0.03em;
+      pointer-events: none;
+    }
+
+    /* New wrapper for scrollable content - Restored */
+    .scrollable-content-area {
+      position: absolute;
+      top: 64px;
+      bottom: 60px;
+      left: 0;
+      right: 0;
+      overflow-y: auto;
+      background: var(--primary-bg);
+    }
+
+    /* Hero Section - Restored specific to products page */
+    .hero {
+      width: 100%;
+      background: var(--hero-gradient);
+      color: var(--text-color);
+      padding: 2.5rem 1.5rem 2rem 1.5rem;
+      text-align: center;
+      border-radius: 0 0 var(--radius) var(--radius);
+      box-shadow: 0 8px 32px 0 rgba(30,144,255,0.06);
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -60px;
+      width: 300px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(30,144,255,0.07) 0%, transparent 80%);
+      transform: translateX(-50%);
+      z-index: 0;
+    }
+    .hero-title {
+      font-size: 2.3rem;
+      font-weight: 800;
+      margin-bottom: 0.7rem;
+      letter-spacing: 0.01em;
+      z-index: 1;
+      position: relative;
+      color: var(--accent-color);
+    }
+    .hero-desc {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+      z-index: 1;
+      position: relative;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1.2rem;
+      color: var(--accent-color);
+      opacity: 0.9;
+      z-index: 1;
+      position: relative;
+    }
+
+    /* Category Grid - Restored */
+    .content { /* This is main.content inside .scrollable-content-area */
+      padding: 0 1.5rem 2rem 1.5rem; /* Adjusted bottom padding */
+      flex-grow: 1; 
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .category-card {
+      background: var(--bg-transparent);
+      border-radius: var(--radius);
+      padding: 2.2rem 1.5rem 1.5rem 1.5rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      border: 1.5px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.22s cubic-bezier(.4,2,.6,1), box-shadow 0.22s, border-color 0.22s, background 0.22s;
+      position: relative;
+      min-height: 320px;
+      overflow: hidden;
+    }
+    .category-card:hover, .category-card:focus-within {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 12px 32px 0 rgba(30,144,255,0.13);
+      border-color: var(--accent-color);
+      background: rgba(30,144,255,0.08);
+    }
+    .category-icon {
+      font-size: 2.7rem;
+      color: var(--accent-color);
+      margin-bottom: 1.1rem;
+      margin-top: 0.2rem;
+      transition: color 0.18s;
+    }
+    .category-card:hover .category-icon {
+      color: var(--secondary-color);
+    }
+    .category-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+      letter-spacing: 0.01em;
+      color: var(--text-color);
+    }
+    .category-description {
+      font-size: 1.01rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.1rem;
+      min-height: 2.2em;
+    }
+    .category-product-count {
+      font-size: 0.82rem;
+      color: var (--accent-color);
+      margin-bottom: 1.2rem;
+    }
+    .category-view-button {
+      background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
+      color: #fff;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 22px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: auto;
+      box-shadow: 0 2px 8px 0 rgba(30,144,255,0.10);
+      transition: background 0.18s, box-shadow 0.18s;
+      outline: none;
+      display: inline-block;
+      letter-spacing: 0.01em;
+    }
+    .category-view-button:hover, .category-card:focus-within .category-view-button {
+      background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+      box-shadow: 0 4px 16px 0 rgba(30,144,255,0.18);
+    }
+
+    /* Navigation Bar */
+    .navigation {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0; /* Added right: 0 for consistency */
+      display: flex;
+      justify-content: space-around; /* Changed from space-evenly */
+      align-items: center;
+      background: var(--primary-bg); /* Changed from #fff */
+      /* border-top: 1px solid #e0e6ef; Removed */
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);  /* More subtle, modern shadow */
+      z-index: 99; /* Changed from 100 */
+      height: 60px;
+    }
+    
+    /* Add navigation container */
+    .navigation-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      height: 60px;
+      background: var(--primary-bg);
+      border-radius: 8px 8px 0 0;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    
+    .nav-item {
+      flex: 1; /* Added */
+      /* Removed: display: flex, flex-direction, align-items, justify-content, width, position, height, gap */
+      text-align: center; /* Added */
+      text-decoration: none; /* Added */
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 0.75rem; /* Added */
+      transition: color 0.2s; /* Changed from 0.18s */
+      -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+      user-select: none; /* Prevent text selection */
+      outline: none; /* Remove outline on click */
+    }
+    
+    .nav-item.active {
+      color: var(--accent-color);
+    }
+        
+    .nav-icon { 
+      font-size: 1.5rem; /* Changed from 1.6rem */
+      display: block;
+      margin-bottom: 2px; /* Added */
+    }
+    
+    .nav-item:focus {
+      outline: none; /* Remove outline on focus */
+    }
+    
+    /* REMOVED Center home button styling for .nav-item:nth-child(3) and its div */
+
+    /* Responsive - Restored */
+    @media (max-width: 900px) {
+      .category-grid { 
+        gap: 1.2rem; 
+        justify-content: center; /* Center grid items */
+        place-items: center;     /* Center items both horizontally and vertically */
+      }
+      .content { 
+        padding: 0 0.5rem 90px 0.5rem; 
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center the grid container */
+      }
+      .hero { 
+        padding: 2rem 0.7rem 1.5rem 0.7rem; 
+      }
+      .category-card { 
+        min-height: 260px; 
+        padding: 1.2rem 0.7rem 1rem 0.7rem; 
+        margin: 0; /* Remove left/right auto margin */
+        width: 92vw;           /* Wider, but not edge-to-edge */
+        max-width: 440px;      /* Prevents being too wide on tablets */
+      }
+      .category-icon { font-size: 2rem; }
+    }
+    @media (min-width: 768px) { /* Added to match index.html nav behavior on larger screens */
+      .navigation {
+        width: 600px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 8px 8px 0 0;
+      }
+    }
+     @keyframes fadeIn { /* This is for menu dropdown, keep */
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <span>Mark</span><span>rypt</span>
+      </div>
+      <div class="header-controls">
+        <div class="search-icon">
+          <i class="fas fa-search"></i>
+        </div>
+        <div class="menu-icon" tabindex="0" aria-haspopup="true" aria-expanded="false" onclick="toggleMenuDropdown()" onblur="closeMenuDropdown()">
+          <i class="fas fa-ellipsis-v"></i>
+          <div class="menu-dropdown" id="menuDropdown">
+            <div class="dropdown-title">Legal & Info</div>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Use</a>
+            <a href="cookies.html">Cookie Policy</a>
+            <a href="about.html">About Markrypt</a>
+            <a href="contact.html">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- New Scrollable Content Wrapper - Restored -->
+    <div class="scrollable-content-area">
+      <!-- Hero Section - Restored -->
+      <section class="hero">
+        <div class="hero-icon"><i class="fas fa-th-large"></i></div>
+        <div class="hero-title">Discover Product Categories</div>
+        <div class="hero-desc">
+          Explore a world of trending, curated, and essential products. Find your next favorite item by browsing our extensive categories below.
+        </div>
+      </section>
+
+      <!-- Main Content Area - Restored (for category grid) -->
+      <main class="content">
+        <div class="category-grid" id="categoryGrid">
+          <!-- Category items will be injected here -->
+        </div>
+      </main>
+    </div> <!-- End of .scrollable-content-area -->
+
+    <!-- Bottom Navigation -->
+    <nav class="navigation">
+      <div class="navigation-container">
+        <a href="trending.html" class="nav-item">
+          <i class="fas fa-fire nav-icon"></i>
+          <span>Trending</span>
+        </a>
+        <a href="products.html" class="nav-item"> <!-- Active on this page -->
+          <i class="fas fa-tag nav-icon"></i>
+          <span>Products</span>
+        </a>
+        <a href="index.html" class="nav-item">
+          <i class="fas fa-home nav-icon"></i>
+          <span>Home</span>
+        </a>
+        <a href="explore.html" class="nav-item">
+          <i class="fas fa-compass nav-icon"></i>
+          <span>Explore</span>
+        </a>
+        <a href="about.html" class="nav-item">
+          <i class="fas fa-info-circle nav-icon"></i>
+          <span>About</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+
+  <script>
+    // Fix the categories array
+    const categories = [
+      {
+        id: "supplements",
+        title: "Supplements",
+        description: "Vitamins, minerals, and dietary supplements for your wellness.",
+        icon: "fas fa-capsules",
+        productCount: 120
+      },
+      {
+        id: "fitness-equipment",
+        title: "Fitness Equipment",
+        description: "Home gym gear, weights, resistance bands, and more.",
+        icon: "fas fa-dumbbell",
+        productCount: 75
+      },
+      {
+        id: "personal-care",
+        title: "Personal Care",
+        description: "Oral care, hygiene, and grooming essentials.",
+        icon: "fas fa-tooth",
+        productCount: 90
+      },
+      {
+        id: "mental-wellness",
+        title: "Mental Wellness",
+        description: "Stress relief, sleep aids, and mindfulness products.",
+        icon: "fas fa-brain",
+        productCount: 45
+      },
+      {
+        id: "first-aid",
+        title: "First Aid",
+        description: "Kits, bandages, and emergency medical supplies.",
+        icon: "fas fa-briefcase-medical",
+        productCount: 50
+      },
+      {
+        id: "health-tech",
+        title: "Health Tech",
+        description: "Blood pressure monitors, thermometers, and health trackers.",
+        icon: "fas fa-heartbeat",
+        productCount: 60
+      },
+      {
+        id: "mobility",
+        title: "Mobility & Accessibility",
+        description: "Aids for mobility, braces, and supports.",
+        icon: "fas fa-wheelchair",
+        productCount: 40
+      },
+      {
+        id: "healthy-snacks",
+        title: "Healthy Snacks",
+        description: "Organic snacks, protein bars, and superfoods.",
+        icon: "fas fa-apple-alt",
+        productCount: 110
+      },
+      {
+        id: "protective-gear",
+        title: "Protective Gear",
+        description: "Masks, gloves, and sanitizers for your safety.",
+        icon: "fas fa-head-side-mask",
+        productCount: 70
+      },
+      {
+        id: "vision-care",
+        title: "Vision Care",
+        description: "Eyewear, contact lens solutions, and eye drops.",
+        icon: "fas fa-eye",
+        productCount: 35
+      },
+      {
+        id: "hearing",
+        title: "Hearing Aids & Care",
+        description: "Hearing aids, batteries, and ear care products.",
+        icon: "fas fa-deaf",
+        productCount: 25
+      },
+      {
+        id: "rehab",
+        title: "Rehabilitation & Therapy",
+        description: "Massagers, foam rollers, and therapy tools.",
+        icon: "fas fa-spa",
+        productCount: 55
+      },
+      {
+        id: "baby-health",
+        title: "Baby Health",
+        description: "Thermometers, nasal aspirators, and baby care.",
+        icon: "fas fa-baby",
+        productCount: 28
+      },
+      {
+        id: "elderly-care",
+        title: "Elderly Care",
+        description: "Supportive products for seniors' health and comfort.",
+        icon: "fas fa-user-clock",
+        productCount: 32
+      },
+      {
+        id: "pain-relief",
+        title: "Pain Relief",
+        description: "Heating pads, cold packs, and topical analgesics.",
+        icon: "fas fa-hot-tub",
+        productCount: 38
+      },
+      {
+        id: "allergy",
+        title: "Allergy & Sinus",
+        description: "Air purifiers, nasal sprays, and allergy relief.",
+        icon: "fas fa-wind",
+        productCount: 27
+      },
+      {
+        id: "weight-management",
+        title: "Weight Management",
+        description: "Scales, meal replacements, and fitness trackers.",
+        icon: "fas fa-balance-scale",
+        productCount: 44
+      },
+      {
+        id: "skin-care",
+        title: "Skin Care",
+        description: "Moisturizers, sunscreens, and acne treatments.",
+        icon: "fas fa-air-freshener",
+        productCount: 60
+      },
+      {
+        id: "sleep",
+        title: "Sleep Aids",
+        description: "Melatonin, sleep masks, and white noise machines.",
+        icon: "fas fa-bed",
+        productCount: 36
+      }
+    ];
+
+    function initializeCategories() {
+      const categoryGrid = document.getElementById('categoryGrid');
+      if (!categoryGrid) {
+        console.error("Category grid element not found!");
+        return;
+      }
+      categoryGrid.innerHTML = '';
+      categories.forEach(category => {
+        categoryGrid.innerHTML += `
+          <div class="category-card" tabindex="0">
+            <i class="${category.icon} category-icon"></i>
+            <h2 class="category-title">${category.title}</h2>
+            <p class="category-description">${category.description}</p>
+            <span class="category-product-count">${category.productCount} products</span>
+            <button class="category-view-button" onclick="navigateToCategory('${category.id}', '${category.title.replace(/'/g, "\\'")}')">View Products</button>
+          </div>
+        `;
+      });
+    }
+
+    function navigateToCategory(categoryId, categoryTitle) {
+      alert(`Navigating to ${categoryTitle} (ID: ${categoryId})`);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initializeCategories();
+      // Highlight current nav item
+      const pageName = window.location.pathname.split("/").pop();
+      const currentPath = pageName === "" ? "index.html" : pageName;
+      document.querySelectorAll('.navigation .nav-item').forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('href') === currentPath) {
+          item.classList.add('active');
+        }
+      });
+    });
+
+    // Dropdown menu logic
+    function toggleMenuDropdown() {
+      const menu = document.getElementById('menuDropdown');
+      menu.classList.toggle('active');
+      const icon = document.querySelector('.menu-icon');
+      icon.setAttribute('aria-expanded', menu.classList.contains('active'));
+    }
+    function closeMenuDropdown() {
+      setTimeout(() => {
+        const menu = document.getElementById('menuDropdown');
+        if (menu) menu.classList.remove('active');
+        const icon = document.querySelector('.menu-icon');
+        if (icon) icon.setAttribute('aria-expanded', 'false');
+      }, 150);
+    }
+  </script>
+</body>
+</html>

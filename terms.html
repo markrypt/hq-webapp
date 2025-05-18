@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Terms of Use - Markrypt</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-bg: #fff;
+      --text-color: #111;
+      --text-secondary: #555;
+      --accent-color: #1e90ff;
+      --secondary-color: #6cb4ee;
+      --bg-transparent: rgba(30, 144, 255, 0.07);
+    }
+    body { font-family: 'Open Sans', sans-serif; background: var(--primary-bg); color: var(--text-color); margin: 0; padding: 0; }
+    .container { max-width: 700px; margin: 4.5rem auto 3.5rem auto; padding: 2rem; background: #f9fbfd; border-radius: 12px; box-shadow: 0 2px 12px rgba(30,144,255,0.07);}
+    h1 { color: var(--accent-color); font-size: 2rem; margin-bottom: 1.2rem; }
+    h2 { color: var(--text-secondary); font-size: 1.2rem; margin-top: 2rem; }
+    p, li { font-size: 1.05rem; line-height: 1.7; }
+    ul { margin-left: 1.2rem; }
+    a { color: var(--accent-color); text-decoration: underline; }
+    .header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.5rem 1rem;
+      z-index: 100;
+      background: var(--primary-bg);
+      border-bottom: 1px solid #e0e6ef;
+    }
+    .logo { font-size: 1.8rem; font-weight: bold; display: flex; align-items: center; }
+    .logo span:first-child { color: var(--text-color); }
+    .logo span:last-child { color: var(--accent-color); }
+    .header-controls { display: flex; gap: 1rem; position: relative; }
+    .search-icon, .menu-icon { font-size: 1.5rem; cursor: pointer; color: var(--accent-color); }
+    .menu-dropdown {
+      display: none;
+      position: absolute;
+      top: 2.5rem;
+      right: 0;
+      background: #fff;
+      border: 1px solid #e0e6ef;
+      border-radius: 10px;
+      box-shadow: 0 4px 24px 0 rgba(30,144,255,0.10);
+      min-width: 210px;
+      z-index: 200;
+      padding: 0.5rem 0;
+    }
+    .menu-dropdown.active {
+      display: block;
+      animation: fadeIn 0.18s;
+    }
+    .menu-dropdown a {
+      display: block;
+      padding: 0.7rem 1.2rem;
+      color: var(--text-color);
+      text-decoration: none;
+      font-size: 1rem;
+      transition: background 0.13s, color 0.13s;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+    .menu-dropdown a:hover {
+      background: var(--bg-transparent);
+      color: var(--accent-color);
+    }
+    .menu-dropdown .dropdown-title {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      font-weight: 700;
+      padding: 0.5rem 1.2rem 0.2rem 1.2rem;
+      letter-spacing: 0.03em;
+      pointer-events: none;
+    }
+    /* Navigation Bar */
+    .navigation {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background: var(--primary-bg); /* Reverted to primary-bg */
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);  /* More subtle, modern shadow */
+      z-index: 99;
+    }
+    /* Add navigation container */
+    .navigation-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      height: 60px;
+      background: var(--primary-bg); /* White background only for container */
+      border-radius: 8px 8px 0 0;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05); /* Shadow only on container */
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .nav-item {
+      flex: 1;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 0.75rem;
+      transition: color 0.2s;
+      -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+      user-select: none; /* Prevent text selection */
+      outline: none; /* Remove outline on click */
+    }
+    .nav-item .nav-icon {
+      font-size: 1.5rem;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .nav-item.active,
+    .nav-item:hover {
+      color: var(--accent-color);
+    }
+    .nav-item:focus {
+      outline: none; /* Remove outline on focus */
+    }
+    @media (min-width: 768px) {
+      .navigation {
+        width: 600px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 8px 8px 0 0;
+      }
+    }
+    @media (max-width: 700px) {
+      .container { margin: 4.5rem 0.5rem 3.5rem 0.5rem; padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <span>Mark</span><span>rypt</span>
+    </div>
+    <div class="header-controls">
+      <div class="search-icon">
+        <i class="fas fa-search"></i>
+      </div>
+      <div class="menu-icon" tabindex="0" aria-haspopup="true" aria-expanded="false" onclick="toggleMenuDropdown()" onblur="closeMenuDropdown(event)">
+        <i class="fas fa-ellipsis-v"></i>
+        <div class="menu-dropdown" id="menuDropdown">
+          <div class="dropdown-title">Legal & Info</div>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+          <a href="cookies.html">Cookie Policy</a>
+          <a href="about.html">About Markrypt</a>
+          <a href="contact.html">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="container">
+    <h1>Terms of Use</h1>
+    <p>Last Updated: June 12, 2024</p>
+    
+    <h2>1. Introduction</h2>
+    <p>
+      Welcome to Markrypt. These Terms of Use ("Terms") constitute a legally binding agreement between you and Markrypt, Inc. ("Markrypt," "we," "us," or "our") governing your access to and use of the Markrypt website, including any content, functionality, and services offered on or through the website (collectively, the "Services").
+    </p>
+    <p>
+      Please read these Terms carefully before using our Services. By accessing or using our Services, you acknowledge that you have read, understood, and agree to be bound by these Terms. If you do not agree to these Terms, you must not access or use our Services.
+    </p>
+
+    <h2>2. User Eligibility</h2>
+    <p>
+      You represent and warrant that you are at least 18 years of age, or the age of legal majority in your jurisdiction, whichever is higher, and possess the legal authority, right, and freedom to enter into these Terms and form a binding agreement. If you are accepting these Terms on behalf of a company or other legal entity, you represent that you have the authority to bind such entity to these Terms.
+    </p>
+    <p>
+      Our Services are not intended for use by individuals under 18 years of age. By using our Services, you confirm that you meet the minimum age requirement. If we learn that we have collected or received personal information from an individual under 18 years of age without verification of parental consent, we will delete that information.
+    </p>
+
+    <h2>3. Account Registration and Security</h2>
+    <p>
+      Some features of our Services may require you to register an account. When you register, you agree to provide accurate, current, and complete information about yourself as prompted by the registration process. You are solely responsible for safeguarding your account credentials and for all activities that occur under your account.
+    </p>
+    <p>
+      You agree to notify us immediately of any unauthorized access to or use of your account. We reserve the right to disable or terminate your account at any time if we determine, in our sole discretion, that you have violated these Terms or if we believe your account poses a security risk.
+    </p>
+    <p>
+      You agree not to share your account credentials with any third party or allow another person to access the Services using your account. We will not be liable for any losses or damages arising from your failure to maintain the security of your account and password.
+    </p>
+
+    <h2>4. Changes to Terms or Services</h2>
+    <p>
+      We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material, we will make reasonable efforts to provide at least 15 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.
+    </p>
+    <p>
+      By continuing to access or use our Services after revisions become effective, you agree to be bound by the revised Terms. If you do not agree to the new Terms, you must stop using the Services.
+    </p>
+    <p>
+      We may update, change, or discontinue any aspect of the Services at any time without prior notice. We will not be liable to you or to any third party for any modification, suspension, or discontinuance of the Services or any part thereof.
+    </p>
+
+    <h2>5. Intellectual Property Rights</h2>
+    <p>
+      The Services and their entire contents, features, and functionality (including but not limited to all information, software, text, displays, images, video, and audio, and the design, selection, and arrangement thereof) are owned by Markrypt, its licensors, or other providers of such material and are protected by United States and international copyright, trademark, patent, trade secret, and other intellectual property or proprietary rights laws.
+    </p>
+    <p>
+      These Terms permit you to use the Services for your personal, non-commercial use only. You must not reproduce, distribute, modify, create derivative works of, publicly display, publicly perform, republish, download, store, transmit, or otherwise exploit any of the material on our Services, except as follows:
+    </p>
+    <p>
+      Your computer may temporarily store copies of such materials in RAM incidental to your accessing and viewing those materials. You may store files that are automatically cached by your Web browser for display enhancement purposes. You may print one copy of a reasonable number of pages of the Services for your own personal, non-commercial use and not for further reproduction, publication, or distribution. If we provide social media features with certain content, you may take such actions as are enabled by such features.
+    </p>
+    <p>
+      You must not access or use for any commercial purposes any part of the Services or any services or materials available through the Services. If you wish to make any use of material on the Services other than that set out in this section, please contact us at: legal@markrypt.com.
+    </p>
+
+    <h2>6. Trademarks</h2>
+    <p>
+      The Markrypt name, logo, and all related names, logos, product and service names, designs, and slogans are trademarks of Markrypt or its affiliates or licensors. You must not use such marks without the prior written permission of Markrypt. All other names, logos, product and service names, designs, and slogans on the Services are the trademarks of their respective owners.
+    </p>
+
+    <h2>7. Prohibited Uses</h2>
+    <p>
+      You may use the Services only for lawful purposes and in accordance with these Terms. You agree not to use the Services in any way that violates any applicable federal, state, local, or international law or regulation, or generally accepted practices or guidelines in relevant jurisdictions. Additionally, you agree not to:
+    </p>
+    <p>
+      Use the Services in any manner that could disable, overburden, damage, or impair the Services or interfere with any other party's use of the Services. Use any robot, spider, or other automatic device, process, or means to access the Services for any purpose, including monitoring or copying any of the material on the Services. Use any manual process to monitor or copy any of the material on the Services or for any other unauthorized purpose without our prior written consent.
+    </p>
+    <p>
+      Use any device, software, or routine that interferes with the proper working of the Services. Introduce any viruses, Trojan horses, worms, logic bombs, or other material that is malicious or technologically harmful. Attempt to gain unauthorized access to, interfere with, damage, or disrupt any parts of the Services, the server on which the Services are stored, or any server, computer, or database connected to the Services.
+    </p>
+    <p>
+      Attack the Services via a denial-of-service attack or a distributed denial-of-service attack. Otherwise attempt to interfere with the proper working of the Services. Use the Services to send unsolicited or unauthorized advertising, promotional materials, junk mail, spam, or any other form of solicitation.
+    </p>
+
+    <h2>8. User Content</h2>
+    <p>
+      The Services may contain interactive features that allow users to post, submit, publish, display, or transmit content or materials (collectively, "User Content"). By providing any User Content on the Services, you grant us and our affiliates and service providers, and each of their and our respective licensees, successors, and assigns the right to use, reproduce, modify, perform, display, distribute, and otherwise disclose to third parties any such material.
+    </p>
+    <p>
+      You represent and warrant that all User Content complies with these Terms and that you own or control all rights in and to your User Content and have the right to grant the license granted above. You understand and acknowledge that you are responsible for any User Content you submit or contribute, and you, not Markrypt, have full responsibility for such content, including its legality, reliability, accuracy, and appropriateness.
+    </p>
+    <p>
+      We are not responsible or liable to any third party for the content or accuracy of any User Content posted by you or any other user of the Services. We have the right to remove any User Content that, in our sole judgment, does not comply with these Terms or may be offensive, illegal, or violate the rights, harm, or threaten the safety of any person.
+    </p>
+
+    <h2>9. Affiliate Links and Marketing</h2>
+    <p>
+      Our Services contain affiliate links to third-party products and services, including but not limited to Amazon products. When you click on these links and make a purchase, we may receive a commission. These affiliate relationships do not affect our product recommendations or the prices you pay for such products.
+    </p>
+    <p>
+      We are a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for us to earn fees by linking to Amazon.com and affiliated sites. As an Amazon Associate, we earn from qualifying purchases. This means that when you click on an Amazon affiliate link on our Services and make a purchase, we receive a small commission from Amazon, at no additional cost to you.
+    </p>
+    <p>
+      We strive to provide honest, accurate, and unbiased information about the products and services we feature through affiliate marketing. However, we cannot guarantee the accuracy or completeness of information about third-party products and services. You acknowledge that your decision to purchase any product or service through our affiliate links is at your own discretion and risk.
+    </p>
+
+    <h2>10. Disclaimers</h2>
+    <p>
+      THE SERVICES AND ALL CONTENT, MATERIALS, INFORMATION, SOFTWARE, PRODUCTS AND SERVICES PROVIDED THROUGH THE SERVICES, ARE PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS. MARKRYPT EXPRESSLY DISCLAIMS ALL WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT.
+    </p>
+    <p>
+      MARKRYPT MAKES NO WARRANTY THAT: (A) THE SERVICES WILL MEET YOUR REQUIREMENTS; (B) THE SERVICES WILL BE AVAILABLE ON AN UNINTERRUPTED, TIMELY, SECURE, OR ERROR-FREE BASIS; (C) THE RESULTS THAT MAY BE OBTAINED FROM THE USE OF THE SERVICES, INCLUDING ANY INFORMATION PROVIDED ON THE SERVICES WILL BE ACCURATE OR RELIABLE; OR (D) THE QUALITY OF ANY PRODUCTS, SERVICES, INFORMATION, OR OTHER MATERIAL PURCHASED OR OBTAINED BY YOU THROUGH THE SERVICES WILL MEET YOUR EXPECTATIONS.
+    </p>
+    <p>
+      ANY CONTENT DOWNLOADED OR OTHERWISE OBTAINED THROUGH THE USE OF THE SERVICES IS DONE AT YOUR OWN DISCRETION AND RISK AND YOU WILL BE SOLELY RESPONSIBLE FOR ANY DAMAGE TO YOUR COMPUTER SYSTEM OR LOSS OF DATA THAT RESULTS FROM THE DOWNLOAD OF ANY SUCH CONTENT.
+    </p>
+    <p>
+      NO ADVICE OR INFORMATION, WHETHER ORAL OR WRITTEN, OBTAINED BY YOU FROM MARKRYPT OR THROUGH OR FROM THE SERVICES SHALL CREATE ANY WARRANTY NOT EXPRESSLY STATED IN THESE TERMS.
+    </p>
+
+    <h2>11. Health Information Disclaimer</h2>
+    <p>
+      The content on our Services related to health, wellness, and products is for informational purposes only. It is not intended to be a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition or health objectives.
+    </p>
+    <p>
+      Never disregard professional medical advice or delay in seeking it because of something you have read on our Services. Markrypt does not recommend or endorse any specific tests, physicians, products, procedures, opinions, or other information that may be mentioned on the Services. Reliance on any information provided by Markrypt, its employees, contracted writers, or medical professionals presenting content on the Services is solely at your own risk.
+    </p>
+
+    <h2>12. Third-Party Links</h2>
+    <p>
+      The Services may contain links to third-party websites or services that are not owned or controlled by Markrypt. Markrypt has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third-party websites or services. You further acknowledge and agree that Markrypt shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with the use of or reliance on any such content, goods, or services available on or through any such websites or services.
+    </p>
+    <p>
+      We strongly advise you to read the terms and conditions and privacy policies of any third-party websites or services that you visit. By using our Services, you expressly relieve Markrypt from any and all liability arising from your use of any third-party website or service.
+    </p>
+
+    <h2>13. Limitation of Liability</h2>
+    <p>
+      IN NO EVENT SHALL MARKRYPT, ITS DIRECTORS, OFFICERS, EMPLOYEES, AGENTS, PARTNERS, SUPPLIERS, OR AFFILIATES, BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING WITHOUT LIMITATION, LOSS OF PROFITS, DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES, RESULTING FROM: (A) YOUR ACCESS TO OR USE OF OR INABILITY TO ACCESS OR USE THE SERVICES; (B) ANY CONDUCT OR CONTENT OF ANY THIRD PARTY ON THE SERVICES; (C) ANY CONTENT OBTAINED FROM THE SERVICES; AND (D) UNAUTHORIZED ACCESS, USE, OR ALTERATION OF YOUR TRANSMISSIONS OR CONTENT, WHETHER BASED ON WARRANTY, CONTRACT, TORT (INCLUDING NEGLIGENCE), OR ANY OTHER LEGAL THEORY, WHETHER OR NOT WE HAVE BEEN INFORMED OF THE POSSIBILITY OF SUCH DAMAGE.
+    </p>
+    <p>
+      THE FOREGOING LIMITATION OF LIABILITY SHALL APPLY TO THE FULLEST EXTENT PERMITTED BY LAW IN THE APPLICABLE JURISDICTION. YOU SPECIFICALLY ACKNOWLEDGE THAT MARKRYPT SHALL NOT BE LIABLE FOR USER CONTENT OR THE DEFAMATORY, OFFENSIVE, OR ILLEGAL CONDUCT OF ANY THIRD PARTY AND THAT THE RISK OF HARM OR DAMAGE FROM THE FOREGOING RESTS ENTIRELY WITH YOU.
+    </p>
+    <p>
+      IN NO EVENT SHALL MARKRYPT'S TOTAL LIABILITY TO YOU FOR ALL DAMAGES, LOSSES, OR CAUSES OF ACTION EXCEED ONE HUNDRED DOLLARS ($100.00), EVEN IF MARKRYPT HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+    </p>
+    <p>
+      SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF IMPLIED WARRANTIES OR THE LIMITATION OR EXCLUSION OF LIABILITY FOR INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THE ABOVE LIMITATIONS OR EXCLUSIONS MAY NOT APPLY TO YOU. IN SUCH JURISDICTIONS, OUR LIABILITY WILL BE LIMITED TO THE GREATEST EXTENT PERMITTED BY LAW.
+    </p>
+
+    <h2>14. Indemnification</h2>
+    <p>
+      You agree to defend, indemnify, and hold harmless Markrypt, its affiliates, licensors, and service providers, and its and their respective officers, directors, employees, contractors, agents, licensors, suppliers, successors, and assigns from and against any claims, liabilities, damages, judgments, awards, losses, costs, expenses, or fees (including reasonable attorneys' fees) arising out of or relating to your violation of these Terms or your use of the Services, including, but not limited to, your User Content, any use of the Services' content, services, and products other than as expressly authorized in these Terms, or your use of any information obtained from the Services.
+    </p>
+    <p>
+      This indemnification obligation will survive the termination or expiration of these Terms and your use of the Services.
+    </p>
+
+    <h2>15. Termination</h2>
+    <p>
+      We may terminate or suspend your access to all or any part of the Services, with or without notice, for any reason, including, without limitation, breach of these Terms. Upon termination, your right to use the Services will immediately cease. If you wish to terminate your account, you may simply discontinue using the Services, and if applicable, you may follow the instructions for account termination within the Services.
+    </p>
+    <p>
+      All provisions of these Terms which by their nature should survive termination shall survive termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity, and limitations of liability.
+    </p>
+
+    <h2>16. Dispute Resolution</h2>
+    <p>
+      You agree that any dispute, claim, or controversy arising out of or relating to these Terms or the breach, termination, enforcement, interpretation, or validity thereof or the use of the Services (collectively, "Disputes") will be settled by binding arbitration between you and Markrypt, except that each party retains the right to bring an individual action in small claims court and the right to seek injunctive or other equitable relief in a court of competent jurisdiction to prevent the actual or threatened infringement, misappropriation, or violation of a party's copyrights, trademarks, trade secrets, patents, or other intellectual property rights.
+    </p>
+    <p>
+      The arbitration will be conducted in accordance with the Commercial Arbitration Rules and the Supplementary Procedures for Consumer Related Disputes of the American Arbitration Association ("AAA"), as modified by these Terms. The arbitration will be conducted in San Francisco, California, unless you and Markrypt agree otherwise. Each party will be responsible for paying any AAA filing, administrative, and arbitrator fees in accordance with AAA rules.
+    </p>
+    <p>
+      You and Markrypt agree that any dispute resolution proceedings will be conducted only on an individual basis and not in a class, consolidated, or representative action. If for any reason a claim proceeds in court rather than in arbitration, you and Markrypt each waive any right to a jury trial.
+    </p>
+
+    <h2>17. Class Action Waiver</h2>
+    <p>
+      YOU AND MARKRYPT AGREE THAT EACH MAY BRING CLAIMS AGAINST THE OTHER ONLY IN YOUR OR ITS INDIVIDUAL CAPACITY AND NOT AS A PLAINTIFF OR CLASS MEMBER IN ANY PURPORTED CLASS OR REPRESENTATIVE PROCEEDING. Further, unless both you and Markrypt agree otherwise, the arbitrator may not consolidate more than one person's claims, and may not otherwise preside over any form of a representative or class proceeding.
+    </p>
+
+    <h2>18. Governing Law</h2>
+    <p>
+      These Terms and any separate agreements whereby we provide you Services shall be governed by and construed in accordance with the laws of the State of California, United States, without regard to its conflict of law provisions. The application of the United Nations Convention on Contracts for the International Sale of Goods is expressly excluded.
+    </p>
+
+    <h2>19. Severability</h2>
+    <p>
+      If any provision of these Terms is found to be unenforceable or invalid under any applicable law, such unenforceability or invalidity shall not render these Terms unenforceable or invalid as a whole, and such provision shall be deleted without affecting the remaining provisions herein.
+    </p>
+
+    <h2>20. Entire Agreement</h2>
+    <p>
+      These Terms, our Privacy Policy, and any other policies or rules posted by us on the Services constitute the entire agreement between you and Markrypt regarding the Services and supersede all prior and contemporaneous written or oral agreements between you and Markrypt.
+    </p>
+    <p>
+      Any rights not expressly granted herein are reserved by Markrypt. Our failure to exercise or enforce any right or provision of these Terms shall not operate as a waiver of such right or provision.
+    </p>
+
+    <h2>21. Assignment</h2>
+    <p>
+      These Terms, and any rights and licenses granted hereunder, may not be transferred or assigned by you, but may be assigned by Markrypt without restriction. Any attempted transfer or assignment in violation hereof shall be null and void.
+    </p>
+
+    <h2>22. Feedback</h2>
+    <p>
+      We welcome feedback, comments, and suggestions for improvements to the Services ("Feedback"). You acknowledge and agree that all Feedback you provide will be the sole and exclusive property of Markrypt and you hereby irrevocably assign to Markrypt and agree to irrevocably assign to Markrypt all of your right, title, and interest in and to all Feedback, including without limitation all worldwide patent, copyright, trade secret, moral and other proprietary or intellectual property rights therein.
+    </p>
+
+    <h2>23. Contact Information</h2>
+    <p>
+      If you have any questions about these Terms, please contact us at:
+    </p>
+    <p>
+      <strong>Email:</strong> <a href="mailto:legal@markrypt.com">legal@markrypt.com</a><br>
+      <strong>Postal Address:</strong><br>
+      Markrypt, Inc.<br>
+      Attn: Legal Department<br>
+      123 Tech Plaza, Suite 400<br>
+      San Francisco, CA 94103<br>
+      United States
+    </p>
+  </div>
+  <nav class="navigation">
+    <div class="navigation-container">
+      <a href="trending.html" class="nav-item">
+        <i class="fas fa-fire nav-icon"></i>
+        <span>Trending</span>
+      </a>
+      <a href="products.html" class="nav-item">
+        <i class="fas fa-tag nav-icon"></i>
+        <span>Products</span>
+      </a>
+      <a href="index.html" class="nav-item">
+        <i class="fas fa-home nav-icon"></i>
+        <span>Home</span>
+      </a>
+      <a href="explore.html" class="nav-item">
+        <i class="fas fa-compass nav-icon"></i>
+        <span>Explore</span>
+      </a>
+      <a href="about.html" class="nav-item">
+        <i class="fas fa-info-circle nav-icon"></i>
+        <span>About</span>
+      </a>
+    </div>
+  </nav>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Update active nav item based on current page
+      const pageName = window.location.pathname.split("/").pop();
+      const currentPath = pageName === "" ? "index.html" : pageName;
+
+      const navItems = document.querySelectorAll('.navigation .nav-item');
+      navItems.forEach(item => {
+        item.classList.remove('active');
+        const linkHref = item.getAttribute('href');
+        if (linkHref === currentPath) {
+          item.classList.add('active');
+        }
+      });
+    });
+
+    function toggleMenuDropdown() {
+      const menu = document.getElementById('menuDropdown');
+      menu.classList.toggle('active');
+      const icon = document.querySelector('.menu-icon');
+      icon.setAttribute('aria-expanded', menu.classList.contains('active'));
+    }
+    function closeMenuDropdown(event) {
+      // Add a small delay to allow link clicks to be processed
+      setTimeout(() => {
+        const menu = document.getElementById('menuDropdown');
+        
+        // Don't close if the click was inside the dropdown
+        if (event && event.relatedTarget && menu && menu.contains(event.relatedTarget)) {
+          return;
+        }
+        
+        if (menu) menu.classList.remove('active');
+        const icon = document.querySelector('.menu-icon');
+        if (icon) icon.setAttribute('aria-expanded', 'false');
+      }, 150);
+    }
+  </script>
+</body>
+</html>

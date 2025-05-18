@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Explore - Markrypt Blog</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-bg: #fff;
+      --text-color: #111;
+      --text-secondary: #555;
+      --accent-color: #1e90ff;
+      --secondary-color: #6cb4ee;
+      --bg-transparent: rgba(30,144,255,0.07);
+      --shadow: 0 2px 6px rgba(0,0,0,0.1);
+      --radius: 14px;
+      --border-color: #e0e6ef;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--primary-bg);
+      color: var(--text-color);
+      overflow: hidden;
+    }
+    .app-container {
+      position: relative;
+      min-height: 100vh;
+    }
+    .header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1rem;
+      background: var(--primary-bg);
+      border-bottom: 1px solid var(--border-color);
+      z-index: 100;
+    }
+    .logo { font-size: 1.5rem; font-weight: bold; }
+    .logo span:first-child { color: var(--text-color); }
+    .logo span:last-child  { color: var(--accent-color); }
+    .header-controls { display: flex; gap: 1rem; position: relative; }
+    .search-icon, .menu-icon { font-size: 1.2rem; cursor: pointer; color: var(--accent-color); }
+    .menu-dropdown {
+      position: absolute; top: 2.5rem; right: 0;
+      background: #fff; border: 1px solid var(--border-color);
+      border-radius: 10px; box-shadow: 0 4px 24px rgba(30,144,255,0.1);
+      display: none; min-width: 210px; padding: 0.5rem 0; z-index: 200;
+    }
+    .menu-dropdown.active { display: block; animation: fadeIn 0.18s; }
+    .menu-dropdown .dropdown-title {
+      padding: 0.5rem 1.2rem 0.2rem; font-size: 0.95rem;
+      color: var(--text-secondary); font-weight: 700;
+    }
+    .menu-dropdown a {
+      display: block; padding: 0.7rem 1.2rem; font-size: 1rem;
+      color: var(--text-color); text-decoration: none;
+    }
+    .menu-dropdown a:hover {
+      background: var(--bg-transparent); color: var(--accent-color);
+    }
+    @keyframes fadeIn { from { opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
+    .content {
+      position: absolute; top:64px; bottom:60px; left:0; right:0;
+      overflow-y: auto; padding:2.5rem 1rem 2rem;
+      background: var(--primary-bg);
+    }
+    .blog-title { text-align:center; font-size:2.3rem; font-weight:800; color:var(--accent-color); margin-bottom:0.5rem; }
+    .blog-desc { text-align:center; font-size:1.15rem; color:var(--text-secondary); max-width:600px; margin:0 auto 2.2rem; }
+    .blog-grid {
+      display: flex; flex-wrap: wrap; gap:2.5rem; justify-content:flex-start;
+    }
+    .blog-card {
+      flex:1 1 22%; min-width:22%; max-width:24%; background:#fff;
+      border-radius:var(--radius); border:1.5px solid var(--border-color);
+      box-shadow:0 8px 32px rgba(30,144,255,0.1),0 1.5px 8px rgba(30,144,255,0.06);
+      display:flex; flex-direction:column; cursor:pointer;
+      overflow:hidden; transition:transform .18s,box-shadow .18s,border-color .18s;
+    }
+    .blog-card:hover {
+      transform:translateY(-10px) scale(1.03);
+      box-shadow:0 16px 40px rgba(30,144,255,0.18),0 2px 12px rgba(30,144,255,0.1);
+      border-color:var(--accent-color);
+      background:linear-gradient(120deg,#eaf6ff 0%,#fff 100%);
+    }
+    .blog-image { width:100%; height:110px; object-fit:cover; background:#eaf6ff;
+      filter:brightness(.97) saturate(1.1); transition:filter .18s;
+    }
+    .blog-card:hover .blog-image { filter:brightness(1.03) saturate(1.2); }
+    .blog-content { padding:1.1rem; display:flex;flex-direction:column;justify-content:space-between;flex:1; }
+    .blog-category { display:inline-block; font-size:.85rem; font-weight:700;
+      color:var(--accent-color);text-transform:uppercase;
+      background:rgba(30,144,255,0.08);padding:.15em .7em;border-radius:12px;
+      margin-bottom:.4rem;
+    }
+    .blog-headline { font-size:1.08rem; font-weight:800; color:var(--text-color);
+      margin-bottom:.4rem; line-height:1.25; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      transition:color .18s;
+    }
+    .blog-card:hover .blog-headline { color:var(--accent-color); }
+    .blog-meta { font-size:.93rem; color:var(--secondary-color); margin-bottom:.5rem; font-weight:500; }
+    .blog-summary { font-size:.98rem; color:var(--text-secondary); line-height:1.5; margin-bottom:.7rem; overflow:hidden; }
+    .navigation {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background: var(--primary-bg);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);  /* More subtle, modern shadow */
+      z-index: 99;
+    }
+
+    /* Add navigation container for the floating menu effect */
+    .navigation-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      height: 60px;
+      background: var(--primary-bg);
+      border-radius: 8px 8px 0 0;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    @media(min-width:768px) {
+      .navigation-container {
+        width: 600px;
+      }
+      .navigation {
+        /* Remove these styles as they're handled by navigation-container */
+        width: auto;
+        left: 0;
+        transform: none;
+        background: transparent;
+        border-radius: 0;
+      }
+    }
+
+    @media(min-width:768px){.navigation{width:600px;left:50%;transform:translateX(-50%);border-radius:8px 8px 0 0;}}
+
+    /* Mobile: Stack blog cards vertically */
+    @media (max-width: 700px) {
+      .blog-grid {
+        flex-direction: column;
+        gap: 1.2rem;
+      }
+      .blog-card {
+        min-width: 0;
+        max-width: 100%;
+        width: 100%;
+      }
+      .blog-image {
+        height: 150px;
+      }
+    }
+    .nav-item {
+      flex: 1;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 0.75rem;
+      transition: color 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      outline: none;
+    }
+    
+    .nav-item.active {
+      color: var(--accent-color);
+    }
+        
+    .nav-icon { 
+      font-size: 1.5rem;
+      display: block;
+      margin-bottom: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <header class="header">
+      <div class="logo"><span>Mark</span><span>rypt</span></div>
+      <div class="header-controls">
+        <div class="search-icon"><i class="fas fa-search"></i></div>
+        <div class="menu-icon" tabindex="0" onclick="toggleMenuDropdown()" onblur="closeMenuDropdown()">
+          <i class="fas fa-ellipsis-v"></i>
+          <div class="menu-dropdown" id="menuDropdown">
+            <div class="dropdown-title">Legal & Info</div>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Use</a>
+            <a href="cookies.html">Cookie Policy</a>
+            <a href="about.html">About Markrypt</a>
+            <a href="contact.html">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="content">
+      <div class="blog-title">Explore Markrypt Blog</div>
+      <div class="blog-desc">Insights, guides, and inspiration for health, wellness, and trending products. Discover our latest articles and curated stories.</div>
+      <div class="blog-grid">
+        <div class="blog-card" onclick="location.href='article/Top 6 Affordable Health and Wellness Must Haves.html'">
+          <img class="blog-image lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/hero/hero1.jpg" alt="Health and Wellness Products">
+          <div class="blog-content">
+            <div>
+              <div class="blog-category">Health & Wellness</div>
+              <div class="blog-headline">Top 6 Affordable Health and Wellness Must-Haves on Amazon</div>
+              <div class="blog-meta">by Michael Brooks · 5 min read</div>
+              <div class="blog-summary">From castor oil to massage guns, discover affordable products with exceptional value that have been verified by thousands of users.</div>
+            </div>
+          </div>
+        </div>
+        <div class="blog-card" onclick="location.href='article/Top 6 Affordable Relaxation & Recovery Gadgets on Amazon.html'">
+          <img class="blog-image lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/hero/hero2.jpg" alt="Health and Wellness Products Collection">
+          <div class="blog-content">
+            <div>
+              <div class="blog-category">Relaxation & Recovery</div>
+              <div class="blog-headline">Top 6 Affordable Relaxation & Recovery Gadgets on Amazon</div>
+              <div class="blog-meta">by Michael Brooks · 5 min read</div>
+              <div class="blog-summary">Research-backed relaxation and recovery tools that deliver exceptional value, from eye massagers to deep tissue shiatsu devices, all highly rated.</div>
+            </div>
+          </div>
+        </div>
+        <div class="blog-card" onclick="location.href='article/6 Best Budget Wellness Finds Under $25 on Amazon - Markrypt.html'">
+          <img class="blog-image lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/hero/hero3.jpg" alt="Budget Wellness Finds">
+          <div class="blog-content">
+            <div>
+              <div class="blog-category">Budget Wellness Finds</div>
+              <div class="blog-headline">6 Best Budget Wellness Finds Under $25 on Amazon</div>
+              <div class="blog-meta">by Michael Brooks · 4 min read</div>
+              <div class="blog-summary">Discover 6 highly-rated, budget-friendly wellness products on Amazon, all under $25 and proven effective.</div>
+            </div>
+          </div>
+        </div>
+        <div class="blog-card" onclick="location.href='article/Amazons Elite 5. Top Rated Home and Kitchen Best Sellers You Cannot Ignore. Markrypt.html'">
+          <img class="blog-image lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/hero/hero4.jpg" alt="Amazon Home & Kitchen Best Sellers">
+          <div class="blog-content">
+            <div>
+              <div class="blog-category">Home & Kitchen</div>
+              <div class="blog-headline">Amazons Elite 5. Top Rated Home and Kitchen Best Sellers You Cannot Ignore.</div>
+              <div class="blog-meta">by Michael Brooks · 4 min read</div>
+              <div class="blog-summary">Discover 5 top-rated best sellers in Home & Kitchen on Amazon, from ant killers to cooling sheets and popular tumblers.</div>
+            </div>
+          </div>
+        </div>
+        <div class="blog-card" onclick="location.href='article/Top 5 Amazon Beauty and Personal Care Best Sellers.html'">
+          <img class="blog-image lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/hero/hero5.jpg" alt="Beauty and Personal Care Products">
+          <div class="blog-content">
+            <div>
+              <div class="blog-category">Beauty & Personal Care</div>
+              <div class="blog-headline">Top 5 Amazon Beauty and Personal Care Best Sellers.</div>
+              <div class="blog-meta">by Michael Brooks · 4 min read</div>
+              <div class="blog-summary">Discover 5 top-rated best sellers in Beauty & Personal Care on Amazon, from acne patches to makeup wipes.</div>
+            </div>
+          </div>
+        </div>
+        <div class="blog-card" onclick="location.href='article/Top 5 Amazon Automotive Best Sellers. Markrypt.html'">
+          <img class="blog-image lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/hero/hero6.jpg" alt="Automotive Best Sellers">
+          <div class="blog-content">
+            <div>
+              <div class="blog-category">Automotive</div>
+              <div class="blog-headline">Top 5 Amazon Automotive Best Sellers.</div>
+              <div class="blog-meta">by Michael Brooks · 4 min read</div>
+              <div class="blog-summary">Discover 5 top-rated best sellers in Automotive on Amazon, from microfiber cloths to motor oil and retainer clips.</div>
+            </div>
+          </div>
+        </div>
+        <div class="blog-card" onclick="location.href='article/Top 5 Amazon Baby Best Sellers.html'">
+          <img class="blog-image lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/hero/hero7.jpg" alt="Top 5 Amazon Baby Best Sellers">
+          <div class="blog-content">
+            <div>
+              <div class="blog-category">Baby Products</div>
+              <div class="blog-headline">Top 5 Amazon Baby Best Sellers</div>
+              <div class="blog-meta">by Michael Brooks · 4 min read</div>
+              <div class="blog-summary">Discover 5 top-rated best sellers in Baby Products on Amazon: Pampers Diapers, Huggies Wipes, and more.</div>
+            </div>
+          </div>
+        </div>
+        <div class="blog-card" onclick="location.href='article/Top Gifts for Dad 2025.html'">
+          <img class="blog-image lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/hero/hero8.jpg" alt="Top Gifts for Dad 2025">
+          <div class="blog-content">
+            <div>
+              <div class="blog-category">Gifts for Dad</div>
+              <div class="blog-headline">Top Gifts for Dad 2025</div>
+              <div class="blog-meta">by Michael Brooks · 4 min read</div>
+              <div class="blog-summary">Discover fantastic gift ideas for Dad for 2025, perfect for any occasion. Find the best presents to make him feel appreciated.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <nav class="navigation">
+      <div class="navigation-container">
+        <a href="trending.html" class="nav-item">
+          <i class="fas fa-fire nav-icon"></i>
+          <span>Trending</span>
+        </a>
+        <a href="products.html" class="nav-item">
+          <i class="fas fa-tag nav-icon"></i>
+          <span>Products</span>
+        </a>
+        <a href="index.html" class="nav-item">
+          <i class="fas fa-home nav-icon"></i>
+          <span>Home</span>
+        </a>
+        <a href="explore.html" class="nav-item">
+          <i class="fas fa-compass nav-icon"></i>
+          <span>Explore</span>
+        </a>
+        <a href="about.html" class="nav-item">
+          <i class="fas fa-info-circle nav-icon"></i>
+          <span>About</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const current = location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('.navigation .nav-item').forEach(item => {
+        item.classList.remove('active'); // Ensure all are inactive first
+        if (item.getAttribute('href') === current) {
+          item.classList.add('active');
+        }
+      });
+
+      // Lazy loading images
+      const lazyImages = document.querySelectorAll('img.lazy');
+      if ('IntersectionObserver' in window) {
+        let lazyImageObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              let lazyImage = entry.target;
+              lazyImage.src = lazyImage.dataset.src;
+              lazyImage.classList.remove('lazy');
+              lazyImageObserver.unobserve(lazyImage);
+            }
+          });
+        });
+        lazyImages.forEach(lazyImage => {
+          lazyImageObserver.observe(lazyImage);
+        });
+      } else {
+        // Fallback for browsers that don't support IntersectionObserver
+        lazyImages.forEach(lazyImage => {
+          lazyImage.src = lazyImage.dataset.src;
+          lazyImage.classList.remove('lazy');
+        });
+      }
+    });
+
+    // Dropdown menu logic
+    function toggleMenuDropdown() {
+      const menu = document.getElementById('menuDropdown');
+      menu.classList.toggle('active');
+      const icon = document.querySelector('.menu-icon');
+      icon.setAttribute('aria-expanded', menu.classList.contains('active'));
+    }
+
+    function closeMenuDropdown() {
+      // Timeout to allow click on dropdown items before it closes
+      setTimeout(() => {
+        const menu = document.getElementById('menuDropdown');
+        if (menu) menu.classList.remove('active');
+        const icon = document.querySelector('.menu-icon');
+        if (icon) icon.setAttribute('aria-expanded', 'false');
+      }, 150); 
+    }
+  </script>
+</body>
+</html>

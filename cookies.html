@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cookie Policy - Markrypt</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+  <style>
+    :root {
+      --primary-bg: #fff;
+      --text-color: #111;
+      --text-secondary: #555;
+      --accent-color: #1e90ff;
+      --secondary-color: #6cb4ee;
+      --bg-transparent: rgba(30, 144, 255, 0.07);
+      --shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--primary-bg);
+      color: var(--text-color);
+      overflow-x: hidden;
+    }
+
+    /* Header (identical to index.html) */
+    .header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1rem;
+      background: var(--primary-bg);
+      border-bottom: 1px solid #e0e6ef;
+      z-index: 100;
+    }
+    .logo { font-size: 1.5rem; font-weight: bold; }
+    .logo span:first-child { color: var(--text-color); }
+    .logo span:last-child  { color: var(--accent-color); }
+    .header-controls { display: flex; gap: 1rem; position: relative; }
+    .search-icon, .menu-icon {
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--accent-color);
+    }
+
+    .menu-dropdown {
+      display: none;
+      position: absolute;
+      top: 2.5rem;
+      right: 0;
+      background: #fff;
+      border: 1px solid #e0e6ef;
+      border-radius: 10px;
+      box-shadow: 0 4px 24px rgba(30,144,255,0.10);
+      min-width: 210px;
+      padding: 0.5rem 0;
+      z-index: 200;
+    }
+    .menu-dropdown.active { display: block; animation: fadeIn 0.18s; }
+    .menu-dropdown .dropdown-title {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      font-weight: 700;
+      padding: 0.5rem 1.2rem 0.2rem;
+      letter-spacing: 0.03em;
+      pointer-events: none;
+    }
+    .menu-dropdown a {
+      display: block;
+      padding: 0.7rem 1.2rem;
+      color: var(--text-color);
+      text-decoration: none;
+      font-size: 1rem;
+      transition: background 0.13s, color 0.13s;
+    }
+    .menu-dropdown a:hover {
+      background: var(--bg-transparent);
+      color: var(--accent-color);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Cookie container (pushed below the 64px header) */
+    .container {
+      max-width: 700px;
+      margin: 5rem auto 4rem;
+      padding: 2rem;
+      background: #f9fbfd;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(30,144,255,0.07);
+    }
+    h1 { color: var(--accent-color); font-size: 2rem; margin-bottom: 1.2rem; }
+    h2 { color: var(--text-secondary); font-size: 1.2rem; margin-top: 2rem; }
+    p, li { font-size: 1.05rem; line-height: 1.7; }
+    ul { margin-left: 1.2rem; }
+    a { color: var(--accent-color); text-decoration: underline; }
+
+    /* Bottom Navigation - Fix conflicting media queries */
+    .navigation {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background: var(--primary-bg);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+      z-index: 99;
+    }
+
+    /* Navigation container */
+    .navigation-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      height: 60px;
+      background: var(--primary-bg);
+      border-radius: 8px 8px 0 0;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    /* Navigation items */
+    .nav-item {
+      flex: 1;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 0.75rem;
+      transition: color 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      outline: none;
+    }
+
+    .nav-item.active {
+      color: var(--accent-color);
+    }
+
+    .nav-icon {
+      font-size: 1.5rem;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* Corrected media query for larger screens */
+    @media (min-width: 768px) {
+      .navigation {
+        width: 600px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 8px 8px 0 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo"><span>Mark</span><span>rypt</span></div>
+    <div class="header-controls">
+      <div class="search-icon"><i class="fas fa-search"></i></div>
+      <div class="menu-icon" tabindex="0" aria-haspopup="true" aria-expanded="false"
+           onclick="toggleMenuDropdown()" onblur="closeMenuDropdown()">
+        <i class="fas fa-ellipsis-v"></i>
+        <div class="menu-dropdown" id="menuDropdown">
+          <div class="dropdown-title">Legal &amp; Info</div>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+          <a href="cookies.html">Cookie Policy</a>
+          <a href="about.html">About Markrypt</a>
+          <a href="contact.html">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <h1>Cookie Policy</h1>
+    <p>Last Updated: June 12, 2024</p>
+    
+    <h2>1. Introduction</h2>
+    <p>
+      This Cookie Policy explains how Markrypt, Inc. ("Markrypt," "we," "us," or "our") uses cookies and similar tracking technologies on our website and associated domains (collectively, the "Services"). This Cookie Policy should be read in conjunction with our Privacy Policy and Terms of Use. By continuing to use our Services, you are agreeing to our use of cookies as described in this Cookie Policy.
+    </p>
+    
+    <h2>2. What Are Cookies?</h2>
+    <p>
+      Cookies are small text files that are stored on your computer, tablet, mobile phone, or other device when you visit a website. They are widely used to make websites work more efficiently, provide a better user experience, and give website owners information about how users interact with their websites. Cookies cannot access, read, or modify any other data on your device.
+    </p>
+    <p>
+      In addition to cookies, we may use other similar technologies, such as web beacons (also known as pixel tags or clear gifs), tracking URLs, or software development kits (SDKs). These technologies may use local storage, which is similar to cookies but can store larger amounts of data. For simplicity, we refer to all of these technologies as "cookies" throughout this Cookie Policy.
+    </p>
+    
+    <h2>3. How Long Do Cookies Last?</h2>
+    <p>
+      Cookies may remain on your device for varying periods of time depending on their purpose. Session cookies are temporary cookies that are stored only in the browser's memory during your browsing session and are automatically deleted when you close the browser. Persistent cookies remain on your device until their expiration date or until you delete them manually. The expiration dates for persistent cookies can range from a few minutes to several years.
+    </p>
+    
+    <h2>4. First-Party and Third-Party Cookies</h2>
+    <p>
+      First-party cookies are set directly by Markrypt when you visit our Services. Third-party cookies are set by domains other than the one you are visiting, such as by analytics providers, advertising networks, and social media platforms that have elements embedded in our Services. These third parties may use the data collected to provide services to us or to target advertisements based on your browsing history across different websites. We have limited control over how third-party cookies are used and are not responsible for the functioning of cookies from third parties.
+    </p>
+    
+    <h2>5. Types of Cookies We Use</h2>
+    <p>
+      <strong>Essential Cookies:</strong> These cookies are strictly necessary for our Services to function properly and securely. They enable core functionality such as security, network management, account authentication, and remembering your preferences. Without these cookies, our Services cannot be provided. Because these cookies are strictly necessary to deliver the Services, you cannot refuse them without impacting how our Services function.
+    </p>
+    <p>
+      <strong>Functional Cookies:</strong> These cookies enhance the functionality of our Services by storing your preferences beyond what is strictly necessary. They remember choices you make, such as your language or region, and provide enhanced, more personalized features. These cookies may be set by us or by third-party providers whose services we have added to our pages. If you disable these cookies, some or all of these features may not function properly.
+    </p>
+    <p>
+      <strong>Performance and Analytics Cookies:</strong> These cookies collect information about how visitors use our Services, including which pages visitors go to most often and if they receive error messages from certain pages. This information helps us improve the way our Services work and ensure that users can easily find what they are looking for. These cookies do not collect information that identifies a visitor. All information these cookies collect is aggregated and therefore anonymous. These cookies may be set by Markrypt or by third-party analytics providers such as Google Analytics.
+    </p>
+    <p>
+      <strong>Targeting and Advertising Cookies:</strong> These cookies are used to deliver advertisements more relevant to you and your interests, based on your browsing habits. They are also used to limit the number of times you see an advertisement as well as help measure the effectiveness of advertising campaigns. They are usually placed by advertising networks with our permission. They remember that you have visited a website and this information is shared with other organizations such as advertisers. These cookies may be set through our Services by our advertising partners. These companies may use them to build a profile of your interests and show you relevant advertisements on other sites.
+    </p>
+    
+    <h2>6. Specific Cookies We Use</h2>
+    <p>
+      <strong>Authentication and Security:</strong> Our Services use cookies to verify that you are who you say you are when you log in to your account, to prevent fraud, and to keep your information secure. This includes cookies that store your session information and prevent unauthorized access to your account.
+    </p>
+    <p>
+      <strong>Preferences and Settings:</strong> Our Services use cookies to remember your settings and preferences so that you don't have to set them each time you visit. This includes cookies that remember your language preference, consent choices, and display preferences.
+    </p>
+    <p>
+      <strong>Analytics and Research:</strong> We use cookies to gain insights into how visitors use our Services, which helps us improve our products and services. This includes cookies that collect information about how users interact with our Services, including the pages they visit, the links they click, how long they stay on each page, and any error messages they encounter.
+    </p>
+    <p>
+      <strong>Marketing and Advertising:</strong> Our Services use cookies to deliver advertisements that are relevant to your interests and measure the effectiveness of our marketing campaigns. This includes cookies that track your interactions with our marketing emails and advertisements, and cookies that help us understand if you have clicked on our advertisements.
+    </p>
+    <p>
+      <strong>Affiliate Marketing:</strong> Our Services use cookies to track affiliate referrals. When you click on affiliate links on our website, a cookie may be set to track that you came from our website so that we can receive credit for referring you if you make a purchase. These cookies typically contain information such as the referrer website, timestamp, and any unique identifiers that allow the affiliate network to correctly attribute the purchase to our referral.
+    </p>
+    
+    <h2>7. Third-Party Services and Cookies</h2>
+    <p>
+      Our Services incorporate functionality provided by third parties, which may set cookies on your device. These third parties include but are not limited to analytics providers (such as Google Analytics), advertising networks, social media platforms (such as Facebook, Twitter, and LinkedIn), and affiliate marketing partners (such as Amazon Associates). Each third party's use of cookies is subject to their own privacy and cookie policies.
+    </p>
+    <p>
+      <strong>Google Analytics:</strong> We use Google Analytics to analyze the use of our Services. Google Analytics uses cookies to gather information about how users use our Services. The information generated by these cookies about your use of the Services (including your IP address) will be transmitted to and stored by Google on servers in the United States. Google will use this information for the purpose of evaluating your use of the Services, compiling reports on website activity for website operators and providing other services relating to website activity and internet usage. Google may also transfer this information to third parties where required to do so by law, or where such third parties process the information on Google's behalf.
+    </p>
+    <p>
+      <strong>Amazon Associates:</strong> As a participant in the Amazon Associates program, our Services use cookies to track affiliate referrals to Amazon.com and its affiliated websites. When you click on an Amazon affiliate link on our Services, a cookie may be set to track that you came from our website so that we can receive a commission if you make a purchase. Amazon's use of cookies is subject to Amazon's privacy policy.
+    </p>
+    <p>
+      <strong>Social Media Features:</strong> Our Services may include features from social media platforms, such as the Facebook Like button, the Twitter Share button, or interactive mini-programs that run on our Services. These features may collect your IP address and which page you are visiting on our Services, and may set a cookie to enable the feature to function properly. Social media features are either hosted by a third party or hosted directly on our Services. Your interactions with these features are governed by the privacy policy of the company providing the feature.
+    </p>
+    
+    <h2>8. Your Cookie Choices</h2>
+    <p>
+      You have the right to decide whether to accept or reject cookies. You can set or amend your web browser controls to accept or refuse cookies. If you choose to reject cookies, you may still use our Services, but your access to some functionality and areas of our Services may be restricted. As the means by which you can refuse cookies through your web browser controls vary from browser to browser, you should visit your browser's help menu for more information.
+    </p>
+    <p>
+      <strong>Browser Settings:</strong> Most web browsers allow you to manage your cookie preferences. You can set your browser to refuse cookies, delete cookies, or alert you when cookies are being sent. The procedures for changing your cookie settings vary by browser:
+    </p>
+    <p>
+      For Google Chrome, go to Settings > Privacy and Security > Cookies and other site data.<br>
+      For Mozilla Firefox, go to Options > Privacy & Security > Cookies and Site Data.<br>
+      For Apple Safari, go to Preferences > Privacy > Cookies and website data.<br>
+      For Microsoft Edge, go to Settings > Site permissions > Cookies and site data.
+    </p>
+    <p>
+      <strong>Do Not Track:</strong> Some browsers have a "Do Not Track" feature that signals to websites that you do not want to have your online activities tracked. Due to the lack of a common understanding of how to interpret these signals, our Services currently do not respond to Do Not Track signals.
+    </p>
+    <p>
+      <strong>Opt-Out Tools:</strong> You may opt out of targeted advertising by using industry opt-out tools such as those provided by the Digital Advertising Alliance (http://optout.aboutads.info/), the Network Advertising Initiative (http://optout.networkadvertising.org/), or the European Interactive Digital Advertising Alliance (http://www.youronlinechoices.eu/).
+    </p>
+    <p>
+      <strong>Google Analytics Opt-Out:</strong> You can opt out of Google Analytics by installing the Google Analytics Opt-out Browser Add-on available at https://tools.google.com/dlpage/gaoptout.
+    </p>
+
+    <h2>9. Cookie Consent</h2>
+    <p>
+      By continuing to use our Services, you are deemed to consent to our use of the cookies described in this Cookie Policy. If you disagree with our use of cookies, you should either disable them as described above or discontinue your use of our Services.
+    </p>
+    <p>
+      When you first visit our Services, you may be presented with a cookie banner that allows you to accept or decline non-essential cookies. If you choose to decline non-essential cookies, we will only set essential cookies on your device. You can change your cookie preferences at any time by clearing your browser cookies and revisiting our Services.
+    </p>
+    <p>
+      Please note that certain features of our Services may not function properly without the use of cookies. If you choose to disable cookies, you may not be able to use all the features of our Services.
+    </p>
+
+    <h2>10. Cookie Security</h2>
+    <p>
+      We take reasonable security measures to protect the data collected via cookies. However, the security of data collected through cookies cannot be guaranteed. We cannot ensure or warrant the security of any information you transmit to us or guarantee that your information may not be accessed, disclosed, altered, or destroyed by breach of any of our physical, technical, or managerial safeguards.
+    </p>
+    <p>
+      We retain information collected via cookies only for as long as necessary for the purposes set out in this Cookie Policy. The retention period depends on the purpose for which the cookie is used and the technical requirements of the cookie itself.
+    </p>
+
+    <h2>11. International Data Transfers</h2>
+    <p>
+      Information collected via cookies may be transferred to, and processed in, countries other than the country in which you reside. These countries may have data protection laws that are different from the laws of your country. By using our Services, you consent to the transfer of your information to countries outside your country of residence, including the United States, and to the storage and processing of such information in those countries.
+    </p>
+
+    <h2>12. Children's Privacy</h2>
+    <p>
+      Our Services are not directed at individuals under the age of 13, and we do not knowingly collect personal information via cookies from children under 13. If we become aware that a child under 13 has provided us with personal information, we will take steps to delete such information from our systems.
+    </p>
+
+    <h2>13. Changes to This Cookie Policy</h2>
+    <p>
+      We may update this Cookie Policy from time to time to reflect changes to our cookie practices or for other operational, legal, or regulatory reasons. If we make material changes to this Cookie Policy, we will notify you by posting a prominent notice on our Services prior to the change becoming effective or by sending you an email notification. We encourage you to periodically review this Cookie Policy for the latest information on our cookie practices.
+    </p>
+    <p>
+      The date at the top of this Cookie Policy indicates when it was last updated. Your continued use of our Services after any changes to this Cookie Policy constitutes your acceptance of the updated Cookie Policy.
+    </p>
+
+    <h2>14. Contact Us</h2>
+    <p>
+      If you have any questions or concerns about this Cookie Policy or our cookie practices, please contact us at:
+    </p>
+    <p>
+      <strong>Email:</strong> <a href="mailto:cookies@markrypt.com">cookies@markrypt.com</a><br>
+      <strong>Postal Address:</strong><br>
+      Markrypt, Inc.<br>
+      Attn: Privacy Team<br>
+      123 Tech Plaza, Suite 400<br>
+      San Francisco, CA 94103<br>
+      United States
+    </p>
+  </div>
+
+  <nav class="navigation">
+    <div class="navigation-container">
+      <a href="trending.html" class="nav-item">
+        <i class="fas fa-fire nav-icon"></i>
+        <span>Trending</span>
+      </a>
+      <a href="products.html" class="nav-item">
+        <i class="fas fa-tag nav-icon"></i>
+        <span>Products</span>
+      </a>
+      <a href="index.html" class="nav-item">
+        <i class="fas fa-home nav-icon"></i>
+        <span>Home</span>
+      </a>
+      <a href="explore.html" class="nav-item">
+        <i class="fas fa-compass nav-icon"></i>
+        <span>Explore</span>
+      </a>
+      <a href="about.html" class="nav-item">
+        <i class="fas fa-info-circle nav-icon"></i>
+        <span>About</span>
+      </a>
+    </div>
+  </nav>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const pageName = window.location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('.navigation .nav-item').forEach(item => {
+        item.classList.remove('active'); // Ensure all are inactive first
+        if (item.getAttribute('href') === pageName) {
+          item.classList.add('active');
+        }
+      });
+    });
+
+    function toggleMenuDropdown() {
+      const menu = document.getElementById('menuDropdown');
+      menu.classList.toggle('active');
+      document.querySelector('.menu-icon')
+              .setAttribute('aria-expanded', menu.classList.contains('active'));
+    }
+
+    function closeMenuDropdown() {
+      setTimeout(() => {
+        const menu = document.getElementById('menuDropdown');
+        if (menu) menu.classList.remove('active');
+        document.querySelector('.menu-icon')
+                .setAttribute('aria-expanded', 'false');
+      }, 150);
+    }
+  </script>
+</body>
+
+</html>

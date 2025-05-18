@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact Us - Markrypt</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-bg: #fff;
+      --text-color: #111;
+      --text-secondary: #555;
+      --accent-color: #1e90ff;
+      --secondary-color: #6cb4ee;
+      --bg-transparent: rgba(30, 144, 255, 0.07);
+    }
+    body { font-family: 'Open Sans', sans-serif; background: var(--primary-bg); color: var(--text-color); margin: 0; padding: 0; }
+    .container { max-width: 600px; margin: 4.5rem auto 3.5rem auto; padding: 2rem; background: #f9fbfd; border-radius: 12px; box-shadow: 0 2px 12px rgba(30,144,255,0.07);}
+    h1 { color: var(--accent-color); font-size: 2rem; margin-bottom: 1.2rem; }
+    p { font-size: 1.08rem; line-height: 1.7; }
+    form { margin-top: 2rem; display: flex; flex-direction: column; gap: 1.1rem; }
+    label { font-weight: 600; color: #555; }
+    input, textarea {
+      font-family: inherit;
+      font-size: 1rem;
+      padding: 0.7rem 1rem;
+      border: 1px solid #c8d6e5;
+      border-radius: 8px;
+      background: #fff;
+      resize: vertical;
+    }
+    textarea { min-height: 100px; }
+    button {
+      background: linear-gradient(90deg, #1e90ff, #6cb4ee);
+      color: #fff;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      padding: 0.8rem 2.2rem;
+      font-size: 1.08rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(30,144,255,0.09);
+      transition: background 0.18s;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #6cb4ee, #1e90ff);
+    }
+    .contact-info {
+      margin-top: 2.2rem;
+      font-size: 1.01rem;
+      color: #555;
+    }
+    .contact-info a { color: var(--accent-color); text-decoration: underline; }
+    .success-message {
+      color: var(--accent-color);
+      font-weight: 600;
+      margin-top: 1.2rem;
+      display: none;
+    }
+    .header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.5rem 1rem;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid #e0e6ef;
+    }
+    .logo { font-size: 1.8rem; font-weight: bold; display: flex; align-items: center; }
+    .logo span:first-child { color: var(--text-color); }
+    .logo span:last-child { color: var(--accent-color); }
+    .header-controls { display: flex; gap: 1rem; position: relative; }
+    .search-icon, .menu-icon { font-size: 1.5rem; cursor: pointer; color: var(--accent-color); }
+    .menu-dropdown {
+      display: none;
+      position: absolute;
+      top: 2.5rem;
+      right: 0;
+      background: #fff;
+      border: 1px solid #e0e6ef;
+      border-radius: 10px;
+      box-shadow: 0 4px 24px 0 rgba(30,144,255,0.10);
+      min-width: 210px;
+      z-index: 200;
+      padding: 0.5rem 0;
+    }
+    .menu-dropdown.active {
+      display: block;
+      animation: fadeIn 0.18s;
+    }
+    .menu-dropdown a {
+      display: block;
+      padding: 0.7rem 1.2rem;
+      color: #111;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: background 0.13s, color 0.13s;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+    .menu-dropdown a:hover {
+      background: var(--bg-transparent);
+      color: var(--accent-color);
+    }
+    .menu-dropdown .dropdown-title {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      font-weight: 700;
+      padding: 0.5rem 1.2rem 0.2rem 1.2rem;
+      letter-spacing: 0.03em;
+      pointer-events: none;
+    }
+    /* Navigation Bar - Updated to match index.html */
+    .navigation {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background: var(--primary-bg);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);  /* More subtle, modern shadow */
+      z-index: 99;
+    }
+
+    /* Add navigation container */
+    .navigation-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      height: 60px;
+      background: var(--primary-bg); /* White background only for container */
+      border-radius: 8px 8px 0 0;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05); /* Shadow only on container */
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .navigation {
+        width: 600px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 8px 8px 0 0;
+      }
+    }
+    @media (max-width: 700px) {
+      .container { margin: 4.5rem 0.5rem 3.5rem 0.5rem; padding: 1rem; }
+    }
+    /* Navigation Bar */
+    .nav-item {
+      flex: 1;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 0.75rem;
+      transition: color 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      outline: none;
+    }
+
+    .nav-item.active {
+      color: var(--accent-color);
+    }
+        
+    .nav-icon { 
+      font-size: 1.5rem;
+      display: block;
+      margin-bottom: 2px;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <span>Mark</span><span>rypt</span>
+    </div>
+    <div class="header-controls">
+      <div class="search-icon">
+        <i class="fas fa-search"></i>
+      </div>
+      <div class="menu-icon" tabindex="0" aria-haspopup="true" aria-expanded="false" onclick="toggleMenuDropdown()" onblur="closeMenuDropdown()">
+        <i class="fas fa-ellipsis-v"></i>
+        <div class="menu-dropdown" id="menuDropdown">
+          <div class="dropdown-title">Legal & Info</div>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+          <a href="cookies.html">Cookie Policy</a>
+          <a href="about.html">About Markrypt</a>
+          <a href="contact.html">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="container">
+    <h1>Contact Us</h1>
+    <p>
+      Have a question, suggestion, or need support? Fill out the form below or email us at
+      <a href="mailto:support@markrypt.com">support@markrypt.com</a>.
+    </p>
+    <form id="contactForm" autocomplete="off" onsubmit="return handleContactForm(event)">
+      <div>
+        <label for="name">Your Name</label><br>
+        <input type="text" id="name" name="name" required maxlength="60">
+      </div>
+      <div>
+        <label for="email">Your Email</label><br>
+        <input type="email" id="email" name="email" required maxlength="80">
+      </div>
+      <div>
+        <label for="message">Message</label><br>
+        <textarea id="message" name="message" required maxlength="1000"></textarea>
+      </div>
+      <button type="submit">Send Message</button>
+      <div class="success-message" id="successMessage">Thank you! Your message has been sent.</div>
+    </form>
+    <div class="contact-info">
+      <div><b>Email:</b> <a href="mailto:support@markrypt.com">support@markrypt.com</a></div>
+      <div><b>Twitter/X:</b> <a href="https://twitter.com/markrypt" target="_blank">@markrypt</a></div>
+    </div>
+  </div>
+  <!-- Bottom Navigation -->
+  <nav class="navigation">
+    <div class="navigation-container">
+      <a href="trending.html" class="nav-item">
+        <i class="fas fa-fire nav-icon"></i>
+        <span>Trending</span>
+      </a>
+      <a href="products.html" class="nav-item">
+        <i class="fas fa-tag nav-icon"></i>
+        <span>Products</span>
+      </a>
+      <a href="index.html" class="nav-item">
+        <i class="fas fa-home nav-icon"></i>
+        <span>Home</span>
+      </a>
+      <a href="explore.html" class="nav-item">
+        <i class="fas fa-compass nav-icon"></i>
+        <span>Explore</span>
+      </a>
+      <a href="about.html" class="nav-item">
+        <i class="fas fa-info-circle nav-icon"></i>
+        <span>About</span>
+      </a>
+    </div>
+  </nav>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Update active nav item based on current page
+      const pageName = window.location.pathname.split("/").pop();
+      const currentPath = pageName === "" ? "index.html" : pageName;
+
+      const navItems = document.querySelectorAll('.navigation .nav-item');
+      navItems.forEach(item => {
+        item.classList.remove('active');
+        const linkHref = item.getAttribute('href');
+        if (linkHref === currentPath) {
+          item.classList.add('active');
+        }
+      });
+    });
+
+    function handleContactForm(e) {
+      e.preventDefault();
+      // Simulate success (no backend)
+      document.getElementById('successMessage').style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('successMessage').style.display = 'none';
+        document.getElementById('contactForm').reset();
+      }, 3500);
+      return false;
+    }
+    function toggleMenuDropdown() {
+      const menu = document.getElementById('menuDropdown');
+      menu.classList.toggle('active');
+      const icon = document.querySelector('.menu-icon');
+      icon.setAttribute('aria-expanded', menu.classList.contains('active'));
+    }
+    function closeMenuDropdown() {
+      setTimeout(() => {
+        const menu = document.getElementById('menuDropdown');
+        if (menu) menu.classList.remove('active');
+        const icon = document.querySelector('.menu-icon');
+        if (icon) icon.setAttribute('aria-expanded', 'false');
+      }, 150);
+    }
+  </script>
+</body>
+</html>
