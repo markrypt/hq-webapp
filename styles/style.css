@@ -1,0 +1,404 @@
+/* Reset and Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #222;
+    background-color: #fff;
+    line-height: 1.6;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  ul {
+    list-style-type: none;
+  }
+  
+  h2, h3, h4 {
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Top Announcement Bar */
+  .top-announcement-bar {
+    background-color: #f0f0f0;
+    text-align: center;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .top-announcement-bar a {
+    color: #007BFF;
+    font-weight: bold;
+  }
+  
+  /* Header & Navigation */
+  .main-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background-color: #fff;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .logo img {
+    height: 40px;
+    display: block;
+  }
+  
+  .logo span {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  /* Navigation Menu */
+  .main-nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+  
+  .main-nav a {
+    position: relative;
+    color: #333;
+    font-weight: 500;
+    padding: 0.25rem 0;
+    transition: color 0.3s ease;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+  
+  /* Animated Underline Effect */
+  .main-nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+    background-color: #007BFF;
+    transition: width 0.3s ease;
+  }
+  
+  .main-nav a:hover {
+    color: #007BFF;
+  }
+  
+  .main-nav a:hover::after {
+    width: 100%;
+  }
+  
+  /* Navigation Icons */
+  .nav-icons a {
+    margin-left: 1rem;
+    color: #333;
+    transition: color 0.3s;
+  }
+  
+  .nav-icons a:hover {
+    color: #007BFF;
+  }
+  
+  /* Top Stories Section */
+  .top-stories-section {
+    padding: 2rem;
+    background-color: #fafafa;
+  }
+  
+  .section-heading {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .section-heading h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+  }
+  
+  .section-heading h3 {
+    font-size: 1.25rem;
+    color: #555;
+  }
+  
+  .cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .story-card {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    transition: transform 0.3s ease;
+  }
+  
+  .story-card:hover {
+    transform: scale(1.02);
+  }
+  
+  .card-content {
+    background-color: rgba(0,0,0,0.5);
+    color: #fff;
+    padding: 1rem;
+    width: 100%;
+  }
+  
+  .card-content h4 {
+    margin-bottom: 0.5rem;
+  }
+  
+  .card-content p {
+    margin-bottom: 1rem;
+  }
+  
+  /* Button Styles */
+  .btn {
+    display: inline-block;
+    background-color: #007BFF;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Stay Informed Section */
+  .stay-informed-section {
+    padding: 3rem 2rem;
+    background-color: #101820;
+    color: #fff;
+    text-align: center;
+  }
+  
+  .info-text h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .info-text p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    color: #ddd;
+  }
+  
+  .info-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    max-width: 1000px;
+    margin: 0 auto 2rem auto;
+  }
+  
+  .info-image {
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+  }
+  
+  .add-section-btn {
+    background-color: #fff;
+    color: #101820;
+    font-weight: bold;
+    padding: 0.75rem 1.5rem;
+  }
+  
+  .add-section-btn:hover {
+    background-color: #eaeaea;
+  }
+  
+  /* Footer */
+  .main-footer {
+    background-color: #f9f9f9;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  .main-footer a {
+    color: #007BFF;
+    transition: color 0.3s ease;
+  }
+  
+  .main-footer a:hover {
+    color: #0056b3;
+  }
+  
+  /* Menu Icon */
+  .menu-icon {
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+  }
+  
+  /* Side Navigation */
+  .side-nav {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 300px;
+    height: 100vh;
+    background-color: #fff;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    transition: left 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+  }
+  
+  .side-nav.active {
+    left: 0;
+  }
+  
+  .side-nav-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  .close-menu {
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+  }
+  
+  .side-nav ul {
+    padding: 1rem;
+  }
+  
+  .side-nav li {
+    margin-bottom: 1rem;
+  }
+  
+  .side-nav a {
+    display: block;
+    padding: 0.5rem 0;
+    color: #333;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+  }
+  
+  .side-nav a:hover {
+    color: #007BFF;
+  }
+  
+  /* Side Nav Topic */
+  .side-nav-topic {
+    padding: 1rem;
+    border-bottom: 1px solid #eaeaea;
+    text-align: center;
+    background-color: #f8f8f8;
+  }
+  
+  .side-nav-topic h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* Overlay */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: none;
+    z-index: 999;
+  }
+  
+  .overlay.active {
+    display: block;
+  }
+
+  /* Side Navigation Menu - Menu Items and Dividers */
+.side-nav ul li {
+  padding: 0.5rem 0;
+}
+
+.side-nav ul li:last-child {
+}
+
+/* The horizontal dividers between groups remain unchanged */
+.side-nav hr {
+  border: none;
+  border-top: 1px solid #eaeaea;
+  margin: 0;
+}
+
+/* Chevron styling */
+.chevron {
+  font-size: 0.8rem;
+  color: #333;
+}
+
+/* Side Navigation Menu - Grouped Sections */
+.nav-section-heading {
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.side-nav-group {
+  margin: 0;
+  padding: 0;
+}
+
+.side-nav-group li {
+  border: none;
+  /* Remove padding from individual items as they are handled by the links */
+}
+
+.side-nav-group li a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 1rem; /* reduced vertical spacing */
+  transition: background-color 0.3s ease;
+}
+
+.side-nav-group li a:hover {
+  background-color: transparent;
+}
+
+/* Horizontal dividers in side-nav */
+.side-nav hr {
+  border: none;
+  border-top: 1px solid #eaeaea;
+  margin: 0;
+}
