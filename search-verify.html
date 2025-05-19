@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Functionality Verification - Markrypt</title>
+  <link rel="icon" href="assets/logo/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="assets/logo/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-bg: #fff;
+      --text-color: #111;
+      --text-secondary: #555;
+      --accent-color: #1e90ff;
+      --secondary-color: #6cb4ee;
+      --bg-transparent: rgba(30, 144, 255, 0.07);
+      --shadow: 0 2px 6px rgba(0,0,0,0.1);
+      --radius: 10px;
+      --border-color: #e0e6ef;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--primary-bg);
+      color: var(--text-color);
+      padding: 40px;
+    }
+    h1 {
+      margin-bottom: 20px;
+      color: var(--accent-color);
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .verification-panel {
+      background: #f9f9f9;
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow);
+    }
+    .verification-title {
+      font-size: 18px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+    }
+    .verification-title i {
+      margin-right: 10px;
+      color: var(--accent-color);
+    }
+    .info-text {
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-right: 10px;
+      text-decoration: none;
+    }
+    .btn:hover {
+      background: var(--secondary-color);
+    }
+    .results {
+      margin-top: 30px;
+      background: #f1f8ff;
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+    .result-item {
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .result-status {
+      font-weight: 600;
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-size: 14px;
+      margin-left: 10px;
+    }
+    .status-ok {
+      background: #e3fcef;
+      color: #0bab5e;
+    }
+    .status-error {
+      background: #fee7e7;
+      color: #e53935;
+    }
+    .test-section {
+      margin-top: 30px;
+    }
+    .search-test-area {
+      display: flex;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .search-icon-test {
+      font-size: 20px;
+      color: var(--accent-color);
+      cursor: pointer;
+      padding: 15px;
+      background: var(--bg-transparent);
+      border-radius: 50%;
+      margin-right: 20px;
+    }
+    .search-result {
+      font-weight: 600;
+    }
+    .pages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 15px;
+      margin-top: 30px;
+    }
+    .page-link {
+      display: block;
+      padding: 15px;
+      background: var(--bg-transparent);
+      border-radius: var(--radius);
+      text-decoration: none;
+      color: var(--text-color);
+      transition: all 0.2s ease;
+    }
+    .page-link:hover {
+      background: var(--accent-color);
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(30, 144, 255, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Search Functionality Verification</h1>
+    
+    <div class="verification-panel">
+      <div class="verification-title">
+        <i class="fas fa-check-circle"></i>
+        <h2>Search Integration Status</h2>
+      </div>
+      <p class="info-text">
+        This page helps you verify that the global search functionality is working across all pages of your website.
+        The verification script checks if the search scripts are properly loaded and functioning.
+      </p>
+      <div>
+        <button class="btn" id="verifyCurrentPage">Verify Current Page</button>
+        <a href="/" class="btn">Back to Homepage</a>
+      </div>
+    </div>
+    
+    <div class="results" id="results">
+      <h3>Verification Results</h3>
+      <div id="resultsContainer">
+        <p>Click "Verify Current Page" to check search functionality on this page.</p>
+      </div>
+    </div>
+    
+    <div class="test-section">
+      <h3>Test Search Functionality</h3>
+      <p class="info-text">
+        Click on the search icon below to test if the search modal opens properly.
+      </p>
+      <div class="search-test-area">
+        <div class="search-icon-test" id="testSearchIcon">
+          <i class="fas fa-search"></i>
+        </div>
+        <div class="search-result" id="searchTestResult"></div>
+      </div>
+    </div>
+    
+    <div class="test-section">
+      <h3>Browse Site Pages</h3>
+      <p class="info-text">
+        Visit these pages to test the search functionality across the site.
+      </p>
+      <div class="pages-grid">
+        <a href="/" class="page-link">Homepage</a>
+        <a href="/trending.html" class="page-link">Trending Products</a>
+        <a href="/products.html" class="page-link">All Products</a>
+        <a href="/category/electronics.html" class="page-link">Electronics Category</a>
+        <a href="/category/books.html" class="page-link">Books Category</a>
+        <a href="/article/Top 5 Amazon Baby Best Sellers.html" class="page-link">Baby Best Sellers Article</a>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/products-data.js"></script>
+  <script src="assets/js/search.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const verifyButton = document.getElementById('verifyCurrentPage');
+      const resultsContainer = document.getElementById('resultsContainer');
+      const testSearchIcon = document.getElementById('testSearchIcon');
+      const searchTestResult = document.getElementById('searchTestResult');
+      
+      // Verify current page
+      verifyButton.addEventListener('click', () => {
+        resultsContainer.innerHTML = '';
+        
+        // Check for search icons
+        const searchIcons = document.querySelectorAll('.search-icon, .search-icon-test');
+        addResultItem('Search Icons', searchIcons.length > 0, 
+          `Found ${searchIcons.length} search icons on this page.`, 
+          'No search icons found on this page.');
+        
+        // Check if SearchManager is initialized
+        const isSearchManagerInitialized = typeof window.searchManager !== 'undefined';
+        addResultItem('Search Manager', isSearchManagerInitialized, 
+          'SearchManager is properly initialized.', 
+          'SearchManager is not initialized.');
+        
+        // Check if search modal exists
+        const searchModal = document.getElementById('searchModal');
+        addResultItem('Search Modal', !!searchModal, 
+          'Search modal found in the DOM.', 
+          'Search modal not found in the DOM.');
+        
+        // Check required scripts
+        const commonScript = document.querySelector('script[src*="common.js"]');
+        addResultItem('common.js', !!commonScript, 
+          'common.js is loaded.', 
+          'common.js is not loaded.');
+        
+        const productsDataScript = document.querySelector('script[src*="products-data.js"]');
+        addResultItem('products-data.js', !!productsDataScript, 
+          'products-data.js is loaded.', 
+          'products-data.js is not loaded.');
+        
+        const searchScript = document.querySelector('script[src*="search.js"]');
+        addResultItem('search.js', !!searchScript, 
+          'search.js is loaded.', 
+          'search.js is not loaded.');
+        
+        // Check if products data is available
+        const isProductsDataAvailable = typeof window.productsData !== 'undefined';
+        addResultItem('Products Data', isProductsDataAvailable, 
+          'Products data is available.', 
+          'Products data is not available.');
+      });
+      
+      // Test search icon click
+      testSearchIcon.addEventListener('click', () => {
+        if (typeof window.searchManager !== 'undefined') {
+          window.searchManager.openSearchModal();
+          searchTestResult.textContent = 'Success! Search modal opened.';
+          searchTestResult.style.color = '#0bab5e';
+        } else {
+          searchTestResult.textContent = 'Error: SearchManager not initialized.';
+          searchTestResult.style.color = '#e53935';
+        }
+      });
+      
+      // Function to add a result item to the results container
+      function addResultItem(name, isSuccess, successMsg, errorMsg) {
+        const item = document.createElement('div');
+        item.className = 'result-item';
+        
+        const status = document.createElement('span');
+        status.className = isSuccess ? 'result-status status-ok' : 'result-status status-error';
+        status.textContent = isSuccess ? 'OK' : 'ERROR';
+        
+        item.innerHTML = `<strong>${name}:</strong> ${isSuccess ? successMsg : errorMsg}`;
+        item.appendChild(status);
+        
+        resultsContainer.appendChild(item);
+      }
+    });
+  </script>
+</body>
+</html>

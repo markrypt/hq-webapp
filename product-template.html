@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Template</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <div class="product-container">
+    <div class="product-image" id="productImage"></div>
+    <div class="product-details">
+      <h1 id="productName"></h1>
+      <p id="productDescription"></p>
+      <div class="product-rating">
+        <span id="productRating"></span>
+        <span id="productReviewCount"></span>
+      </div>
+      <a id="categoryLink" href="#"></a>
+      <button id="viewProductBtn">View Product</button>
+    </div>
+  </div>
+
+  <div id="zoomModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="zoomImage">
+  </div>
+
+  <script src="assets/js/products-data.js"></script>
+  <script src="assets/js/search.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Fetch product data from URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get('id');
+      const product = productsData.find(p => p.id === productId);
+
+      if (!product) {
+        // Handle product not found
+        document.body.innerHTML = '<h1>Product not found</h1>';
+        return;
+      }
+
+      // Update product details
+      document.getElementById('productName').textContent = product.title;
+      document.getElementById('productTitle').textContent = product.title;
+      document.getElementById('productDescription').textContent = product.description;
+      document.getElementById('productImage').style.backgroundImage = `url('../${product.image}')`;
+      document.getElementById('productReviewCount').textContent = `(${product.reviewCount.toLocaleString()})`;
+      document.getElementById('categoryLink').textContent = product.category;
+      document.getElementById('categoryLink').href = `/category/${product.category.toLowerCase().replace(/\s+/g, '-')}`;
+      
+      // Set the zoom image source for modal
+      document.getElementById('zoomImage').src = `../${product.image}`;
+      
+      // Set the View Product button URL to the affiliate link if available
+      if (product.affiliateLink) {
+        document.getElementById('viewProductBtn').addEventListener('click', function() {
+          // Open Amazon with the affiliate link in a new tab
+          window.open(product.affiliateLink, '_blank');
+          
+          // Show toast notification
+          showToast('Opening product page...');
+        });
+      } else {
+        // Fallback to the original Amazon search method if no affiliate link
+        document.getElementById('viewProductBtn').addEventListener('click', function() {
+          // Generate an Amazon search URL
+          const amazonUrl = `https://www.amazon.com/s?k=${encodeURIComponent(product.title)}`;
+          
+          // Copy the link to clipboard
+          navigator.clipboard.writeText(amazonUrl).then(() => {
+            // Show toast notification
+            showToast('Product link copied to clipboard!');
+          });
+          
+          // Open Amazon in new tab
+          window.open(amazonUrl, '_blank');
+        });
+      }
+      
+      // Generate stars
+      // ...existing code...
+    });
+
+    // Function to show toast notification
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.remove();
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

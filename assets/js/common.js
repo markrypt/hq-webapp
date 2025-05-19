@@ -21,6 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Call the function to set active nav item
   setActiveNavItem();
+  
+  // Initialize global search if search icons exist and the search manager isn't initialized yet
+  initializeGlobalSearch();
 });
 
 // Dropdown menu logic
@@ -39,4 +42,75 @@ function closeMenuDropdown() {
     const icon = document.querySelector('.menu-icon');
     if (icon) icon.setAttribute('aria-expanded', 'false');
   }, 150); 
+}
+
+// Global search initialization
+function initializeGlobalSearch() {
+  const searchIcons = document.querySelectorAll('.search-icon');
+  if (searchIcons.length === 0) return;
+
+  // Get base path for assets (handles both root and subdirectory pages)
+  const basePath = determineBasePath();
+
+  // Check if products data is already loaded
+  if (typeof window.productsData === 'undefined') {
+    // Load products data dynamically
+    loadScript(basePath + 'assets/js/products-data.js', () => {
+      // After products data is loaded, load search.js
+      loadScript(basePath + 'assets/js/search.js', () => {
+        // Search.js will automatically initialize itself once loaded
+      });
+    });
+  } else if (typeof window.searchManager === 'undefined') {
+    // Products data already exists but search.js not loaded
+    loadScript(basePath + 'assets/js/search.js', () => {
+      // Search.js will automatically initialize itself once loaded
+    });
+  }
+  
+  // Attach click event to search icons if search manager is not available yet
+  if (typeof window.searchManager === 'undefined') {
+    searchIcons.forEach(icon => {
+      icon.addEventListener('click', () => {
+        if (window.searchManager) {
+          window.searchManager.openSearchModal();
+        } else {
+          // If searchManager isn't initialized yet, delay action slightly
+          setTimeout(() => {
+            if (window.searchManager) {
+              window.searchManager.openSearchModal();
+            } else {
+              console.error('Search functionality not yet initialized');
+            }
+          }, 500);
+        }
+      });
+    });
+  }
+}
+
+// Helper function to determine the base path
+function determineBasePath() {
+  const path = window.location.pathname;
+  // Check if we're in a subdirectory
+  return path.includes('/', 1) ? '../' : './';
+}
+
+// Helper function to dynamically load scripts
+function loadScript(url, callback) {
+  // Check if script is already loaded
+  if (document.querySelector(`script[src="${url}"]`)) {
+    if (callback) callback();
+    return;
+  }
+  
+  const script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src = url;
+  
+  if (callback) {
+    script.onload = callback;
+  }
+  
+  document.head.appendChild(script);
 }
