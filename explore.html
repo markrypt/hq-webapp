@@ -366,9 +366,22 @@
       document.querySelectorAll('.navigation .nav-item').forEach(item => {
         item.classList.remove('active'); // Ensure all are inactive first
         const href = item.getAttribute('href');
-        if (href && href.replace('.html', '') === cleanCurrent) {
-          item.classList.add('active');
+        if (href) {
+          if (href.replace('.html', '') === cleanCurrent) {
+            item.classList.add('active');
+          }
         }
+      });
+
+      // Handle click events to prevent showing .html extension in URL
+      document.querySelectorAll('.nav-item, .logo a, .menu-dropdown a').forEach(link => {
+        link.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href && !href.includes('://') && !href.startsWith('mailto:')) {
+            e.preventDefault();
+            window.location.href = href + '.html';
+          }
+        });
       });
 
       // Lazy loading images
