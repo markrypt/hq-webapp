@@ -199,20 +199,16 @@
       gap: 2rem;
       margin-bottom: 2rem;
     }
-    .category-card {
+    .category-card { /* Modified: remove padding, text-align, display flex, align-items. These move to the link */
       background: var(--bg-transparent);
       border-radius: var(--radius);
-      padding: 2.2rem 1.5rem 1.5rem 1.5rem;
-      text-align: center;
       box-shadow: var(--shadow);
       border: 1.5px solid var(--border-color);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       transition: transform 0.22s cubic-bezier(.4,2,.6,1), box-shadow 0.22s, border-color 0.22s, background 0.22s;
       position: relative;
-      min-height: 320px;
+      min-height: 320px; /* Keep min-height for consistent card size */
       overflow: hidden;
+      display: block; /* Ensure it behaves as a block for the link inside */
     }
     .category-card:hover, .category-card:focus-within {
       transform: translateY(-10px) scale(1.03);
@@ -220,6 +216,24 @@
       border-color: var(--accent-color);
       background: rgba(30,144,255,0.08);
     }
+
+    /* New style for the link wrapping card content */
+    .category-card-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 2.2rem 1.5rem 1.5rem 1.5rem;
+      text-decoration: none;
+      color: inherit; /* Inherit text color from parent */
+      height: 100%; /* Make link fill the card */
+      outline: none; /* Remove outline on focus */
+    }
+    .category-card-link:focus {
+        /* Optional: add a focus style directly to the link if needed, 
+           though :focus-within on .category-card should cover it */
+    }
+
     .category-icon {
       font-size: 2.7rem;
       color: var(--accent-color);
@@ -227,7 +241,7 @@
       margin-top: 0.2rem;
       transition: color 0.18s;
     }
-    .category-card:hover .category-icon {
+    .category-card:hover .category-icon, .category-card-link:hover .category-icon { /* Ensure icon hover works */
       color: var(--secondary-color);
     }
     .category-title {
@@ -247,7 +261,11 @@
       font-size: 0.82rem;
       color: var (--accent-color);
       margin-bottom: 1.2rem;
+      margin-top: auto; /* Pushes this to the bottom if card content is shorter */
     }
+    /* .category-view-button and its hover/focus styles are no longer needed as the whole card is a link */
+    /* Remove or comment out .category-view-button styles */
+    /*
     .category-view-button {
       background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
       color: #fff;
@@ -268,6 +286,7 @@
       background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
       box-shadow: 0 4px 16px 0 rgba(30,144,255,0.18);
     }
+    */
 
     /* Navigation Bar */
     .navigation {
@@ -347,10 +366,13 @@
       }
       .category-card { 
         min-height: 260px; 
-        padding: 1.2rem 0.7rem 1rem 0.7rem; 
+        /* padding is now on .category-card-link, so remove from here if it was set */
         margin: 0; /* Remove left/right auto margin */
         width: 92vw;           /* Wider, but not edge-to-edge */
         max-width: 440px;      /* Prevents being too wide on tablets */
+      }
+      .category-card-link { /* Adjust padding for smaller screens */
+        padding: 1.2rem 0.7rem 1rem 0.7rem; 
       }
       .category-icon { font-size: 2rem; }
     }
@@ -581,21 +603,19 @@
       }
       categoryGrid.innerHTML = '';
       categories.forEach(category => {
+        // Construct the navigation URL
+        const categoryUrl = `category/${category.id}`;
         categoryGrid.innerHTML += `
           <div class="category-card" tabindex="0">
-            <i class="${category.icon} category-icon"></i>
-            <h2 class="category-title">${category.title}</h2>
-            <p class="category-description">${category.description}</p>
-            <span class="category-product-count">${category.productCount} products</span>
-            <button class="category-view-button" onclick="navigateToCategory('${category.id}', '${category.title.replace(/'/g, "\\'")}')">View Products</button>
+            <a href="${categoryUrl}" class="category-card-link" aria-label="View products in ${category.title}">
+              <i class="${category.icon} category-icon"></i>
+              <h2 class="category-title">${category.title}</h2>
+              <p class="category-description">${category.description}</p>
+              <span class="category-product-count">${category.productCount} products</span>
+            </a>
           </div>
         `;
       });
-    }
-
-    function navigateToCategory(categoryId, categoryTitle) {
-      // This function already navigates to a clean URL, which is good.
-      window.location.href = `category/${categoryId}`;
     }
 
     document.addEventListener('DOMContentLoaded', () => {
