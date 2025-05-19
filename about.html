@@ -4,10 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>About Us - Markrypt</title>
-  <link rel="icon" href="assets/logo/favicon.ico" type="image/x-icon">
+  <meta name="description" content="Learn about Markrypt - your trusted guide to discovering top-curated products and insightful articles. Find out about our mission, values, and how we select products.">
+  <meta name="keywords" content="Markrypt, product curation, online shopping, product discovery">
+  <meta property="og:title" content="About Us - Markrypt">
+  <meta property="og:description" content="Learn about Markrypt - your trusted guide to discovering top-curated products and insightful articles.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://markrypt.com/about">
+  <meta property="og:image" content="https://markrypt.com/assets/logo/logo.png">  <link rel="icon" href="assets/logo/favicon.ico" type="image/x-icon">
   <link rel="shortcut icon" href="assets/logo/favicon.ico" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
   <style>
     :root {
       --primary-bg: #fff;
@@ -299,17 +306,16 @@
     <!-- Header -->
     <header class="header">
       <div class="logo">
-        <a href="/"> <!-- Changed from index -->
+        <a href="/">
           <img src="assets/logo/logo.png" alt="Markrypt Logo" class="logo-image">
-          <span>Mark</span><span>rypt</span>
+          <span>Mar</span><span>krypt</span>
         </a>
       </div>
       <div class="header-controls">
         <div class="search-icon">
           <i class="fas fa-search"></i>
-        </div>
-        <div class="menu-icon" tabindex="0" aria-haspopup="true" aria-expanded="false" onclick="toggleMenuDropdown()" onblur="closeMenuDropdown()">
-          <i class="fas fa-ellipsis-v"></i>
+        </div>        <div class="menu-icon" tabindex="0" aria-haspopup="true" aria-expanded="false" onclick="toggleMenuDropdown()" onblur="closeMenuDropdown()">
+          <i class="fas fa-bars"></i>
           <div class="menu-dropdown" id="menuDropdown">
             <div class="dropdown-title">Legal & Info</div>
             <a href="privacy">Privacy Policy</a>
@@ -450,10 +456,10 @@
       setTimeout(() => {
         const menu = document.getElementById('menuDropdown');
         if (menu) menu.classList.remove('active');
-        const icon = document.querySelector('.menu-icon');
-        if (icon) icon.setAttribute('aria-expanded', 'false');
+        const icon = document.querySelector('.menu-icon');        if (icon) icon.setAttribute('aria-expanded', 'false');
       }, 150); 
     }
   </script>
+  <script src="assets/js/common.js"></script>
 </body>
 </html>

@@ -4,16 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Markrypt – Discover Curated Products</title>
-  <link rel="icon" href="assets/logo/favicon.ico" type="image/x-icon">
+  <meta name="description" content="Discover top-curated products and insightful articles with Markrypt. Your gateway to a better shopping experience with handpicked collections and recommendations.">
+  <meta name="keywords" content="Markrypt, curated products, online shopping, product discovery, product recommendations">
+  <meta property="og:title" content="Markrypt – Discover Curated Products">
+  <meta property="og:description" content="Your gateway to discovering top-curated products and insightful articles. Dive in and elevate your shopping experience.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://markrypt.com/">
+  <meta property="og:image" content="https://markrypt.com/assets/logo/logo.png">  <link rel="icon" href="assets/logo/favicon.ico" type="image/x-icon">
   <link rel="shortcut icon" href="assets/logo/favicon.ico" type="image/x-icon">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
   <style>
     :root {
       --primary-bg: #fff;
@@ -243,9 +244,9 @@
 <body>
   <header class="header">
     <div class="logo">
-      <a href="/"> <!-- Updated to root path -->
+      <a href="/">
         <img src="assets/logo/logo.png" alt="Markrypt Logo" class="logo-image">
-        <span>Mark</span><span>rypt</span>
+        <span>Mar</span><span>krypt</span>
       </a>
     </div>
     <div class="header-controls">
@@ -253,7 +254,7 @@
         <i class="fas fa-search"></i>
       </div>
       <div class="menu-icon" tabindex="0" aria-haspopup="true" aria-expanded="false" onclick="toggleMenuDropdown()" onblur="closeMenuDropdown()">
-        <i class="fas fa-ellipsis-v"></i>
+        <i class="fas fa-bars"></i>
         <div class="menu-dropdown" id="menuDropdown">
           <div class="dropdown-title">Legal & Info</div>
           <a href="/privacy">Privacy Policy</a>
@@ -270,8 +271,12 @@
     <h1>Markrypt</h1>
     <p>Your gateway to discovering top-curated products and insightful articles. Dive in and elevate your shopping experience.</p>
     <div class="hero-buttons">
-      <a href="products" class="btn primary">Browse Products</a>
-      <a href="explore" class="btn secondary">Learn More</a>
+      <a href="products" class="btn primary" data-target="products">
+        Browse Products
+      </a>
+      <a href="explore" class="btn secondary" data-target="explore">
+        Explore Articles
+      </a>
     </div>
   </main>
 
@@ -285,7 +290,7 @@
         <i class="fas fa-tag nav-icon"></i>
         <span>Products</span>
       </a>
-      <a href="/" class="nav-item"> <!-- Changed from . -->
+      <a href="/" class="nav-item active"> <!-- Active on this page -->
         <i class="fas fa-home nav-icon"></i>
         <span>Home</span>
       </a>
@@ -302,60 +307,52 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const path = window.location.pathname;
-      const search = window.location.search;
-      const hash = window.location.hash;
-
-      // Client-side fallback redirect if server didn't handle /index or /index.html
-      if (path === '/index.html' || path === '/index') {
-        window.location.replace('/' + search + hash);
-        return; // Stop further script execution on this page as it's redirecting
-      }
-
-      // Standardized active navigation item logic
-      const currentPathname = window.location.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
-      const normalizedCurrentPath = (currentPathname !== '/' && currentPathname.endsWith('/')) ? currentPathname.slice(0, -1) : currentPathname;
-
-      document.querySelectorAll('.navigation .nav-item, .menu-dropdown a, .header .logo a, .hero-buttons .btn').forEach(link => {
-        const linkHref = link.getAttribute('href');
-        if (linkHref && linkHref !== '#' && !linkHref.startsWith('mailto:') && !linkHref.startsWith('tel:')) {
-          const linkUrl = new URL(linkHref, window.location.href);
-          let linkPathname = linkUrl.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
-          const normalizedLinkPath = (linkPathname !== '/' && linkPathname.endsWith('/')) ? linkPathname.slice(0, -1) : linkPathname;
-          
-          // Special handling for the root path represented by "/"
-          const targetPath = (normalizedLinkPath === '') ? '/' : normalizedLinkPath;
-          const currentActivePath = (normalizedCurrentPath === '') ? '/' : normalizedCurrentPath;
-
-          if (targetPath === currentActivePath) {
-            link.classList.add('active');
-          } else {
-            link.classList.remove('active');
-          }
+      const pagePath = window.location.pathname;
+      const current = pagePath.split('/').pop() || 'index';
+      const cleanCurrent = current.replace('.html', '');
+      
+      document.querySelectorAll('.navigation .nav-item').forEach(item => {
+        item.classList.remove('active'); // Ensure all are inactive first
+        const href = item.getAttribute('href');
+        if ((href === '/' && cleanCurrent === 'index') || 
+            (href && href.replace('.html', '') === cleanCurrent)) {
+          item.classList.add('active');
         }
       });
-
-      // REMOVE THE PREVIOUS CLICK HANDLER BLOCK THAT ADDED .html
-      // Default browser navigation will now handle clicks on clean hrefs.
     });
 
-    // Dropdown menu logic (ensure these are defined, possibly globally or per page)
+    // Dropdown menu logic
     function toggleMenuDropdown() {
       const menu = document.getElementById('menuDropdown');
-      if (menu) {
-        menu.classList.toggle('active');
-        const icon = document.querySelector('.menu-icon');
-        if (icon) icon.setAttribute('aria-expanded', menu.classList.contains('active'));
-      }
+      menu.classList.toggle('active');
+      const icon = document.querySelector('.menu-icon');
+      icon.setAttribute('aria-expanded', menu.classList.contains('active'));
     }
 
     function closeMenuDropdown() {
+      // Timeout to allow click on dropdown items before it closes
       setTimeout(() => {
         const menu = document.getElementById('menuDropdown');
         if (menu) menu.classList.remove('active');
         const icon = document.querySelector('.menu-icon');
         if (icon) icon.setAttribute('aria-expanded', 'false');
       }, 150); 
+    }
+  </script>  
+  <script src="assets/js/common.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Markrypt",
+      "url": "https://markrypt.com",
+      "logo": "https://markrypt.com/assets/logo/logo.png",
+      "description": "Your gateway to discovering top-curated products and insightful articles.",
+      "sameAs": [
+        "https://facebook.com/markrypt",
+        "https://twitter.com/markrypt",
+        "https://instagram.com/markrypt"
+      ]
     }
   </script>
   <script src="index.js"></script>
