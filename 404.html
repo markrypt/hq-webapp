@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecting... - Markrypt</title>
+  <link rel="icon" href="/assets/logo/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/assets/logo/favicon.ico" type="image/x-icon">
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #fff;
+      color: #111;
+    }
+    .loading {
+      text-align: center;
+      padding: 2rem;
+    }
+    .loading h1 {
+      margin-bottom: 1rem;
+      color: #1e90ff;
+    }
+    .spinner {
+      width: 40px;
+      height: 40px;
+      margin: 2rem auto;
+      border: 4px solid rgba(30, 144, 255, 0.2);
+      border-top-color: #1e90ff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get the current path
+      let pathWithoutHash = window.location.pathname.split('#')[0];
+      
+      // Remove trailing slashes
+      let path = pathWithoutHash.replace(/\/+$/, '');
+      
+      // If empty path, redirect to index
+      if (!path || path === '/') {
+        window.location.href = '/index.html';
+        return;
+      }
+      
+      // If path already has .html extension, no need to redirect
+      if (path.endsWith('.html')) {
+        window.location.href = path;
+        return;
+      }
+      
+      // Handle /category/ or /article/ paths
+      if (path.includes('/category/') || path.includes('/article/')) {
+        if (!path.endsWith('.html')) {
+          // Keep the original path and add .html
+          window.location.href = path + '.html';
+          return;
+        }
+      }
+      
+      // For regular paths (not in /category/ or /article/), add .html extension
+      if (!path.includes('.')) {
+        // Check if path has a trailing slash before the last segment
+        let segments = path.split('/');
+        let lastSegment = segments[segments.length - 1];
+        
+        // Add .html to the path
+        window.location.href = path + '.html';
+        return;
+      }
+      
+      // If we get here, it's a real 404
+      console.log("Genuine 404 for path:", path);
+      // Optionally, redirect to a custom 404 page or home
+      setTimeout(function() {
+        window.location.href = '/index.html';
+      }, 1500);
+    });
+  </script>
+</head>
+<body>
+  <div class="loading">
+    <h1>Redirecting...</h1>
+    <div class="spinner"></div>
+    <p>Please wait while we take you to the right place.</p>
+  </div>
+</body>
+</html>

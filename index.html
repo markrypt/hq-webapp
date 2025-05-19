@@ -243,7 +243,7 @@
 <body>
   <header class="header">
     <div class="logo">
-      <a href="index.html"> <!-- Link to home -->
+      <a href="/"> <!-- Updated to root path -->
         <img src="assets/logo/logo.png" alt="Markrypt Logo" class="logo-image">
         <span>Mark</span><span>rypt</span>
       </a>
@@ -256,11 +256,11 @@
         <i class="fas fa-ellipsis-v"></i>
         <div class="menu-dropdown" id="menuDropdown">
           <div class="dropdown-title">Legal & Info</div>
-          <a href="privacy.html">Privacy Policy</a>
-          <a href="terms.html">Terms of Use</a>
-          <a href="cookies.html">Cookie Policy</a>
-          <a href="about.html">About Markrypt</a>
-          <a href="contact.html">Contact Us</a>
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms of Use</a>
+          <a href="/cookies">Cookie Policy</a>
+          <a href="/about">About Markrypt</a>
+          <a href="/contact">Contact Us</a>
         </div>
       </div>
     </div>
@@ -270,30 +270,30 @@
     <h1>Markrypt</h1>
     <p>Your gateway to discovering top-curated products and insightful articles. Dive in and elevate your shopping experience.</p>
     <div class="hero-buttons">
-      <a href="products.html" class="btn primary">Browse Products</a>
-      <a href="explore.html" class="btn secondary">Learn More</a>
+      <a href="products" class="btn primary">Browse Products</a>
+      <a href="explore" class="btn secondary">Learn More</a>
     </div>
   </main>
 
   <nav class="navigation">
     <div class="navigation-container">
-      <a href="trending.html" class="nav-item">
+      <a href="trending" class="nav-item">
         <i class="fas fa-fire nav-icon"></i>
         <span>Trending</span>
       </a>
-      <a href="products.html" class="nav-item">
+      <a href="products" class="nav-item">
         <i class="fas fa-tag nav-icon"></i>
         <span>Products</span>
       </a>
-      <a href="index.html" class="nav-item">
+      <a href="." class="nav-item">
         <i class="fas fa-home nav-icon"></i>
         <span>Home</span>
       </a>
-      <a href="explore.html" class="nav-item">
+      <a href="explore" class="nav-item">
         <i class="fas fa-compass nav-icon"></i>
         <span>Explore</span>
       </a>
-      <a href="about.html" class="nav-item">
+      <a href="about" class="nav-item">
         <i class="fas fa-info-circle nav-icon"></i>
         <span>About</span>
       </a>
@@ -302,11 +302,41 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const current = location.pathname.split('/').pop() || 'index.html';
-      document.querySelectorAll('.nav-item').forEach(item => {
-        if (item.getAttribute('href') === current) {
-          item.classList.add('active');
+      // Handle active navigation item - improved for Live Server
+      const pagePath = window.location.pathname;
+      const pageFile = pagePath.split('/').pop(); // Get the file name part
+      
+      document.querySelectorAll('.navigation .nav-item').forEach(item => {
+        const itemHref = item.getAttribute('href');
+        if (itemHref) {
+          // Check current page against navigation item
+          if ((pageFile === itemHref + '.html') || 
+              (pageFile === 'index.html' && (itemHref === '.' || itemHref === '/'))) {
+            item.classList.add('active');
+          }
         }
+      });
+      
+      // Handle navigation links to avoid page refresh
+      document.querySelectorAll('.nav-item, .btn, .logo a').forEach(link => {
+        link.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          
+          // Only intercept internal links
+          if (href && !href.includes('://')) {
+            e.preventDefault();
+            
+            // Navigate to the correct HTML file with .html extension visible in URL
+            if (href === '/' || href === '.') {
+              window.location.href = 'index.html';
+            } else if (href.endsWith('.html')) {
+              window.location.href = href;
+            } else {
+              // Add .html extension and make sure it's in the URL
+              window.location.href = href + '.html';
+            }
+          }
+        });
       });
     });
 
@@ -328,5 +358,6 @@
       }, 150); 
     }
   </script>
+  <script src="index.js"></script>
 </body>
 </html>

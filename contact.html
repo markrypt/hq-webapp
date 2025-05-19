@@ -181,7 +181,7 @@
 <body>
   <header class="header">
     <div class="logo">
-      <a href="index.html">
+      <a href="index">
         <img src="assets/logo/logo.png" alt="Markrypt Logo" class="logo-image">
         <span>Mark</span><span>rypt</span>
       </a>
@@ -194,11 +194,11 @@
         <i class="fas fa-ellipsis-v"></i>
         <div class="menu-dropdown" id="menuDropdown">
           <div class="dropdown-title">Legal & Info</div>
-          <a href="privacy.html">Privacy Policy</a>
-          <a href="terms.html">Terms of Use</a>
-          <a href="cookies.html">Cookie Policy</a>
-          <a href="about.html">About Markrypt</a>
-          <a href="contact.html">Contact Us</a>
+          <a href="privacy">Privacy Policy</a>
+          <a href="terms">Terms of Use</a>
+          <a href="cookies">Cookie Policy</a>
+          <a href="about">About Markrypt</a>
+          <a href="contact">Contact Us</a>
         </div>
       </div>
     </div>
@@ -213,23 +213,23 @@
 
   <nav class="navigation">
     <div class="navigation-container">
-      <a href="trending.html" class="nav-item">
+      <a href="trending" class="nav-item">
         <i class="fas fa-fire nav-icon"></i>
         <span>Trending</span>
       </a>
-      <a href="products.html" class="nav-item">
+      <a href="products" class="nav-item">
         <i class="fas fa-tag nav-icon"></i>
         <span>Products</span>
       </a>
-      <a href="index.html" class="nav-item">
+      <a href="index" class="nav-item">
         <i class="fas fa-home nav-icon"></i>
         <span>Home</span>
       </a>
-      <a href="explore.html" class="nav-item">
+      <a href="explore" class="nav-item">
         <i class="fas fa-compass nav-icon"></i>
         <span>Explore</span>
       </a>
-      <a href="about.html" class="nav-item">
+      <a href="about" class="nav-item">
         <i class="fas fa-info-circle nav-icon"></i>
         <span>About</span>
       </a>
@@ -238,9 +238,13 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const current = location.pathname.split('/').pop() || 'index.html';
+      const pagePath = window.location.pathname;
+      const current = pagePath.split('/').pop() || 'index';
+      const cleanCurrent = current.replace('.html', '');
+      
       document.querySelectorAll('.nav-item').forEach(item => {
-        if (item.getAttribute('href') === current) {
+        const href = item.getAttribute('href');
+        if (href && href.replace('.html', '') === cleanCurrent) {
           item.classList.add('active');
         }
       });

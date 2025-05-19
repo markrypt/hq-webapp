@@ -444,23 +444,23 @@
   </div>
   <nav class="navigation">
     <div class="navigation-container">
-      <a href="trending.html" class="nav-item">
+      <a href="trending" class="nav-item">
         <i class="fas fa-fire nav-icon"></i>
         <span>Trending</span>
       </a>
-      <a href="products.html" class="nav-item">
+      <a href="products" class="nav-item">
         <i class="fas fa-tag nav-icon"></i>
         <span>Products</span>
       </a>
-      <a href="index.html" class="nav-item">
+      <a href="index" class="nav-item">
         <i class="fas fa-home nav-icon"></i>
         <span>Home</span>
       </a>
-      <a href="explore.html" class="nav-item">
+      <a href="explore" class="nav-item">
         <i class="fas fa-compass nav-icon"></i>
         <span>Explore</span>
       </a>
-      <a href="about.html" class="nav-item">
+      <a href="about" class="nav-item">
         <i class="fas fa-info-circle nav-icon"></i>
         <span>About</span>
       </a>
@@ -469,10 +469,14 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // Active nav item logic
-      const current = location.pathname.split('/').pop() || 'index.html';
+      const pagePath = window.location.pathname;
+      const current = pagePath.split('/').pop() || 'index';
+      const cleanCurrent = current.replace('.html', '');
+      
       document.querySelectorAll('.navigation .nav-item').forEach(item => {
         item.classList.remove('active');
-        if (item.getAttribute('href') === current) {
+        const href = item.getAttribute('href');
+        if (href && href.replace('.html', '') === cleanCurrent) {
           item.classList.add('active');
         }
       });

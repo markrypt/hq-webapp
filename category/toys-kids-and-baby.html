@@ -288,15 +288,18 @@
       const currentPath = pageName === "" ? "index.html" : pageName; 
       let activeNavItemFound = false;
       document.querySelectorAll('.navigation .nav-item').forEach(item => {
-        item.classList.remove('active');
         const itemHref = item.getAttribute('href');
-        if (itemHref && itemHref.replace('../', '') === currentPath) {
-          item.classList.add('active');
-          activeNavItemFound = true;
+        if (itemHref) {
+          const cleanHref = itemHref.replace('../', '').replace('.html', '');
+          const currentPathClean = currentPath.replace('.html', '');
+          if (cleanHref === currentPathClean) {
+            item.classList.add('active');
+            activeNavItemFound = true;
+          }
         }
       });
       if (!activeNavItemFound) {
-        const exploreNavItem = document.querySelector('.navigation .nav-item[href="../explore.html"]');
+        const exploreNavItem = document.querySelector('.navigation .nav-item[href="../explore"]');
         if (exploreNavItem) {
            exploreNavItem.classList.add('active'); // Default to Explore for category pages
         }
