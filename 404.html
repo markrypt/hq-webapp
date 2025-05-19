@@ -41,49 +41,43 @@
   </style>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Get the current path
-      let pathWithoutHash = window.location.pathname.split('#')[0];
-      
-      // Remove trailing slashes
-      let path = pathWithoutHash.replace(/\/+$/, '');
-      
-      // If empty path, redirect to index
-      if (!path || path === '/') {
-        window.location.href = '/index.html';
-        return;
+      let currentPathname = window.location.pathname;
+      let currentSearch = window.location.search;
+      let currentHash = window.location.hash;
+
+      // Normalize path: remove trailing slashes unless it's the root
+      let normalizedPath = currentPathname.replace(/\/+$/, '');
+      if (currentPathname.endsWith('/') && normalizedPath === '') {
+        normalizedPath = '/'; // Keep root as /
       }
-      
-      // If path already has .html extension, no need to redirect
-      if (path.endsWith('.html')) {
-        window.location.href = path;
-        return;
-      }
-      
-      // Handle /category/ or /article/ paths
-      if (path.includes('/category/') || path.includes('/article/')) {
-        if (!path.endsWith('.html')) {
-          // Keep the original path and add .html
-          window.location.href = path + '.html';
-          return;
+
+
+      // If the path ends with .html, redirect to the version without .html
+      if (normalizedPath.endsWith('.html')) {
+        let newPathname = normalizedPath.substring(0, normalizedPath.length - 5);
+        // Special case for index.html -> /
+        if (newPathname.endsWith('/index')) {
+            newPathname = newPathname.substring(0, newPathname.length - 5); // remove 'index'
+            if (newPathname === '') newPathname = '/'; // ensure root path is '/'
+        } else if (newPathname === 'index') {
+            newPathname = '/';
         }
-      }
-      
-      // For regular paths (not in /category/ or /article/), add .html extension
-      if (!path.includes('.')) {
-        // Check if path has a trailing slash before the last segment
-        let segments = path.split('/');
-        let lastSegment = segments[segments.length - 1];
-        
-        // Add .html to the path
-        window.location.href = path + '.html';
+        window.location.replace(newPathname + currentSearch + currentHash);
         return;
       }
       
-      // If we get here, it's a real 404
-      console.log("Genuine 404 for path:", path);
-      // Optionally, redirect to a custom 404 page or home
+      // If it's /index, redirect to /
+      if (normalizedPath === '/index') {
+        window.location.replace('/' + currentSearch + currentHash);
+        return;
+      }
+
+      // For any other path that hits 404.html (meaning it's a clean URL but file not found by server rules)
+      // This is a true 404. The page already shows "Redirecting..."
+      // The timeout to index.html is a fallback.
+      // console.log("Genuine 404 for path:", normalizedPath, "Redirecting to home.");
       setTimeout(function() {
-        window.location.href = '/index.html';
+        window.location.href = '/index.html'; // Default redirect for actual 404s
       }, 1500);
     });
   </script>

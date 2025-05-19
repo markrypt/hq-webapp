@@ -359,32 +359,29 @@
   </div>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const pagePath = window.location.pathname;
-      const current = pagePath.split('/').pop() || 'index';
-      const cleanCurrent = current.replace('.html', '');
+      // Standardized active navigation item logic
+      const currentPathname = window.location.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
+      const normalizedCurrentPath = (currentPathname !== '/' && currentPathname.endsWith('/')) ? currentPathname.slice(0, -1) : currentPathname;
       
-      document.querySelectorAll('.navigation .nav-item').forEach(item => {
-        item.classList.remove('active'); // Ensure all are inactive first
-        const href = item.getAttribute('href');
-        if (href) {
-          if (href.replace('.html', '') === cleanCurrent) {
-            item.classList.add('active');
+      document.querySelectorAll('.navigation .nav-item, .menu-dropdown a, .header .logo a').forEach(link => {
+        const linkHref = link.getAttribute('href');
+        if (linkHref && linkHref !== '#' && !linkHref.startsWith('mailto:') && !linkHref.startsWith('tel:')) {
+          const linkUrl = new URL(linkHref, window.location.href);
+          let linkPathname = linkUrl.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
+          const normalizedLinkPath = (linkPathname !== '/' && linkPathname.endsWith('/')) ? linkPathname.slice(0, -1) : linkPathname;
+
+          if (normalizedLinkPath === normalizedCurrentPath) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
           }
         }
       });
 
-      // Handle click events to prevent showing .html extension in URL
-      document.querySelectorAll('.nav-item, .logo a, .menu-dropdown a').forEach(link => {
-        link.addEventListener('click', function(e) {
-          const href = this.getAttribute('href');
-          if (href && !href.includes('://') && !href.startsWith('mailto:')) {
-            e.preventDefault();
-            window.location.href = href + '.html';
-          }
-        });
-      });
+      // REMOVE THE PREVIOUS CLICK HANDLER BLOCK THAT ADDED .html
+      // Default browser navigation will now handle clicks on clean hrefs.
 
-      // Lazy loading images
+      // Lazy loading images (this logic is fine)
       const lazyImages = document.querySelectorAll('img.lazy');
       if ('IntersectionObserver' in window) {
         let lazyImageObserver = new IntersectionObserver((entries, observer) => {
@@ -409,15 +406,17 @@
       }
     });
 
-    // Dropdown menu logic
+    // Dropdown menu logic (ensure these are defined)
     function toggleMenuDropdown() {
       const menu = document.getElementById('menuDropdown');
-      menu.classList.toggle('active');
-      const icon = document.querySelector('.menu-icon');
-      icon.setAttribute('aria-expanded', menu.classList.contains('active'));
+      if (menu) {
+        menu.classList.toggle('active');
+        const icon = document.querySelector('.menu-icon');
+        if (icon) icon.setAttribute('aria-expanded', menu.classList.contains('active'));
+      }
     }
 
-    function closeMenuDropdown() { // Standardized
+    function closeMenuDropdown() { 
       setTimeout(() => {
         const menu = document.getElementById('menuDropdown');
         if (menu) menu.classList.remove('active');

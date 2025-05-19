@@ -594,34 +594,43 @@
     }
 
     function navigateToCategory(categoryId, categoryTitle) {
-      // Navigate to the specific category page
+      // This function already navigates to a clean URL, which is good.
       window.location.href = `category/${categoryId}`;
     }
 
     document.addEventListener('DOMContentLoaded', () => {
       initializeCategories();
-      // Highlight current nav item
-      const pagePath = window.location.pathname;
-      const currentPath = pagePath.split("/").pop() || 'index';
-      const cleanCurrentPath = currentPath.replace('.html', '');
       
-      document.querySelectorAll('.navigation .nav-item').forEach(item => {
-        item.classList.remove('active');
-        const href = item.getAttribute('href');
-        if (href && href.replace('.html', '') === cleanCurrentPath) {
-          item.classList.add('active');
+      // Standardized active navigation item logic
+      const currentPathname = window.location.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
+      const normalizedCurrentPath = (currentPathname !== '/' && currentPathname.endsWith('/')) ? currentPathname.slice(0, -1) : currentPathname;
+      
+      document.querySelectorAll('.navigation .nav-item, .menu-dropdown a, .header .logo a').forEach(link => {
+        const linkHref = link.getAttribute('href');
+        if (linkHref && linkHref !== '#' && !linkHref.startsWith('mailto:') && !linkHref.startsWith('tel:')) {
+          const linkUrl = new URL(linkHref, window.location.href);
+          let linkPathname = linkUrl.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
+          const normalizedLinkPath = (linkPathname !== '/' && linkPathname.endsWith('/')) ? linkPathname.slice(0, -1) : linkPathname;
+
+          if (normalizedLinkPath === normalizedCurrentPath) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
         }
       });
     });
 
-    // Dropdown menu logic
+    // Dropdown menu logic (ensure these are defined)
     function toggleMenuDropdown() {
       const menu = document.getElementById('menuDropdown');
-      menu.classList.toggle('active');
-      const icon = document.querySelector('.menu-icon');
-      icon.setAttribute('aria-expanded', menu.classList.contains('active'));
+      if (menu) {
+        menu.classList.toggle('active');
+        const icon = document.querySelector('.menu-icon');
+        if (icon) icon.setAttribute('aria-expanded', menu.classList.contains('active'));
+      }
     }
-    function closeMenuDropdown() { // Standardized
+    function closeMenuDropdown() { 
       setTimeout(() => {
         const menu = document.getElementById('menuDropdown');
         if (menu) menu.classList.remove('active');

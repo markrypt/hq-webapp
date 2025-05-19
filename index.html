@@ -302,54 +302,40 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Handle active navigation item - improved for Live Server
-      const pagePath = window.location.pathname;
-      const pageFile = pagePath.split('/').pop(); // Get the file name part
-      
-      document.querySelectorAll('.navigation .nav-item').forEach(item => {
-        const itemHref = item.getAttribute('href');
-        if (itemHref) {
-          // Check current page against navigation item
-          if ((pageFile === itemHref + '.html') || 
-              (pageFile === 'index.html' && (itemHref === '.' || itemHref === '/' || itemHref === 'index'))) {
-            item.classList.add('active');
+      // Standardized active navigation item logic
+      const currentPathname = window.location.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
+      const normalizedCurrentPath = (currentPathname !== '/' && currentPathname.endsWith('/')) ? currentPathname.slice(0, -1) : currentPathname;
+
+      document.querySelectorAll('.navigation .nav-item, .menu-dropdown a, .header .logo a, .hero-buttons .btn').forEach(link => {
+        const linkHref = link.getAttribute('href');
+        if (linkHref && linkHref !== '#' && !linkHref.startsWith('mailto:') && !linkHref.startsWith('tel:')) {
+          const linkUrl = new URL(linkHref, window.location.href);
+          let linkPathname = linkUrl.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
+          const normalizedLinkPath = (linkPathname !== '/' && linkPathname.endsWith('/')) ? linkPathname.slice(0, -1) : linkPathname;
+
+          if (normalizedLinkPath === normalizedCurrentPath) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
           }
         }
       });
-      
-      // Handle navigation links to avoid page refresh
-      document.querySelectorAll('.nav-item, .btn, .logo a, .menu-dropdown a').forEach(link => {
-        link.addEventListener('click', function(e) {
-          const href = this.getAttribute('href');
-          
-          // Only intercept internal links
-          if (href && !href.includes('://') && !href.startsWith('mailto:')) {
-            e.preventDefault();
-            
-            // Navigate to the correct HTML file with .html extension visible in URL
-            if (href === '/' || href === '.') {
-              window.location.href = 'index.html';
-            } else if (href.endsWith('.html')) {
-              window.location.href = href;
-            } else {
-              // Add .html extension and make sure it's in the URL
-              window.location.href = href + '.html';
-            }
-          }
-        });
-      });
+
+      // REMOVE THE PREVIOUS CLICK HANDLER BLOCK THAT ADDED .html
+      // Default browser navigation will now handle clicks on clean hrefs.
     });
 
-    // Dropdown menu logic
+    // Dropdown menu logic (ensure these are defined, possibly globally or per page)
     function toggleMenuDropdown() {
       const menu = document.getElementById('menuDropdown');
-      menu.classList.toggle('active');
-      const icon = document.querySelector('.menu-icon');
-      icon.setAttribute('aria-expanded', menu.classList.contains('active'));
+      if (menu) {
+        menu.classList.toggle('active');
+        const icon = document.querySelector('.menu-icon');
+        if (icon) icon.setAttribute('aria-expanded', menu.classList.contains('active'));
+      }
     }
 
     function closeMenuDropdown() {
-      // Timeout to allow click on dropdown items before it closes
       setTimeout(() => {
         const menu = document.getElementById('menuDropdown');
         if (menu) menu.classList.remove('active');

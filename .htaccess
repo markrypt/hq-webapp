@@ -1,20 +1,28 @@
 # Enable URL rewrites
 RewriteEngine On
+RewriteBase /
 
-# Redirect /index to / (root)
-RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index(\.html)?\ HTTP/
+# Redirect www to non-www (optional, uncomment to use)
+# RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+# RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+
+# Remove .html extension from URL and redirect
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.+)\.html [NC]
+RewriteRule ^(.+)\.html$ /$1 [R=301,L]
+
+# Redirect /index.html or /index (if typed in URL) to /
+RewriteCond %{THE_REQUEST} /index(\.html)?\s [NC]
 RewriteRule ^index(\.html)?$ / [R=301,L]
 
-# Add trailing slash to directories
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^(.*[^/])$ $1/ [R=301,L]
+# Add trailing slash to directories (optional)
+# RewriteCond %{REQUEST_FILENAME} -d
+# RewriteRule ^(.*[^/])$ /$1/ [R=301,L]
 
-# If URL doesn't end with '/' or have a file extension (like .html)
-# and if it's not a real directory, add .html extension internally
-RewriteCond %{REQUEST_FILENAME} !-d
+# Internally rewrite clean URL to .html file
 RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
-RewriteRule ^([^\.]+)$ $1.html [NC,L]
+RewriteRule ^(.*)$ $1.html [L,QSA]
 
 # Set default document as index.html
 DirectoryIndex index.html
