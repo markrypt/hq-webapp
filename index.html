@@ -285,7 +285,7 @@
         <i class="fas fa-tag nav-icon"></i>
         <span>Products</span>
       </a>
-      <a href="." class="nav-item">
+      <a href="/" class="nav-item"> <!-- Changed from . -->
         <i class="fas fa-home nav-icon"></i>
         <span>Home</span>
       </a>
@@ -312,8 +312,12 @@
           const linkUrl = new URL(linkHref, window.location.href);
           let linkPathname = linkUrl.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
           const normalizedLinkPath = (linkPathname !== '/' && linkPathname.endsWith('/')) ? linkPathname.slice(0, -1) : linkPathname;
+          
+          // Special handling for the root path represented by "/"
+          const targetPath = (normalizedLinkPath === '') ? '/' : normalizedLinkPath;
+          const currentActivePath = (normalizedCurrentPath === '') ? '/' : normalizedCurrentPath;
 
-          if (normalizedLinkPath === normalizedCurrentPath) {
+          if (targetPath === currentActivePath) {
             link.classList.add('active');
           } else {
             link.classList.remove('active');

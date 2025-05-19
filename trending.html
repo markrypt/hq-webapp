@@ -407,14 +407,14 @@
     <!-- Header -->
     <header class="header">
       <div class="logo">
-        <a href="index">
+        <a href="/">
           <img src="assets/logo/logo.png" alt="Markrypt Logo" class="logo-image">
           <span>Mark</span><span>rypt</span>
         </a>
       </div>
       <div class="header-controls">
-        <div class="search-icon"><i class="fas fa-search"></i></div>
-        <div class="menu-icon" tabindex="0" onclick="toggleMenuDropdown()" onblur="closeMenuDropdown()">
+        <div class="search-icon" aria-label="Search"><i class="fas fa-search"></i></div>
+        <div class="menu-icon" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-label="Menu" onclick="toggleMenuDropdown()" onblur="closeMenuDropdown()">
           <i class="fas fa-ellipsis-v"></i>
           <div class="menu-dropdown" id="menuDropdown">
             <div class="dropdown-title">Legal & Info</div>
@@ -436,7 +436,7 @@
       <div class="navigation-container">
         <a href="trending" class="nav-item"><i class="fas fa-fire nav-icon"></i><span>Trending</span></a>
         <a href="products" class="nav-item"><i class="fas fa-tag nav-icon"></i><span>Products</span></a>
-        <a href="index" class="nav-item">
+        <a href="/" class="nav-item">
           <i class="fas fa-home nav-icon"></i>
           <span>Home</span>
         </a>
