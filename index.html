@@ -302,6 +302,16 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      const path = window.location.pathname;
+      const search = window.location.search;
+      const hash = window.location.hash;
+
+      // Client-side fallback redirect if server didn't handle /index or /index.html
+      if (path === '/index.html' || path === '/index') {
+        window.location.replace('/' + search + hash);
+        return; // Stop further script execution on this page as it's redirecting
+      }
+
       // Standardized active navigation item logic
       const currentPathname = window.location.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
       const normalizedCurrentPath = (currentPathname !== '/' && currentPathname.endsWith('/')) ? currentPathname.slice(0, -1) : currentPathname;
