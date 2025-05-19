@@ -194,9 +194,6 @@
         transform: translateX(-50%);
         border-radius: 8px 8px 0 0;
       }
-      .navigation-container { /* On larger screens, the container itself doesn't need full width if navigation is centered */
-         /* Max-width is already set, this ensures it doesn't try to be 100% of a potentially wider parent if .navigation was full width */
-      }
     }
      @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
@@ -209,7 +206,7 @@
     <!-- Header -->
     <header class="header">
       <div class="logo">
-        <a href="../index.html"> <!-- Or link to products.html -->
+        <a href="../">
           <img src="../assets/logo/logo.png" alt="Markrypt Logo" class="logo-image">
           <span>Mark</span><span>rypt</span>
         </a>
@@ -222,11 +219,11 @@
           <i class="fas fa-ellipsis-v"></i>
           <div class="menu-dropdown" id="menuDropdown">
             <div class="dropdown-title">Legal & Info</div>
-            <a href="../privacy.html">Privacy Policy</a>
-            <a href="../terms.html">Terms of Use</a>
-            <a href="../cookies.html">Cookie Policy</a>
-            <a href="../about.html">About Markrypt</a>
-            <a href="../contact.html">Contact Us</a>
+            <a href="../privacy">Privacy Policy</a>
+            <a href="../terms">Terms of Use</a>
+            <a href="../cookies">Cookie Policy</a>
+            <a href="../about">About Markrypt</a>
+            <a href="../contact">Contact Us</a>
           </div>
         </div>
       </div>
@@ -236,30 +233,31 @@
     <div class="scrollable-content-area">
       <main class="product-main-content">
         <h1>Books</h1>
-        <p>Explore our collection of books.</p>
+        <p>Explore a vast collection of books across all genres.</p>
+        <!-- Add more product specific HTML structure here -->
       </main>
     </div> <!-- End of .scrollable-content-area -->
 
     <!-- Bottom Navigation -->
     <nav class="navigation">
       <div class="navigation-container">
-        <a href="../trending.html" class="nav-item">
+        <a href="../trending" class="nav-item">
           <i class="fas fa-fire nav-icon"></i>
           <span>Trending</span>
         </a>
-        <a href="../products.html" class="nav-item">
+        <a href="../products" class="nav-item">
           <i class="fas fa-tag nav-icon"></i>
           <span>Products</span>
         </a>
-        <a href="../index.html" class="nav-item">
+        <a href="../" class="nav-item">
           <i class="fas fa-home nav-icon"></i>
           <span>Home</span>
         </a>
-        <a href="../explore.html" class="nav-item">
+        <a href="../explore" class="nav-item">
           <i class="fas fa-compass nav-icon"></i>
           <span>Explore</span>
         </a>
-        <a href="../about.html" class="nav-item">
+        <a href="../about" class="nav-item">
           <i class="fas fa-info-circle nav-icon"></i>
           <span>About</span>
         </a>
@@ -268,13 +266,15 @@
   </div>
 
   <script>
-    // Dropdown menu logic
     function toggleMenuDropdown() {
       const menu = document.getElementById('menuDropdown');
-      menu.classList.toggle('active');
-      const icon = document.querySelector('.menu-icon');
-      icon.setAttribute('aria-expanded', menu.classList.contains('active'));
+      if (menu) {
+        menu.classList.toggle('active');
+        const icon = document.querySelector('.menu-icon');
+        if (icon) icon.setAttribute('aria-expanded', menu.classList.contains('active'));
+      }
     }
+
     function closeMenuDropdown() {
       setTimeout(() => {
         const menu = document.getElementById('menuDropdown');
@@ -285,36 +285,65 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      // Highlight current nav item
-      const pageName = window.location.pathname.split("/").pop();
-      // For a product template, you might want to highlight 'Products' or nothing by default
-      // Or determine active based on a query param or specific product page logic
-      const currentPath = pageName === "" ? "index.html" : pageName; 
-      
-      // Example: If this template is used for pages like "product-detail.html?id=123",
-      // you might want to make "products.html" active in the nav.
-      // For now, it will try to match the exact filename.
-      let activeNavItemFound = false;
-      document.querySelectorAll('.navigation .nav-item').forEach(item => {
-        item.classList.remove('active');
-        const itemHref = item.getAttribute('href');
-        if (itemHref && itemHref.replace('../', '') === currentPath) {
-          item.classList.add('active');
-          activeNavItemFound = true;
+      const currentAbsolutePath = window.location.pathname.replace(/\.html$/, '').replace(/\/index$/, '');
+
+      document.querySelectorAll('.navigation .nav-item').forEach(link => {
+        const linkHref = link.getAttribute('href');
+        if (linkHref) {
+          const resolvedLinkUrl = new URL(linkHref, window.location.href);
+          let resolvedLinkPath = resolvedLinkUrl.pathname.replace(/\.html$/, '').replace(/\/index$/, '');
+          if (resolvedLinkPath.endsWith('/') && resolvedLinkPath !== '/') {
+            resolvedLinkPath = resolvedLinkPath.slice(0, -1);
+          }
+          if (linkHref === '../' || linkHref === '../index') { // Ensure home link resolves to /
+             resolvedLinkPath = '/';
+          }
+          
+          // For category pages, "Products" tab is active
+          if (resolvedLinkPath === '/products') {
+            link.classList.add('active');
+          } else if (resolvedLinkPath === currentAbsolutePath) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
         }
       });
 
-      // If no direct match (e.g., on a page like "product-detail.html"),
-      // you could default to highlighting "Products" or another relevant item.
-      // For this template, we'll leave it as is, or you can uncomment below to default to "Products".
-      /*
-      if (!activeNavItemFound) {
-        const productsNavItem = document.querySelector('.navigation .nav-item[href="products.html"]');
-        if (productsNavItem) {
-          productsNavItem.classList.add('active');
+      const logoLink = document.querySelector('.header .logo a');
+      if (logoLink) {
+        const logoHref = logoLink.getAttribute('href');
+        const resolvedLogoUrl = new URL(logoHref, window.location.href);
+        let resolvedLogoPath = resolvedLogoUrl.pathname.replace(/\.html$/, '').replace(/\/index$/, '');
+        if (resolvedLogoPath.endsWith('/') && resolvedLogoPath !== '/') {
+            resolvedLogoPath = resolvedLogoPath.slice(0, -1);
+        }
+         if (logoHref === '../' || logoHref === '../index') { // Ensure home link resolves to /
+             resolvedLogoPath = '/';
+          }
+
+        if (resolvedLogoPath === currentAbsolutePath && currentAbsolutePath === '/') { // Only active if truly on home
+            logoLink.classList.add('active');
+        } else {
+            logoLink.classList.remove('active');
         }
       }
-      */
+
+      document.querySelectorAll('.menu-dropdown a').forEach(link => {
+        const linkHref = link.getAttribute('href');
+        if (linkHref && linkHref !== '#' && !linkHref.startsWith('mailto:') && !linkHref.startsWith('tel:')) {
+          const resolvedLinkUrl = new URL(linkHref, window.location.href);
+          let resolvedLinkPath = resolvedLinkUrl.pathname.replace(/\.html$/, '').replace(/\/index$/, '');
+          if (resolvedLinkPath.endsWith('/') && resolvedLinkPath !== '/') {
+            resolvedLinkPath = resolvedLinkPath.slice(0, -1);
+          }
+          if (resolvedLinkPath === currentAbsolutePath) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        }
+      });
     });
   </script>
 </body>
