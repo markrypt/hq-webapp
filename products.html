@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Markrypt - Product Categories</title>
+  <link rel="icon" href="assets/logo/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="assets/logo/favicon.ico" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -42,33 +44,51 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 64px;
+      height: 64px; /* Standardized */
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 1rem;
+      padding: 0 1rem; /* Standardized */
       z-index: 100;
       background: var(--primary-bg);
-      border-bottom: 1px solid #e0e6ef;
+      border-bottom: 1px solid var(--border-color); /* Use var */
     }
     .logo {
-      font-size: 1.5rem;
+      font-size: 1.5rem; /* Standardized */
       font-weight: bold;
       display: flex;
       align-items: center;
     }
+    .logo a,
+    .logo a:link,
+    .logo a:visited,
+    .logo a:hover,
+    .logo a:active {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      color: inherit;
+    }
+    .logo-image {
+      height: 32px;
+      margin-right: 0.5rem;
+    }
     .logo span:first-child { color: var(--text-color); }
     .logo span:last-child { color: var(--accent-color); }
     .header-controls { display: flex; gap: 1rem; position: relative; }
-    .search-icon, .menu-icon { font-size: 1.2rem; cursor: pointer; color: var(--accent-color); }
+    .search-icon, .menu-icon {
+      font-size: 1.2rem; /* Standardized */
+      cursor: pointer;
+      color: var(--accent-color);
+    }
     .menu-dropdown {
       display: none;
       position: absolute;
       top: 2.5rem;
       right: 0;
       background: #fff;
-      border: 1px solid #e0e6ef;
-      border-radius: 10px;
+      border: 1px solid var(--border-color); /* Use var */
+      border-radius: 10px; /* Standardized, or var(--radius) if preferred smaller */
       box-shadow: 0 4px 24px 0 rgba(30,144,255,0.10);
       min-width: 210px;
       z-index: 200;
@@ -343,8 +363,8 @@
       }
     }
      @keyframes fadeIn { /* This is for menu dropdown, keep */
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from { opacity: 0; transform: translateY(10px); } /* Added transform for consistency */
+      to { opacity: 1; transform: translateY(0); } /* Added transform for consistency */
     }
   </style>
 </head>
@@ -353,13 +373,16 @@
     <!-- Header -->
     <header class="header">
       <div class="logo">
-        <span>Mark</span><span>rypt</span>
+        <a href="index.html">
+          <img src="assets/logo/logo.png" alt="Markrypt Logo" class="logo-image">
+          <span>Mark</span><span>rypt</span>
+        </a>
       </div>
       <div class="header-controls">
-        <div class="search-icon">
+        <div class="search-icon" aria-label="Search">
           <i class="fas fa-search"></i>
         </div>
-        <div class="menu-icon" tabindex="0" aria-haspopup="true" aria-expanded="false" onclick="toggleMenuDropdown()" onblur="closeMenuDropdown()">
+        <div class="menu-icon" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-label="Menu" onclick="toggleMenuDropdown()" onblur="closeMenuDropdown()">
           <i class="fas fa-ellipsis-v"></i>
           <div class="menu-dropdown" id="menuDropdown">
             <div class="dropdown-title">Legal & Info</div>
@@ -423,137 +446,130 @@
     // Fix the categories array
     const categories = [
       {
-        id: "supplements",
-        title: "Supplements",
-        description: "Vitamins, minerals, and dietary supplements for your wellness.",
-        icon: "fas fa-capsules",
-        productCount: 120
+        id: "clothing-shoes-jewelry-and-watches", // Updated ID
+        title: "Clothing, Shoes, Jewelry & Watches",
+        description: "Discover the latest trends in fashion and accessories.",
+        icon: "fas fa-tshirt", 
+        productCount: 250 
       },
       {
-        id: "fitness-equipment",
-        title: "Fitness Equipment",
-        description: "Home gym gear, weights, resistance bands, and more.",
-        icon: "fas fa-dumbbell",
-        productCount: 75
+        id: "amazon-fresh",
+        title: "Amazon Fresh",
+        description: "Groceries and essentials delivered to your door.",
+        icon: "fas fa-shopping-basket",
+        productCount: 300
       },
       {
-        id: "personal-care",
-        title: "Personal Care",
-        description: "Oral care, hygiene, and grooming essentials.",
-        icon: "fas fa-tooth",
+        id: "whole-foods-market",
+        title: "Whole Foods Market",
+        description: "Organic and natural products from Whole Foods.",
+        icon: "fas fa-leaf",
+        productCount: 180
+      },
+      {
+        id: "household-essentials",
+        title: "Household Essentials",
+        description: "Cleaning supplies, paper products, and more.",
+        icon: "fas fa-home",
+        productCount: 150
+      },
+      {
+        id: "books",
+        title: "Books",
+        description: "Explore a vast collection of books across all genres.",
+        icon: "fas fa-book",
+        productCount: 500
+      },
+      {
+        id: "movies-music-and-games", // Updated ID
+        title: "Movies, Music & Games",
+        description: "Entertainment for everyone: movies, music, and games.",
+        icon: "fas fa-film",
+        productCount: 220
+      },
+      {
+        id: "electronics",
+        title: "Electronics",
+        description: "Gadgets, devices, and accessories for your tech needs.",
+        icon: "fas fa-tv",
+        productCount: 350
+      },
+      {
+        id: "computers",
+        title: "Computers",
+        description: "Laptops, desktops, tablets, and computer accessories.",
+        icon: "fas fa-laptop",
+        productCount: 190
+      },
+      {
+        id: "smart-home",
+        title: "Smart Home",
+        description: "Automate your home with smart devices and technology.",
+        icon: "fas fa-lightbulb",
         productCount: 90
       },
       {
-        id: "mental-wellness",
-        title: "Mental Wellness",
-        description: "Stress relief, sleep aids, and mindfulness products.",
-        icon: "fas fa-brain",
-        productCount: 45
+        id: "home-garden-and-tools", // Updated ID
+        title: "Home, Garden & Tools",
+        description: "Everything you need for your home, garden, and DIY projects.",
+        icon: "fas fa-tools",
+        productCount: 280
       },
       {
-        id: "first-aid",
-        title: "First Aid",
-        description: "Kits, bandages, and emergency medical supplies.",
-        icon: "fas fa-briefcase-medical",
-        productCount: 50
+        id: "pet-supplies",
+        title: "Pet Supplies",
+        description: "Food, toys, and accessories for your beloved pets.",
+        icon: "fas fa-paw",
+        productCount: 160
       },
       {
-        id: "health-tech",
-        title: "Health Tech",
-        description: "Blood pressure monitors, thermometers, and health trackers.",
-        icon: "fas fa-heartbeat",
-        productCount: 60
+        id: "food-and-grocery", // Updated ID
+        title: "Food & Grocery",
+        description: "Pantry staples, snacks, beverages, and fresh food items.",
+        icon: "fas fa-utensils",
+        productCount: 400
       },
       {
-        id: "mobility",
-        title: "Mobility & Accessibility",
-        description: "Aids for mobility, braces, and supports.",
-        icon: "fas fa-wheelchair",
-        productCount: 40
-      },
-      {
-        id: "healthy-snacks",
-        title: "Healthy Snacks",
-        description: "Organic snacks, protein bars, and superfoods.",
-        icon: "fas fa-apple-alt",
-        productCount: 110
-      },
-      {
-        id: "protective-gear",
-        title: "Protective Gear",
-        description: "Masks, gloves, and sanitizers for your safety.",
-        icon: "fas fa-head-side-mask",
-        productCount: 70
-      },
-      {
-        id: "vision-care",
-        title: "Vision Care",
-        description: "Eyewear, contact lens solutions, and eye drops.",
-        icon: "fas fa-eye",
-        productCount: 35
-      },
-      {
-        id: "hearing",
-        title: "Hearing Aids & Care",
-        description: "Hearing aids, batteries, and ear care products.",
-        icon: "fas fa-deaf",
-        productCount: 25
-      },
-      {
-        id: "rehab",
-        title: "Rehabilitation & Therapy",
-        description: "Massagers, foam rollers, and therapy tools.",
+        id: "beauty-and-health", // Updated ID
+        title: "Beauty & Health",
+        description: "Skincare, makeup, personal care, and wellness products.",
         icon: "fas fa-spa",
-        productCount: 55
+        productCount: 320
       },
       {
-        id: "baby-health",
-        title: "Baby Health",
-        description: "Thermometers, nasal aspirators, and baby care.",
-        icon: "fas fa-baby",
-        productCount: 28
+        id: "toys-kids-and-baby", // Updated ID
+        title: "Toys, Kids & Baby",
+        description: "Toys, games, and essentials for children of all ages.",
+        icon: "fas fa-child",
+        productCount: 200
       },
       {
-        id: "elderly-care",
-        title: "Elderly Care",
-        description: "Supportive products for seniors' health and comfort.",
-        icon: "fas fa-user-clock",
-        productCount: 32
+        id: "handmade",
+        title: "Handmade",
+        description: "Unique, handcrafted items from artisans.",
+        icon: "fas fa-hand-sparkles",
+        productCount: 80
       },
       {
-        id: "pain-relief",
-        title: "Pain Relief",
-        description: "Heating pads, cold packs, and topical analgesics.",
-        icon: "fas fa-hot-tub",
-        productCount: 38
+        id: "sports-and-outdoors", // Updated ID
+        title: "Sports & Outdoors",
+        description: "Equipment and gear for sports and outdoor activities.",
+        icon: "fas fa-futbol", 
+        productCount: 230
       },
       {
-        id: "allergy",
-        title: "Allergy & Sinus",
-        description: "Air purifiers, nasal sprays, and allergy relief.",
-        icon: "fas fa-wind",
-        productCount: 27
+        id: "automotive",
+        title: "Automotive",
+        description: "Parts, accessories, and tools for your vehicle.",
+        icon: "fas fa-car",
+        productCount: 170
       },
       {
-        id: "weight-management",
-        title: "Weight Management",
-        description: "Scales, meal replacements, and fitness trackers.",
-        icon: "fas fa-balance-scale",
-        productCount: 44
-      },
-      {
-        id: "skin-care",
-        title: "Skin Care",
-        description: "Moisturizers, sunscreens, and acne treatments.",
-        icon: "fas fa-air-freshener",
-        productCount: 60
-      },
-      {
-        id: "sleep",
-        title: "Sleep Aids",
-        description: "Melatonin, sleep masks, and white noise machines.",
-        icon: "fas fa-bed",
-        productCount: 36
+        id: "industrial-and-scientific", // Updated ID
+        title: "Industrial and Scientific",
+        description: "Supplies and equipment for industrial and scientific purposes.",
+        icon: "fas fa-flask",
+        productCount: 110
       }
     ];
 
@@ -578,7 +594,8 @@
     }
 
     function navigateToCategory(categoryId, categoryTitle) {
-      alert(`Navigating to ${categoryTitle} (ID: ${categoryId})`);
+      // Navigate to the specific category page
+      window.location.href = `category/${categoryId}.html`;
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -601,7 +618,7 @@
       const icon = document.querySelector('.menu-icon');
       icon.setAttribute('aria-expanded', menu.classList.contains('active'));
     }
-    function closeMenuDropdown() {
+    function closeMenuDropdown() { // Standardized
       setTimeout(() => {
         const menu = document.getElementById('menuDropdown');
         if (menu) menu.classList.remove('active');

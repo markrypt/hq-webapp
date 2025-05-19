@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>About - Markrypt</title>
+  <title>About Us - Markrypt</title>
+  <link rel="icon" href="assets/logo/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="assets/logo/favicon.ico" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -60,6 +62,20 @@
       font-weight: bold;
       display: flex;
       align-items: center;
+    }
+    .logo a,
+    .logo a:link,
+    .logo a:visited,
+    .logo a:hover,
+    .logo a:active {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      color: inherit;
+    }
+    .logo-image {
+      height: 32px;
+      margin-right: 0.5rem;
     }
     .logo span:first-child { color: var(--text-color); }
     .logo span:last-child { color: var(--accent-color); }
@@ -283,7 +299,10 @@
     <!-- Header -->
     <header class="header">
       <div class="logo">
-        <span>Mark</span><span>rypt</span>
+        <a href="index.html">
+          <img src="assets/logo/logo.png" alt="Markrypt Logo" class="logo-image">
+          <span>Mark</span><span>rypt</span>
+        </a>
       </div>
       <div class="header-controls">
         <div class="search-icon">
@@ -307,92 +326,73 @@
       <div class="about-title">About Markrypt</div>
       <div class="about-section">
         <p class="about-text">
-          Welcome to Markrypt! We are dedicated to helping you discover the best health, wellness, and trending products available online. Our mission is to simplify your shopping experience by curating high-quality items and providing insightful information.
+          Navigating the vast online marketplace can be overwhelming. At Markrypt, we simplify your discovery process. We're a dedicated team passionate about uncovering and curating an exciting array of products that blend quality, innovation, and value. Think of us as your trusted companion in the world of online shopping, here to bring you insightful highlights and direct paths to items that can genuinely enhance your daily life.
         </p>
         <ul class="about-list">
-          <li><i class="fas fa-check-circle"></i> Curated product selections.</li>
-          <li><i class="fas fa-lightbulb"></i> Insightful articles and guides.</li>
-          <li><i class="fas fa-shield-alt"></i> Focus on quality and reliability.</li>
-          <li><i class="fas fa-link"></i> Easy access to products via affiliate links.</li>
+          <li><i class="fas fa-search-dollar"></i> Discover diverse, handpicked product collections.</li>
+          <li><i class="fas fa-bullhorn"></i> Get clear, concise insights and feature highlights.</li>
+          <li><i class="fas fa-medal"></i> We prioritize quality, innovation, and user satisfaction.</li>
+          <li><i class="fas fa-stream"></i> Enjoy a streamlined path to explore and acquire new finds.</li>
         </ul>
       </div>
       
       <div class="about-section">
         <h2 class="legal-title">Our Story</h2>
         <p class="about-text">
-          Markrypt was founded in 2022 by a team of health enthusiasts and tech professionals who were frustrated with the overwhelming amount of information and products online. We realized that consumers needed a trusted source to cut through the noise and highlight truly beneficial products.
+          Markrypt was founded with a simple idea: to create a go-to resource for discovering interesting and useful products without the usual hassle of endless searching. We noticed how challenging it can be to find reliable information and trustworthy recommendations in the vast online marketplace.
         </p>
         <p class="about-text">
-          Starting with just a handful of carefully researched product recommendations, we've grown to cover hundreds of items across multiple health and wellness categories, all thoroughly vetted by our team of experts.
+          Starting with a commitment to thorough research and a user-first approach, we've grown into a platform that showcases a wide array of products. Our team is dedicated to finding items that offer genuine value, aiming to connect you with products that enhance your lifestyle.
         </p>
       </div>
       
       <div class="about-section">
         <h2 class="legal-title">Our Mission & Values</h2>
         <p class="about-text">
-          At Markrypt, we believe everyone deserves access to quality health and wellness products without spending hours on research. Our core values guide everything we do:
+          At Markrypt, our mission is to be your trusted guide in the world of online shopping. We strive to empower you with the information you need to make confident purchasing decisions. Our core values are:
         </p>
         <ul class="about-list">
-          <li><i class="fas fa-balance-scale"></i> <strong>Integrity</strong> - We're honest about our affiliate relationships and only recommend products we believe in.</li>
-          <li><i class="fas fa-search"></i> <strong>Thoroughness</strong> - Our team conducts extensive research before recommending any product.</li>
-          <li><i class="fas fa-users"></i> <strong>Community</strong> - We value user feedback and continuously improve our recommendations based on real experiences.</li>
-          <li><i class="fas fa-universal-access"></i> <strong>Accessibility</strong> - We strive to make health and wellness accessible to everyone through education and affordable options.</li>
+          <li><i class="fas fa-balance-scale"></i> <strong>Integrity</strong> - We are transparent about our affiliate relationships and recommend products based on their merit.</li>
+          <li><i class="fas fa-search"></i> <strong>Diligence</strong> - Our team invests time in researching and evaluating products to ensure quality.</li>
+          <li><i class="fas fa-users"></i> <strong>User Focus</strong> - Your needs and interests are at the heart of our curation process.</li>
+          <li><i class="fas fa-universal-access"></i> <strong>Clarity</strong> - We aim to provide clear, concise, and helpful information.</li>
         </ul>
       </div>
       
       <div class="about-section">
         <h2 class="legal-title">How We Select Products</h2>
         <p class="about-text">
-          Our product selection process is rigorous and thorough. Before any product appears on Markrypt, it goes through our comprehensive evaluation:
+          Our product selection process is designed to identify items that stand out for their quality, innovation, or value. We consider various factors, including:
         </p>
         <ul class="about-list">
-          <li><i class="fas fa-clipboard-check"></i> Research product specifications and manufacturer claims</li>
-          <li><i class="fas fa-star-half-alt"></i> Analyze authentic user reviews and feedback</li>
-          <li><i class="fas fa-certificate"></i> Verify certifications and quality standards</li>
-          <li><i class="fas fa-dollar-sign"></i> Assess value for money compared to alternatives</li>
-          <li><i class="fas fa-industry"></i> Investigate manufacturing practices when possible</li>
-          <li><i class="fas fa-heart"></i> Consider overall benefit to health and wellness</li>
+          <li><i class="fas fa-clipboard-check"></i> Manufacturer information and product specifications.</li>
+          <li><i class="fas fa-star-half-alt"></i> User reviews and feedback from various sources.</li>
+          <li><i class="fas fa-certificate"></i> Brand reputation and quality standards.</li>
+          <li><i class="fas fa-dollar-sign"></i> Overall value and usefulness to our audience.</li>
+          <li><i class="fas fa-bullseye"></i> Relevance to current trends and user interests.</li>
         </ul>
         <p class="about-text" style="margin-top: 1rem;">
-          We regularly review our product selections to ensure our recommendations remain current and accurate as new options enter the market.
-        </p>
-      </div>
-      
-      <div class="about-section">
-        <h2 class="legal-title">Frequently Asked Questions</h2>
-        
-        <p style="font-weight: 600; color: var(--text-color); margin-top: 1rem;">Do you physically test all products?</p>
-        <p style="margin-bottom: 1.5rem;">
-          While we do test many products directly, our recommendations are also based on extensive research, expert opinions, and verified user reviews. We're transparent when our recommendations come from research rather than direct testing.
-        </p>
-        
-        <p style="font-weight: 600; color: var(--text-color);">How do affiliate links work?</p>
-        <p style="margin-bottom: 1.5rem;">
-          When you click on our affiliate links and make a purchase, we earn a small commission at no additional cost to you. These commissions help us maintain and improve Markrypt while keeping our content free for all users.
-        </p>
-        
-        <p style="font-weight: 600; color: var(--text-color);">Can I suggest products for review?</p>
-        <p style="margin-bottom: 1.5rem;">
-          Absolutely! We welcome your suggestions and feedback. Please visit our Contact page to submit product recommendations or share your experiences with products we've featured.
-        </p>
-        
-        <p style="font-weight: 600; color: var(--text-color);">Do you only feature products with affiliate programs?</p>
-        <p>
-          No. While many products on our site do have affiliate programs, our primary goal is to recommend the best products regardless of affiliate status. We regularly feature items we believe in even when there's no financial benefit to us.
+          We continually refine our selections to ensure our recommendations are current and genuinely helpful.
         </p>
       </div>
 
       <div class="legal-section">
-        <h2 class="legal-title">Our Commitment</h2>
+        <h2 class="legal-title">Our Commitment & Affiliate Disclosure</h2>
         <p>
-          At Markrypt, we strive to provide up-to-date and relevant information. While we earn a commission on qualifying purchases made through our affiliate links (e.g., as an Amazon Associate), our recommendations are based on research and perceived value to our users.
+          At Markrypt, we aim to provide you with valuable insights and curated product selections. To support our work and keep our content free, we participate in affiliate marketing programs. This means that when you click on links to various merchants on this site and make a purchase, this can result in a commission that is credited to this site.
+        </p>
+        <p>
+          Markrypt is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com and affiliated sites. As an Amazon Associate, we earn from qualifying purchases.
+        </p>
+        <p>
+          Our participation in these programs does not influence the products we feature or our editorial content. We are committed to providing honest and unbiased information to help you make informed decisions.
         </p>
         <h2 class="legal-title">Disclaimer</h2>
         <p>
-          The information provided on Markrypt is for general informational purposes only. All information on the Site is provided in good faith, however, we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability, or completeness of any information on the Site.
+          The information provided on Markrypt is for general informational purposes only. All information on the Site is provided in good faith; however, we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability, or completeness of any information on the Site. Product specifications, prices, and availability are subject to change without notice.
         </p>
         <p class="disclaimer">
-          Always consult with a professional before making health-related decisions.
+          Please verify all information directly with the merchant before making a purchase.
         </p>
       </div>
     </main>

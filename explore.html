@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Explore - Markrypt Blog</title>
+  <link rel="icon" href="assets/logo/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="assets/logo/favicon.ico" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -15,7 +17,7 @@
       --secondary-color: #6cb4ee;
       --bg-transparent: rgba(30,144,255,0.07);
       --shadow: 0 2px 6px rgba(0,0,0,0.1);
-      --radius: 14px;
+      --radius: 14px; /* This page has 14px, others 10px or 16px. Standardizing dropdown to 10px for now. */
       --border-color: #e0e6ef;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,24 +34,48 @@
     .header {
       position: fixed;
       top: 0; left: 0; right: 0;
-      height: 64px;
+      height: 64px; /* Standardized */
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 1rem;
+      padding: 0 1rem; /* Standardized */
       background: var(--primary-bg);
       border-bottom: 1px solid var(--border-color);
       z-index: 100;
     }
-    .logo { font-size: 1.5rem; font-weight: bold; }
+    .logo {
+      font-size: 1.5rem; /* Standardized */
+      font-weight: bold;
+      display: flex; /* Added for alignment */
+      align-items: center; /* Added for alignment */
+    }
+    .logo a,
+    .logo a:link,
+    .logo a:visited,
+    .logo a:hover,
+    .logo a:active {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      color: inherit;
+    }
+    .logo-image {
+      height: 32px;
+      margin-right: 0.5rem;
+    }
     .logo span:first-child { color: var(--text-color); }
     .logo span:last-child  { color: var(--accent-color); }
     .header-controls { display: flex; gap: 1rem; position: relative; }
-    .search-icon, .menu-icon { font-size: 1.2rem; cursor: pointer; color: var(--accent-color); }
+    .search-icon, .menu-icon {
+      font-size: 1.2rem; /* Standardized */
+      cursor: pointer;
+      color: var(--accent-color);
+    }
     .menu-dropdown {
       position: absolute; top: 2.5rem; right: 0;
       background: #fff; border: 1px solid var(--border-color);
-      border-radius: 10px; box-shadow: 0 4px 24px rgba(30,144,255,0.1);
+      border-radius: 10px; /* Standardized radius */
+      box-shadow: 0 4px 24px rgba(30,144,255,0.1);
       display: none; min-width: 210px; padding: 0.5rem 0; z-index: 200;
     }
     .menu-dropdown.active { display: block; animation: fadeIn 0.18s; }
@@ -191,10 +217,15 @@
 <body>
   <div class="app-container">
     <header class="header">
-      <div class="logo"><span>Mark</span><span>rypt</span></div>
+      <div class="logo">
+        <a href="index.html">
+          <img src="assets/logo/logo.png" alt="Markrypt Logo" class="logo-image">
+          <span>Mark</span><span>rypt</span>
+        </a>
+      </div>
       <div class="header-controls">
-        <div class="search-icon"><i class="fas fa-search"></i></div>
-        <div class="menu-icon" tabindex="0" onclick="toggleMenuDropdown()" onblur="closeMenuDropdown()">
+        <div class="search-icon" aria-label="Search"><i class="fas fa-search"></i></div>
+        <div class="menu-icon" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-label="Menu" onclick="toggleMenuDropdown()" onblur="closeMenuDropdown()">
           <i class="fas fa-ellipsis-v"></i>
           <div class="menu-dropdown" id="menuDropdown">
             <div class="dropdown-title">Legal & Info</div>
@@ -369,8 +400,7 @@
       icon.setAttribute('aria-expanded', menu.classList.contains('active'));
     }
 
-    function closeMenuDropdown() {
-      // Timeout to allow click on dropdown items before it closes
+    function closeMenuDropdown() { // Standardized
       setTimeout(() => {
         const menu = document.getElementById('menuDropdown');
         if (menu) menu.classList.remove('active');

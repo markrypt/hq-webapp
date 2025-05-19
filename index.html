@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Markrypt – Discover Curated Products</title>
+  <link rel="icon" href="assets/logo/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="assets/logo/favicon.ico" type="image/x-icon">
   <link
     href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap"
     rel="stylesheet"
@@ -44,7 +46,26 @@
       border-bottom: 1px solid #e0e6ef;
       z-index: 100;
     }
-    .logo { font-size: 1.5rem; font-weight: bold; }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      display: flex; /* Added */
+      align-items: center; /* Added */
+    }
+    .logo a,
+    .logo a:link,
+    .logo a:visited,
+    .logo a:hover,
+    .logo a:active { /* Added for link styling */
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      color: inherit;
+    }
+    .logo-image { /* Added */
+      height: 32px; /* Adjust as needed */
+      margin-right: 0.5rem; /* Space between image and text */
+    }
     .logo span:first-child { color: var(--text-color); }
     .logo span:last-child  { color: var(--accent-color); }
     .header-controls { display: flex; gap: 1rem; position: relative; }
@@ -221,7 +242,12 @@
 </head>
 <body>
   <header class="header">
-    <div class="logo"><span>Mark</span><span>rypt</span></div>
+    <div class="logo">
+      <a href="index.html"> <!-- Link to home -->
+        <img src="assets/logo/logo.png" alt="Markrypt Logo" class="logo-image">
+        <span>Mark</span><span>rypt</span>
+      </a>
+    </div>
     <div class="header-controls">
       <div class="search-icon">
         <i class="fas fa-search"></i>

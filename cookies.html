@@ -1,17 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cookie Policy - Markrypt</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  />
+  <link rel="icon" href="assets/logo/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="assets/logo/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
       --primary-bg: #fff;
@@ -20,18 +16,20 @@
       --accent-color: #1e90ff;
       --secondary-color: #6cb4ee;
       --bg-transparent: rgba(30, 144, 255, 0.07);
-      --shadow: 0 2px 6px rgba(0,0,0,0.1);
+      --border-color: #e0e6ef;
+      --radius: 10px;
     }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Open Sans', sans-serif;
-      background: var(--primary-bg);
-      color: var(--text-color);
-      overflow-x: hidden;
+    * { margin: 0; padding: 0; box-sizing: border-box; } /* Added for consistency */
+    body { 
+      font-family: 'Open Sans', sans-serif; 
+      background: var(--primary-bg); 
+      color: var(--text-color); 
+      margin: 0; 
+      padding-top: 64px; /* For fixed header */
+      padding-bottom: 60px; /* For fixed navigation */
+      min-height: calc(100vh - 124px);
+      box-sizing: border-box;
     }
-
-    /* Header (identical to index.html) */
     .header {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -41,10 +39,30 @@
       align-items: center;
       padding: 0 1rem;
       background: var(--primary-bg);
-      border-bottom: 1px solid #e0e6ef;
+      border-bottom: 1px solid var(--border-color);
       z-index: 100;
     }
-    .logo { font-size: 1.5rem; font-weight: bold; }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+    .logo a,
+    .logo a:link,
+    .logo a:visited,
+    .logo a:hover,
+    .logo a:active {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      color: inherit;
+    }
+    .logo-image {
+      height: 32px;
+      margin-right: 0.5rem;
+    }
+    .logo span { font-weight: bold; } /* Added to make logo text bold */
     .logo span:first-child { color: var(--text-color); }
     .logo span:last-child  { color: var(--accent-color); }
     .header-controls { display: flex; gap: 1rem; position: relative; }
@@ -53,28 +71,22 @@
       cursor: pointer;
       color: var(--accent-color);
     }
-
     .menu-dropdown {
       display: none;
       position: absolute;
       top: 2.5rem;
       right: 0;
       background: #fff;
-      border: 1px solid #e0e6ef;
-      border-radius: 10px;
-      box-shadow: 0 4px 24px rgba(30,144,255,0.10);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      box-shadow: 0 4px 24px 0 rgba(30,144,255,0.10);
       min-width: 210px;
-      padding: 0.5rem 0;
       z-index: 200;
+      padding: 0.5rem 0;
     }
-    .menu-dropdown.active { display: block; animation: fadeIn 0.18s; }
-    .menu-dropdown .dropdown-title {
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-      font-weight: 700;
-      padding: 0.5rem 1.2rem 0.2rem;
-      letter-spacing: 0.03em;
-      pointer-events: none;
+    .menu-dropdown.active {
+      display: block;
+      animation: fadeIn 0.18s;
     }
     .menu-dropdown a {
       display: block;
@@ -82,39 +94,28 @@
       color: var(--text-color);
       text-decoration: none;
       font-size: 1rem;
-      transition: background 0.13s, color 0.13s;
     }
     .menu-dropdown a:hover {
       background: var(--bg-transparent);
       color: var(--accent-color);
     }
-
+    .menu-dropdown .dropdown-title {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      font-weight: 700;
+      padding: 0.5rem 1.2rem 0.2rem 1.2rem;
+    }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
-    /* Cookie container (pushed below the 64px header) */
-    .container {
-      max-width: 700px;
-      margin: 5rem auto 4rem;
-      padding: 2rem;
-      background: #f9fbfd;
-      border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(30,144,255,0.07);
-    }
+    .container { max-width: 700px; margin: 2rem auto; padding: 2rem; background: #f9fbfd; border-radius: 12px; box-shadow: 0 2px 12px rgba(30,144,255,0.07);}
     h1 { color: var(--accent-color); font-size: 2rem; margin-bottom: 1.2rem; }
-    h2 { color: var(--text-secondary); font-size: 1.2rem; margin-top: 2rem; }
-    p, li { font-size: 1.05rem; line-height: 1.7; }
-    ul { margin-left: 1.2rem; }
-    a { color: var(--accent-color); text-decoration: underline; }
+    p { font-size: 1.05rem; line-height: 1.7; }
 
-    /* Bottom Navigation - Fix conflicting media queries */
     .navigation {
       position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
+      bottom: 0; left: 0; right: 0;
       height: 60px;
       background: var(--primary-bg);
       display: flex;
@@ -123,66 +124,76 @@
       box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
       z-index: 99;
     }
-
-    /* Navigation container */
     .navigation-container {
       width: 100%;
       max-width: 600px;
       margin: 0 auto;
       height: 60px;
-      background: var(--primary-bg);
-      border-radius: 8px 8px 0 0;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
       display: flex;
-      justify-content: space-around;
+      justify-content: space-around; /* Ensured consistency */
       align-items: center;
     }
-
-    /* Navigation items */
     .nav-item {
       flex: 1;
       text-align: center;
       text-decoration: none;
       color: var(--text-secondary);
-      cursor: pointer;
       font-size: 0.75rem;
-      transition: color 0.2s;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
+      cursor: pointer; /* Added for consistency */
+      transition: color 0.2s; /* Added for consistency */
+      -webkit-tap-highlight-color: transparent; /* Added for consistency */
+      user-select: none; /* Added for consistency */
+      outline: none; /* Added for consistency */
+      display: flex; /* Added for consistency */
+      flex-direction: column; /* Added for consistency */
+      align-items: center; /* Added for consistency */
+      justify-content: center; /* Added for consistency */
+      width: 100%; /* Added for consistency */
+      height: 100%; /* Added for consistency */
+      padding: 0; /* Added for consistency */
+      margin: 0; /* Added for consistency */
+    }
+    .nav-item.active { color: var(--accent-color); }
+    .nav-icon { 
+      font-size: 1.5rem; 
+      display: block; 
+      margin-bottom: 2px; 
+      width: 100%; /* Added for consistency */
+      text-align: center; /* Added for consistency */
+      height: 24px; /* Added for consistency */
+      line-height: 24px; /* Added for consistency */
+    }
+    .nav-item span { /* Added for consistency */
+      display: block;
+      width: 100%;
+      text-align: center;
+      height: 16px; 
+      line-height: 16px;
+    }
+    .nav-item:focus { /* Added for consistency */
       outline: none;
     }
-
-    .nav-item.active {
-      color: var(--accent-color);
-    }
-
-    .nav-icon {
-      font-size: 1.5rem;
-      display: block;
-      margin-bottom: 2px;
-    }
-
-    /* Corrected media query for larger screens */
     @media (min-width: 768px) {
-      .navigation {
-        width: 600px;
-        left: 50%;
-        transform: translateX(-50%);
-        border-radius: 8px 8px 0 0;
-      }
+      .navigation { width: 600px; left: 50%; transform: translateX(-50%); border-radius: 8px 8px 0 0; }
     }
   </style>
 </head>
 <body>
   <header class="header">
-    <div class="logo"><span>Mark</span><span>rypt</span></div>
+    <div class="logo">
+      <a href="index.html">
+        <img src="assets/logo/logo.png" alt="Markrypt Logo" class="logo-image">
+        <span>Mark</span><span>rypt</span>
+      </a>
+    </div>
     <div class="header-controls">
-      <div class="search-icon"><i class="fas fa-search"></i></div>
-      <div class="menu-icon" tabindex="0" aria-haspopup="true" aria-expanded="false"
-           onclick="toggleMenuDropdown()" onblur="closeMenuDropdown()">
+      <div class="search-icon" aria-label="Search">
+        <i class="fas fa-search"></i>
+      </div>
+      <div class="menu-icon" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-label="Menu" onclick="toggleMenuDropdown()" onblur="closeMenuDropdown()">
         <i class="fas fa-ellipsis-v"></i>
         <div class="menu-dropdown" id="menuDropdown">
-          <div class="dropdown-title">Legal &amp; Info</div>
+          <div class="dropdown-title">Legal & Info</div>
           <a href="privacy.html">Privacy Policy</a>
           <a href="terms.html">Terms of Use</a>
           <a href="cookies.html">Cookie Policy</a>
@@ -367,31 +378,25 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const pageName = window.location.pathname.split('/').pop() || 'index.html';
-      document.querySelectorAll('.navigation .nav-item').forEach(item => {
-        item.classList.remove('active'); // Ensure all are inactive first
-        if (item.getAttribute('href') === pageName) {
+      const current = location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('.nav-item').forEach(item => {
+        if (item.getAttribute('href') === current) {
           item.classList.add('active');
         }
       });
     });
-
     function toggleMenuDropdown() {
       const menu = document.getElementById('menuDropdown');
       menu.classList.toggle('active');
-      document.querySelector('.menu-icon')
-              .setAttribute('aria-expanded', menu.classList.contains('active'));
+      document.querySelector('.menu-icon').setAttribute('aria-expanded', menu.classList.contains('active'));
     }
-
     function closeMenuDropdown() {
       setTimeout(() => {
         const menu = document.getElementById('menuDropdown');
         if (menu) menu.classList.remove('active');
-        document.querySelector('.menu-icon')
-                .setAttribute('aria-expanded', 'false');
+        document.querySelector('.menu-icon').setAttribute('aria-expanded', 'false');
       }, 150);
     }
   </script>
 </body>
-
 </html>

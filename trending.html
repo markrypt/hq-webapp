@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Markrypt - Amazon Affiliate Products</title>
+  <title>Trending - Markrypt</title>
+  <link rel="icon" href="assets/logo/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="assets/logo/favicon.ico" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -44,7 +46,26 @@
       border-bottom: 1px solid var(--border-color);
       z-index: 100;
     }
-    .logo { font-size: 1.5rem; font-weight: bold; }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+    .logo a,
+    .logo a:link,
+    .logo a:visited,
+    .logo a:hover,
+    .logo a:active {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      color: inherit;
+    }
+    .logo-image {
+      height: 32px;
+      margin-right: 0.5rem;
+    }
     .logo span:first-child { color: var(--text-color); }
     .logo span:last-child { color: var(--accent-color); }
     .header-controls { display: flex; gap: 1rem; position: relative; }
@@ -345,13 +366,52 @@
         max-width: 550px; /* Maintain or adjust max-width as needed */
       }
     }
+    
+    /* Featured Deals Title */
+    .featured-deals-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      text-align: center;
+      padding: 1rem;
+      color: var(--text-color);
+      background: var(--primary-bg);
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    
+    /* Discount Badge */
+    .discount-badge {
+      display: inline-block;
+      background-color: #e74c3c;
+      color: white;
+      padding: 0.35rem 0.7rem;
+      border-radius: 16px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      margin-bottom: 0.6rem;
+    }
+    
+    /* Limited time deal text */
+    .limited-deal {
+      font-size: 0.8rem;
+      color: #e74c3c;
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+    }
   </style>
 </head>
 <body>
   <div class="app-container">
     <!-- Header -->
     <header class="header">
-      <div class="logo"><span>Mark</span><span>rypt</span></div>
+      <div class="logo">
+        <a href="index.html">
+          <img src="assets/logo/logo.png" alt="Markrypt Logo" class="logo-image">
+          <span>Mark</span><span>rypt</span>
+        </a>
+      </div>
       <div class="header-controls">
         <div class="search-icon"><i class="fas fa-search"></i></div>
         <div class="menu-icon" tabindex="0" onclick="toggleMenuDropdown()" onblur="closeMenuDropdown()">
@@ -390,88 +450,93 @@
     const products = [
       {
         id: 1,
-        title: "Vitamin D3 & K2 Supplement",
-        description: "Premium vitamin supplement with 5000 IU D3 and 100mcg K2 MK-7. Supports bone health, immune function and heart health.",
-        price: "$24.95",
-        image: "https://via.placeholder.com/1080x1920/143642/ffffff?text=Vitamin+D3+K2",
-        rating: 4.8,
-        reviews: 3257,
-        features: ["5000 IU D3", "100mcg K2 MK-7", "Non-GMO", "90 Capsules"],
-        vendor: {
-          name: "VitalHealth",
-          avatar: "https://via.placeholder.com/80/0A8754/ffffff?text=VH",
-          verified: true
-        },
-        tags: ["Supplements", "Vitamins", "Immunity"],
-        affiliateUrl: "https://www.amazon.com/s?k=vitamin+d3+k2"
+        title: "Ring Battery Doorbell (2024 release)",
+        description: "Head-to-Toe Video, Live View with Two-Way Talk, and Motion Detection & Alerts, Satin Nickel.",
+        image: "assets/trending/ring-doorbell-2024.jpg",
+        imageAlt: "Ring Battery Doorbell",
+        discount: "45% off",
+        limitedDeal: true,
+        features: ["Head-to-Toe Video", "Live View with Two-Way Talk", "Motion Detection", "2024 release"],
+        rating: 4.5,
+        reviews: 1250,
+        vendor: { name: "Ring", verified: true },
+        tags: ["Smart Home", "Security", "Doorbells"],
+        affiliateUrl: "https://www.amazon.com/Ring-Battery-Doorbell-Head-to-Toe-Video-Satin-Nickel/dp/B0BZWRSRWV?pd_rd_w=BpAqq&content-id=amzn1.sym.9533ab59-1513-4ecb-a243-cc6e62682629&pf_rd_p=9533ab59-1513-4ecb-a243-cc6e62682629&pf_rd_r=2Y119616ZY2A76M8JKHW&pd_rd_wg=4sCOs&pd_rd_r=977e5c1a-22ae-4000-af58-ceaf63c98c4e&pd_rd_i=B0BZWRSRWV&th=1&linkCode=ll1&tag=1914061-20&linkId=855e549cd194b27d5ee08e57e2d8fcc4&language=en_US&ref_=as_li_ss_tl"
       },
       {
         id: 2,
-        title: "Smart Hydration Tracking Water Bottle",
-        description: "Tracks water intake, glows to remind you when to drink, and syncs with your smartphone. Built-in temperature sensor.",
-        price: "$39.99",
-        image: "https://via.placeholder.com/1080x1920/0A8754/ffffff?text=Smart+Bottle",
-        rating: 4.6,
-        reviews: 2184,
-        features: ["24oz Capacity", "App Connectivity", "LED Reminder", "BPA-Free"],
-        vendor: {
-          name: "HydroTech",
-          avatar: "https://via.placeholder.com/80/143642/ffffff?text=HT",
-          verified: true
-        },
-        tags: ["Hydration", "Fitness", "Smart Devices"],
-        affiliateUrl: "https://www.amazon.com/s?k=smart+water+bottle"
+        title: "Dyson V8 Plus Cordless Vacuum",
+        description: "Powerful cordless vacuum cleaner, Silver/Nickel.",
+        image: "assets/trending/dyson-v8-plus.jpg",
+        imageAlt: "Dyson V8 Plus Vacuum",
+        discount: "26% off",
+        limitedDeal: true,
+        features: ["Cordless", "Powerful Suction", "Silver/Nickel", "Lightweight"],
+        rating: 4.7,
+        reviews: 3120,
+        vendor: { name: "Dyson", verified: true },
+        tags: ["Home", "Cleaning", "Vacuums"],
+        affiliateUrl: "https://www.amazon.com/Dyson-Cordless-Vacuum-Silver-Nickel/dp/B0CT9552BL?pd_rd_w=BpAqq&content-id=amzn1.sym.9533ab59-1513-4ecb-a243-cc6e62682629&pf_rd_p=9533ab59-1513-4ecb-a243-cc6e62682629&pf_rd_r=2Y119616ZY2A76M8JKHW&pd_rd_wg=4sCOs&pd_rd_r=977e5c1a-22ae-4000-af58-ceaf63c98c4e&pd_rd_i=B0CT9552BL&th=1&linkCode=ll1&tag=1914061-20&linkId=bbd450d576ba044204270a39eb6eaefe&language=en_US&ref_=as_li_ss_tl"
       },
       {
         id: 3,
-        title: "Organic Plant Protein Powder",
-        description: "Complete plant-based protein with all essential amino acids. 25g protein per serving, no artificial sweeteners or additives.",
-        price: "$32.95",
-        image: "https://via.placeholder.com/1080x1920/79BD8F/111111?text=Plant+Protein",
-        rating: 4.7,
-        reviews: 4289,
-        features: ["25g Protein", "Organic", "No Additives", "30 Servings"],
-        vendor: {
-          name: "PureNutrition",
-          avatar: "https://via.placeholder.com/80/BEEB9F/111111?text=PN",
-          verified: true
-        },
-        tags: ["Nutrition", "Plant-Based", "Fitness"],
-        affiliateUrl: "https://www.amazon.com/s?k=organic+plant+protein"
+        title: "MaryRuth's multivitamin - Energy & Beauty Booster",
+        description: "Liquid Morning Multivitamin for Women, Men & Kids. Vitamin A C D E B6 B12 Biotin Zinc. Vegan, Non-GMO, Gluten Free.",
+        image: "assets/trending/maryruths-multivitamin.jpg",
+        imageAlt: "MaryRuth's Multivitamin",
+        discount: "40% off",
+        limitedDeal: true,
+        features: ["32 Servings", "Vegan", "Non-GMO", "Gluten Free"],
+        rating: 4.8,
+        reviews: 2785,
+        vendor: { name: "MaryRuth's", verified: true },
+        tags: ["Health", "Supplements", "Vitamins"],
+        affiliateUrl: "https://www.amazon.com/Vitamins-MaryRuth-Raspberry-Multivitamin-Minerals/dp/B00MDRTV8A?pd_rd_w=BpAqq&content-id=amzn1.sym.9533ab59-1513-4ecb-a243-cc6e62682629&pf_rd_p=9533ab59-1513-4ecb-a243-cc6e62682629&pf_rd_r=2Y119616ZY2A76M8JKHW&pd_rd_wg=4sCOs&pd_rd_r=977e5c1a-22ae-4000-af58-ceaf63c98c4e&pd_rd_i=B00MDRTV8A&th=1&linkCode=ll1&tag=1914061-20&linkId=b58146fadbd5996afdcb04163d90bf7f&language=en_US&ref_=as_li_ss_tl"
       },
       {
         id: 4,
-        title: "Medical Grade Sleep Tracker",
-        description: "Advanced sleep monitoring with heart rate, breathing patterns and sleep cycles. Clinical-grade accuracy with personalized insights.",
-        price: "$129.99",
-        image: "https://via.placeholder.com/1080x1920/00111C/ffffff?text=Sleep+Tracker",
-        rating: 4.5,
-        reviews: 1876,
-        features: ["Heart Rate Monitor", "Sleep Analysis", "App Integration", "Non-Wearable"],
-        vendor: {
-          name: "SleepScience",
-          avatar: "https://via.placeholder.com/80/1D7373/ffffff?text=SS",
-          verified: true
-        },
-        tags: ["Sleep", "Health Tech", "Wellness"],
-        affiliateUrl: "https://www.amazon.com/s?k=sleep+tracker"
+        title: "Instant Pot Duo 7-in-1 Mini",
+        description: "Electric Pressure Cooker, Slow Rice Cooker, Steamer, Sauté, Yogurt Maker, Warmer & Sterilizer. 3 Quart, Stainless Steel.",
+        image: "assets/trending/instant-pot-duo-mini.jpg",
+        imageAlt: "Instant Pot Duo Mini",
+        discount: "33% off",
+        limitedDeal: true,
+        features: ["7-in-1", "3 Quart", "Stainless Steel", "Free App with 1900+ Recipes"],
+        rating: 4.6,
+        reviews: 5420,
+        vendor: { name: "Instant Pot", verified: true },
+        tags: ["Kitchen", "Appliances", "Cooking"],
+        affiliateUrl: "https://www.amazon.com/Instant-Pot-Duo-Mini-Programmable/dp/B06Y1YD5W7?pd_rd_w=BpAqq&content-id=amzn1.sym.9533ab59-1513-4ecb-a243-cc6e62682629&pf_rd_p=9533ab59-1513-4ecb-a243-cc6e62682629&pf_rd_r=2Y119616ZY2A76M8JKHW&pd_rd_wg=4sCOs&pd_rd_r=977e5c1a-22ae-4000-af58-ceaf63c98c4e&pd_rd_i=B06Y1YD5W7&th=1&linkCode=ll1&tag=1914061-20&linkId=27ae1a749568c2e2aba5f4ff4e8eac32&language=en_US&ref_=as_li_ss_tl"
       },
       {
         id: 5,
-        title: "Natural Stress & Anxiety Relief Supplement",
-        description: "Clinically studied herbal formula with Ashwagandha, L-Theanine, and Rhodiola for stress relief and mental clarity.",
-        price: "$27.99",
-        image: "https://via.placeholder.com/1080x1920/BEEB9F/111111?text=Stress+Relief",
-        rating: 4.6,
-        reviews: 2953,
-        features: ["Ashwagandha", "L-Theanine", "Non-Habit Forming", "60 Capsules"],
-        vendor: {
-          name: "MindEase",
-          avatar: "https://via.placeholder.com/80/619B8A/ffffff?text=ME",
-          verified: true
-        },
-        tags: ["Mental Health", "Supplements", "Wellness"],
-        affiliateUrl: "https://www.amazon.com/s?k=stress+relief+supplement"
+        title: "Thermacell E-Series Rechargeable Mosquito Repeller",
+        description: "20' Mosquito Protection Zone. Bug Spray Alternative, Scent Free.",
+        image: "assets/trending/thermacell-e-series.jpg",
+        imageAlt: "Thermacell Mosquito Repeller",
+        discount: "20% off",
+        limitedDeal: true,
+        features: ["Rechargeable", "20' Protection Zone", "Bug Spray Alternative", "Scent Free"],
+        rating: 4.4,
+        reviews: 840,
+        vendor: { name: "Thermacell", verified: true },
+        tags: ["Outdoors", "Pest Control", "Camping"],
+        affiliateUrl: "https://www.amazon.com/Rechargeable-Mosquito-Repeller-Charging-Packaging/dp/B0DD29W5Z4?pd_rd_w=BpAqq&content-id=amzn1.sym.9533ab59-1513-4ecb-a243-cc6e62682629&pf_rd_p=9533ab59-1513-4ecb-a243-cc6e62682629&pf_rd_r=2Y119616ZY2A76M8JKHW&pd_rd_wg=4sCOs&pd_rd_r=977e5c1a-22ae-4000-af58-ceaf63c98c4e&pd_rd_i=B0DD29W5Z4&th=1&linkCode=ll1&tag=1914061-20&linkId=e11d70da4702a5dd8ed6360fc2f8b78d&language=en_US&ref_=as_li_ss_tl"
+      },
+      {
+        id: 6,
+        title: "Signature Design by Ashley Clare View Coastal Outdoor Sofa",
+        description: "Eucalyptus Outdoor Patio Sofa with Cushions, Beige.",
+        image: "assets/trending/ashley-outdoor-sofa.jpg",
+        imageAlt: "Ashley Outdoor Sofa",
+        discount: "18% off",
+        limitedDeal: true,
+        features: ["Eucalyptus Wood", "Beige Cushions", "Coastal Design", "Outdoor Patio"],
+        rating: 4.3,
+        reviews: 620,
+        vendor: { name: "Ashley Furniture", verified: true },
+        tags: ["Furniture", "Outdoor", "Patio"],
+        affiliateUrl: "https://www.amazon.com/Signature-Design-Ashley-P801-838-Cushion/dp/B07KQN24YR?pd_rd_w=BpAqq&content-id=amzn1.sym.9533ab59-1513-4ecb-a243-cc6e62682629&pf_rd_p=9533ab59-1513-4ecb-a243-cc6e62682629&pf_rd_r=2Y119616ZY2A76M8JKHW&pd_rd_wg=4sCOs&pd_rd_r=977e5c1a-22ae-4000-af58-ceaf63c98c4e&pd_rd_i=B07KQN24YR&th=1&linkCode=ll1&tag=1914061-20&linkId=18866054051fd97dc0c480c80c6f1103&language=en_US&ref_=as_li_ss_tl"
       }
     ];
     
@@ -485,13 +550,12 @@
       products.forEach((product, index) => {
         feed.innerHTML += `
           <div class="product-card" id="product-${product.id}">
-            <img class="product-bg" src="${product.image}" alt="${product.title}" />
+            <img class="product-bg" src="${product.image}" alt="${product.imageAlt || product.title}" />
             <div class="bg-overlay"></div>
             
             <div class="product-content">
               <h2 class="product-title">${product.title}</h2>
               <p class="product-description">${product.description}</p>
-              <div class="product-price">${product.price}</div>
               
               <div class="product-features">
                 ${product.features.map(feature => 
@@ -565,11 +629,11 @@
     function showProductInfo(productId) {
       const product = products.find(p => p.id === productId);
       if (product) {
-        alert(`${product.title}\n\nPrice: ${product.price}\nRating: ${product.rating} (${product.reviews} reviews)\n\nFeatures:\n${product.features.join('\n')}`);
+        alert(`${product.title}\n\nRating: ${product.rating} (${product.reviews} reviews)\n\nFeatures:\n${product.features.join('\n')}`);
       }
     }
     
-    // Share product
+    // Share product (updated to handle full affiliate URLs)
     function shareProduct(productId) {
       const currentProduct = products.find(p => p.id === productId);
       if (!currentProduct) return;
@@ -577,13 +641,22 @@
       if (navigator.share) {
         navigator.share({
           title: currentProduct.title,
-          text: currentProduct.description,
+          text: `Check out this amazing deal: ${currentProduct.title} (${currentProduct.discount})`,
           url: currentProduct.affiliateUrl
         })
         .then(() => console.log('Shared successfully'))
         .catch((error) => console.log('Error sharing:', error));
       } else {
-        alert(`Check out this product: ${currentProduct.title}\n${currentProduct.affiliateUrl}`);
+        // Fallback for browsers that don't support navigator.share
+        // Create a temporary input to copy the URL
+        const tempInput = document.createElement('input');
+        tempInput.value = currentProduct.affiliateUrl;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+        
+        alert(`Link copied to clipboard! \n\nProduct: ${currentProduct.title}\nDiscount: ${currentProduct.discount}`);
       }
     }
     
@@ -598,12 +671,11 @@
       let startY;
       let startTime;
       let currentScrollTop = 0;
-      const SWIPE_THRESHOLD = 50; 
+      const SWIPE_THRESHOLD = 50;
       const MAX_SWIPE_TIME = 500; 
       let currentProductIndex = 0;
 
       const productCards = () => Array.from(feed.querySelectorAll('.product-card'));
-
       const updateCurrentIndex = () => {
         const cards = productCards();
         if (cards.length === 0) return;
@@ -614,10 +686,8 @@
       const navigateToProduct = (index) => {
         const cards = productCards();
         if (cards.length === 0) return;
-        
         if (index < 0) index = 0; // Don't loop, stop at first
         if (index >= cards.length) index = cards.length - 1; // Don't loop, stop at last
-
         if (cards[index]) {
           feed.scrollTo({
             top: cards[index].offsetTop,
@@ -650,7 +720,7 @@
         const endY = e.pageY;
         const timeElapsed = Date.now() - startTime;
         const distanceY = startY - endY; // Inverted for swipe up/down intuitive direction
-        
+
         updateCurrentIndex(); // Update index based on where drag ended
 
         if (timeElapsed < MAX_SWIPE_TIME && Math.abs(distanceY) > SWIPE_THRESHOLD) {
