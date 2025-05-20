@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Test - Markrypt</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">  <link rel="stylesheet" href="assets/css/styles.css">
+  <meta name="theme-color" content="#1e90ff">
+  <style>
+    :root {
+      --accent-color: #1e90ff;
+      --accent-light: #6cb4ee;
+      --text-color: #333;
+      --text-secondary: #666;
+      --bg-light: #f8f9fa;
+      --border-color: #e9ecef;
+      --shadow-sm: 0 4px 6px rgba(0,0,0,0.05);
+      --shadow-md: 0 5px 15px rgba(0,0,0,0.08);
+      --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+      --radius: 12px;
+      --spacing-xs: 0.25rem;
+      --spacing-sm: 0.5rem;
+      --spacing-md: 1rem;
+      --spacing-lg: 1.5rem;
+      --spacing-xl: 2rem;
+    }
+
+    /* Base styles */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    /* Main container styles */
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 20px 15px;
+      box-sizing: border-box;
+    }
+    
+    h1 {
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      margin-bottom: 1.5rem;
+      color: var(--text-color);
+      text-align: center;
+      line-height: 1.2;
+    }
+    
+    /* Debug info styles */
+    .debug-info {
+      padding: 15px;
+      background-color: var(--bg-light);
+      border-radius: var(--radius);
+      margin-bottom: 25px;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      white-space: pre-wrap;
+      max-height: clamp(150px, 30vh, 250px);
+      overflow: auto;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
+      font-size: 0.9rem;
+    }
+      .debug-section {
+      margin-bottom: 12px;
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      background-color: #fff;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .debug-section:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    
+    .debug-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: var(--accent-color);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    /* Test actions styles */
+    .test-actions {
+      margin: 25px 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      justify-content: center;
+      gap: 12px;
+    }
+      .test-button {
+      padding: 12px 20px;
+      background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(30,144,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 48px;
+    }
+    
+    .test-button:hover, .test-button:focus {
+      background: linear-gradient(135deg, #1a7ad9, #57a5e5);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 15px rgba(30,144,255,0.3);
+      outline: none;
+    }
+    
+    .test-button:active {
+      transform: translateY(-1px);
+    }
+      /* Product container styles */
+    #productContainer {
+      background-color: #fff;
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow-md);
+      min-height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .loading-spinner {
+      text-align: center;
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 20px;
+    }
+    
+    .loading-spinner i {
+      font-size: 2rem;
+      color: var(--accent-color);
+      animation: spin 1.5s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+      /* Header back button styles */
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 15px;
+      background-color: var(--bg-light);
+      border-radius: 50px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .back-button i {
+      margin-right: 8px;
+      transition: transform 0.3s ease;
+    }
+    
+    .back-button:hover {
+      background-color: #e9ecef;
+      color: var(--accent-color);
+    }
+    
+    .back-button:hover i {
+      transform: translateX(-3px);
+    }
+    
+    .header {
+      background-color: white;
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+    }
+      /* Responsive design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px 10px;
+      }
+      
+      h1 {
+        font-size: 1.6rem;
+      }
+      
+      .debug-info {
+        padding: 10px;
+        max-height: 200px;
+      }
+      
+      .test-actions {
+        grid-template-columns: 1fr;
+      }
+      
+      .test-button {
+        width: 100%;
+      }
+      
+      .page-description {
+        font-size: 0.95rem;
+      }
+      
+      .debug-section {
+        margin-bottom: 10px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .debug-section {
+        padding: 8px;
+      }
+      
+      .debug-title {
+        font-size: 0.85rem;
+      }
+      
+      .btn-text {
+        display: none;
+      }
+      
+      .header-controls .back-button {
+        padding: 8px;
+        min-width: unset;
+        width: auto;
+      }
+      
+      .test-button {
+        font-size: 0.9rem;
+        padding: 10px 15px;
+        height: 40px;
+      }
+      
+      .section-title {
+        font-size: 1.2rem;
+      }
+      
+      #productContainer {
+        padding: 15px;
+        min-height: 150px;
+      }
+    }
+    
+    /* Improve touch target size on mobile */
+    @media (max-width: 768px) {
+      .test-button, .back-button {
+        min-height: 44px; /* Apple's recommended minimum touch target size */
+      }
+      
+      .debug-section {
+        padding: 10px;
+      }
+    }
+      /* Additional styling for new layout elements */
+    .page-header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 15px 0;
+    }
+    
+    .page-description {
+      color: var(--text-secondary);
+      font-size: clamp(0.95rem, 3vw, 1.1rem);
+      max-width: 600px;
+      margin: 0 auto 15px;
+      line-height: 1.5;
+    }
+    
+    .section-title {
+      font-size: clamp(1.2rem, 4vw, 1.5rem);
+      margin-bottom: 20px;
+      color: var(--text-color);
+      position: relative;
+      padding-bottom: 10px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      width: 60px;
+      background: linear-gradient(90deg, var(--accent-color), var(--accent-light));
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+    
+    .section-title:hover::after {
+      width: 80px;
+    }
+      .test-panel, .debug-panel, .results-panel {
+      margin-bottom: 30px;
+      background-color: #fff;
+      border-radius: var(--radius);
+      padding: clamp(15px, 3vw, 25px);
+      box-shadow: var(--shadow-md);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .test-panel:hover, .debug-panel:hover, .results-panel:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    /* Add icons to debug titles */
+    .debug-title i {
+      margin-right: 8px;
+      opacity: 0.8;
+      font-size: 1rem;
+      transition: transform 0.3s ease;
+    }
+    
+    .debug-section:hover .debug-title i {
+      transform: scale(1.2);
+    }
+    
+    /* Add icons to buttons */
+    .test-button i {
+      margin-right: 8px;
+      transition: transform 0.3s ease;
+    }
+    
+    .test-button:hover i {
+      transform: scale(1.2);
+    }
+      /* Mobile-friendly header */
+    @media (max-width: 768px) {
+      .header {
+        padding: 10px 15px;
+      }
+      
+      .logo-image {
+        height: 30px;
+      }
+      
+      .header .logo span {
+        font-size: 1.2rem;
+      }
+    }
+    
+    /* Accessibility improvements */
+    .screen-reader-text {
+      border: 0;
+      clip: rect(1px, 1px, 1px, 1px);
+      clip-path: inset(50%);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+      word-wrap: normal !important;
+    }
+    
+    /* Add focus styles for keyboard navigation */
+    a:focus, button:focus {
+      outline: 2px solid var(--accent-color);
+      outline-offset: 2px;
+    }
+    
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #121212;
+        color: #e0e0e0;
+      }
+      
+      :root {
+        --text-color: #e0e0e0;
+        --text-secondary: #aaa;
+        --bg-light: #222;
+        --border-color: #444;
+      }
+      
+      .test-panel, .debug-panel, .results-panel, .header, #productContainer {
+        background-color: #1e1e1e;
+        color: #e0e0e0;
+      }
+      
+      .debug-section {
+        background-color: #2a2a2a;
+        border-color: #444;
+      }
+      
+      .back-button {
+        background-color: #2a2a2a;
+        color: #aaa;
+      }
+      
+      .back-button:hover {
+        background-color: #333;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <a href="/" aria-label="Go to Markrypt homepage">
+        <img src="assets/logo/logo.png" alt="Markrypt Logo" class="logo-image">
+        <span>Mar</span><span>krypt</span>
+      </a>
+    </div>
+    <div class="header-controls">
+      <a href="index.html" class="back-button" aria-label="Return to Home">
+        <i class="fas fa-home" aria-hidden="true"></i> <span class="btn-text">Return to Home</span>
+      </a>
+    </div>
+  </header>
+  <main>
+    <div class="container">
+      <div class="page-header" role="banner">
+        <h1>Product Page Test</h1>
+        <p class="page-description">Use this tool to test product loading functionality and diagnose issues</p>
+      </div>
+      
+      <div class="test-panel">
+        <h2 class="section-title">
+          <i class="fas fa-sliders-h" aria-hidden="true"></i>
+          Test Controls
+        </h2>
+        <div class="test-actions" role="toolbar" aria-label="Product test controls">
+          <button class="test-button" id="loadJbl" aria-label="Load JBL Go 4 product">
+            <i class="fas fa-music" aria-hidden="true"></i> Load JBL Go 4
+          </button>
+          <button class="test-button" id="loadRandom" aria-label="Load random product">
+            <i class="fas fa-random" aria-hidden="true"></i> Load Random Product
+          </button>
+          <button class="test-button" id="reloadData" aria-label="Reload product data">
+            <i class="fas fa-sync-alt" aria-hidden="true"></i> Reload Product Data
+          </button>
+        </div>
+      </div>
+      
+      <div class="debug-panel">
+        <h2 class="section-title">
+          <i class="fas fa-bug" aria-hidden="true"></i>
+          Debug Information
+        </h2>
+        <div class="debug-info" id="debugInfo" role="region" aria-label="Debug information panel">
+          <div class="debug-section">
+            <div class="debug-title"><i class="fas fa-link" aria-hidden="true"></i> URL Parameters:</div>
+            <div id="urlParams">Loading...</div>
+          </div>
+          <div class="debug-section">
+            <div class="debug-title"><i class="fas fa-database" aria-hidden="true"></i> Products Data:</div>
+            <div id="productsDataStatus">Checking...</div>
+          </div>
+          <div class="debug-section">
+            <div class="debug-title"><i class="fas fa-info-circle" aria-hidden="true"></i> Loading Status:</div>
+            <div id="loadingStatus">Not started</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="results-panel">
+        <h2 class="section-title">
+          <i class="fas fa-eye" aria-hidden="true"></i>
+          Preview Area
+        </h2>
+        <div id="productContainer" role="region" aria-label="Product preview area">
+          <!-- Product content will be loaded here by JavaScript -->
+          <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+            <span>Click a button above to load a product</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="assets/js/products-data.js"></script>
+  <script src="assets/js/product-detail.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Display URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      document.getElementById('urlParams').innerHTML = Array.from(urlParams.entries())
+        .map(entry => `${entry[0]}: ${entry[1]}`)
+        .join('<br>') || 'No URL parameters';
+      
+      // Check if products data is available
+      const productsDataStatus = document.getElementById('productsDataStatus');
+      if (typeof productsData !== 'undefined' && productsData && Array.isArray(productsData)) {
+        productsDataStatus.innerHTML = `Available: ${productsData.length} products found`;
+      } else {
+        productsDataStatus.innerHTML = 'ERROR: productsData is not available or not an array';
+      }
+      
+      // Setup test buttons
+      document.getElementById('loadJbl').addEventListener('click', function() {
+        window.location.href = 'product.html?id=jbl-go-4';
+      });
+      
+      document.getElementById('loadRandom').addEventListener('click', function() {
+        if (typeof productsData !== 'undefined' && productsData && Array.isArray(productsData)) {
+          const randomIndex = Math.floor(Math.random() * productsData.length);
+          const randomProduct = productsData[randomIndex];
+          window.location.href = `product.html?id=${randomProduct.id}`;
+        } else {
+          alert('Products data not available. Cannot load random product.');
+        }
+      });
+      
+      document.getElementById('reloadData').addEventListener('click', function() {
+        document.getElementById('loadingStatus').innerHTML = 'Reloading data...';
+        
+        // Create a new script element
+        const script = document.createElement('script');
+        script.src = 'assets/js/products-data.js?' + new Date().getTime();
+        script.onload = function() {
+          document.getElementById('loadingStatus').innerHTML = 'Data reloaded successfully';
+          
+          // Update products data status
+          if (typeof productsData !== 'undefined' && productsData && Array.isArray(productsData)) {
+            productsDataStatus.innerHTML = `Available: ${productsData.length} products found`;
+          } else {
+            productsDataStatus.innerHTML = 'ERROR: productsData is not available or not an array';
+          }
+        };
+        script.onerror = function() {
+          document.getElementById('loadingStatus').innerHTML = 'Error reloading data';
+        };
+        
+        // Append the script to the document
+        document.head.appendChild(script);
+      });
+    });
+  </script>
+</body>
+</html>

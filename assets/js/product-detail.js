@@ -4,17 +4,18 @@
  */
 class ProductDetailManager {
   constructor() {
+    console.log('ProductDetailManager constructor called');
     this.productId = this.getProductIdFromUrl();
     this.product = null;
     this.relatedProducts = [];
     
     // Initialize when DOM is ready
     document.addEventListener('DOMContentLoaded', () => {
+      console.log('DOM loaded, initializing product detail manager');
       this.init();
     });
   }
-  
-  /**
+    /**
    * Get product ID from URL
    * Format: /product.html?id=product-id or /product/product-id
    */
@@ -24,13 +25,22 @@ class ProductDetailManager {
     const paramId = urlParams.get('id');
     if (paramId) return paramId;
     
-    // If no URL parameter, try to extract from path
+    // Try to extract from path like /product/product-id
     const pathParts = window.location.pathname.split('/');
+    
+    // Look for /product/[productId] format
+    for (let i = 0; i < pathParts.length - 1; i++) {
+      if (pathParts[i] === 'product' && pathParts[i+1]) {
+        return pathParts[i+1].replace('.html', '');
+      }
+    }
+    
+    // Otherwise try to get the last path segment (fallback)
     if (pathParts.length > 0) {
-      // Get the last part of the path
       const lastPart = pathParts[pathParts.length - 1];
-      // Return the part without .html extension if it exists
-      return lastPart.replace('.html', '');
+      if (lastPart !== 'product' && lastPart !== 'product.html') {
+        return lastPart.replace('.html', '');
+      }
     }
     
     return null;
@@ -38,9 +48,11 @@ class ProductDetailManager {
   
   /**
    * Initialize the product detail page
-   */
-  init() {
+   */  init() {
+    console.log(`ProductDetailManager initializing with product ID: ${this.productId}`);
+    
     if (!this.productId) {
+      console.error('No product ID found in URL');
       this.showProductNotFound();
       return;
     }
@@ -49,9 +61,12 @@ class ProductDetailManager {
     this.product = this.findProduct(this.productId);
     
     if (!this.product) {
+      console.error(`Product not found with ID: ${this.productId}`);
       this.showProductNotFound();
       return;
     }
+    
+    console.log(`Product found: ${this.product.title}`);
     
     // Set page title
     document.title = `${this.product.title} - Markrypt`;
@@ -67,10 +82,15 @@ class ProductDetailManager {
     this.setupEventListeners();
   }
   
-  /**
-   * Find a product by ID from the products data
+  /**   * Find a product by ID from the products data
    */
   findProduct(id) {
+    // Check if productsData is available
+    if (typeof productsData === 'undefined' || !productsData) {
+      console.error('productsData is not available');
+      return null;
+    }
+    
     return productsData.find(product => product.id === id);
   }
   
@@ -149,9 +169,8 @@ class ProductDetailManager {
           <p class="product-detail-description">${product.description}</p>
           
           ${featuresHtml}
-          
-          <div class="product-detail-actions">
-            <a href="#" class="product-detail-button primary" id="viewOnAmazon">
+            <div class="product-detail-actions">
+            <a href="https://www.amazon.com/s?k=${encodeURIComponent(product.title)}" target="_blank" rel="noopener noreferrer" class="product-detail-button primary">
               <i class="fas fa-external-link-alt"></i> View on Amazon
             </a>
             <button class="product-detail-button secondary" id="shareProduct">
@@ -241,8 +260,7 @@ class ProductDetailManager {
       const badgeHtml = product.badge 
         ? `<span class="product-badge ${product.badge}">${product.badge}</span>` 
         : '';
-      
-      html += `
+        html += `
         <a href="product.html?id=${product.id}" class="product-card">
           ${badgeHtml}
           <div class="product-image" style="background-image: url('${product.image}');"></div>

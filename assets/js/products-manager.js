@@ -152,7 +152,7 @@ class ProductsManager {
     const starsHTML = this.generateStarRating(product.rating);
 
     return `
-      <a href="product/${product.id}" class="product-card">
+      <a href="product.html?id=${product.id}" class="product-card">
         ${badgeHTML}
         <div class="product-image" style="background-image: url('${product.image}');"></div>
         <div class="product-content">

@@ -441,12 +441,19 @@
       </a>
     </div>
   </nav>
-
   <script src="assets/js/products-data.js"></script>
   <script src="assets/js/products-manager.js"></script>
   <script src="assets/js/search.js"></script>
   <script src="assets/js/product-detail.js"></script>
   <script>
+    console.log('Product page scripts loaded');
+    // Verify that productsData is available
+    if (typeof productsData !== 'undefined') {
+      console.log(`Product data loaded with ${productsData.length} products`);
+    } else {
+      console.error('Products data is not available!');
+    }
+  </script>
     document.addEventListener('DOMContentLoaded', () => {
       // Update active nav item based on current page
       const currentPathname = window.location.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');

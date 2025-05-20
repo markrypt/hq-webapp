@@ -365,12 +365,11 @@ class SearchManager {
       `;
       return;
     }
-    
-    // Display results
+      // Display results
     searchResults.innerHTML = '';
     results.forEach(product => {
       const resultItem = document.createElement('a');
-      resultItem.href = `product/${product.id}`;
+      resultItem.href = `product.html?id=${product.id}`; // Changed to use query parameter format
       resultItem.className = 'search-result-item';
       
       let badgeHTML = '';
