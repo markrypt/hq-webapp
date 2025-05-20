@@ -56,6 +56,13 @@ class ProductDetailManager {
       this.showProductNotFound();
       return;
     }
+
+    // Ensure productsData is available
+    if (typeof productsData === 'undefined' || !productsData || productsData.length === 0) {
+      console.error('productsData is not available or empty. Cannot find product.');
+      this.showProductNotFound(); // Or some other error message
+      return;
+    }
     
     // Find the product in the data
     this.product = this.findProduct(this.productId);
@@ -67,6 +74,7 @@ class ProductDetailManager {
     }
     
     console.log(`Product found: ${this.product.title}`);
+    console.log(`Product affiliate link: ${this.product.affiliateLink}`); // Log the affiliate link
     
     // Set page title
     document.title = `${this.product.title} - Markrypt`;
@@ -124,17 +132,7 @@ class ProductDetailManager {
     
     // Generate features HTML
     const featuresHtml = product.features?.length 
-      ? `
-        <h3 class="product-detail-features-title">Key Features</h3>
-        <ul class="product-detail-features">
-          ${product.features.map(feature => `
-            <li class="product-detail-feature">
-              <i class="fas fa-check-circle"></i>
-              <span>${feature}</span>
-            </li>
-          `).join('')}
-        </ul>
-      ` 
+      ? this.renderFeatures(product.features).outerHTML
       : '';
     
     // Generate badge HTML
@@ -166,17 +164,10 @@ class ProductDetailManager {
             </div>
           </div>
           
+          ${this.createActionButtons(product).outerHTML}
           <p class="product-detail-description">${product.description}</p>
           
           ${featuresHtml}
-            <div class="product-detail-actions">
-            <a href="https://www.amazon.com/s?k=${encodeURIComponent(product.title)}" target="_blank" rel="noopener noreferrer" class="product-detail-button primary">
-              <i class="fas fa-external-link-alt"></i> View on Amazon
-            </a>
-            <button class="product-detail-button secondary" id="shareProduct">
-              <i class="fas fa-share-alt"></i> Share
-            </button>
-          </div>
         </div>
       </div>
     `;
@@ -363,7 +354,406 @@ class ProductDetailManager {
       .replace(/^-+/, '')             // Trim - from start of text
       .replace(/-+$/, '');            // Trim - from end of text
   }
+
+  /**
+   * Render features with icons
+   */
+  renderFeatures(features) {
+    const featuresList = document.createElement('ul');
+    featuresList.className = 'product-detail-features';
+    
+    features.forEach(feature => {
+      const featureItem = document.createElement('li');
+      featureItem.className = 'product-detail-feature';
+      
+      // Add an appropriate icon based on feature content
+      let iconClass = 'check-circle';
+      if (feature.toLowerCase().includes('battery')) iconClass = 'battery-full';
+      else if (feature.toLowerCase().includes('bluetooth')) iconClass = 'bluetooth';
+      else if (feature.toLowerCase().includes('water')) iconClass = 'tint';
+      else if (feature.toLowerCase().includes('wireless')) iconClass = 'wifi';
+      else if (feature.toLowerCase().includes('memory') || feature.toLowerCase().includes('storage')) iconClass = 'memory';
+      
+      // Create feature content with icon and formatted text
+      const featureKey = feature.split(':')[0].trim();
+      const featureValue = feature.split(':')[1]?.trim() || '';
+      
+      featureItem.innerHTML = `
+        <i class="fas fa-${iconClass}"></i>
+        <div class="feature-text">
+          <strong>${featureKey}</strong>
+          ${featureValue}
+        </div>
+      `;
+      
+      featuresList.appendChild(featureItem);
+    });
+    
+    // Add a title with an icon
+    const featuresTitle = document.createElement('h3');
+    featuresTitle.className = 'product-detail-features-title';
+    featuresTitle.innerHTML = '<i class="fas fa-list-ul"></i> Key Features';
+    
+    // Add both elements to the container
+    const featuresContainer = document.createElement('div');
+    featuresContainer.appendChild(featuresTitle);
+    featuresContainer.appendChild(featuresList);
+    
+    return featuresContainer;
+  }
+
+  /**
+   * Create action buttons with icons
+   */
+  createActionButtons(product) {
+    const actionsContainer = document.createElement('div');
+    actionsContainer.className = 'product-detail-actions';
+
+    // Buy Now Button
+    if (product.affiliateLink) {
+      const buyButton = document.createElement('a');
+      buyButton.href = product.affiliateLink;
+      buyButton.target = '_blank'; // Open in new tab
+      buyButton.className = 'product-detail-button primary';
+      buyButton.innerHTML = '<i class="fas fa-shopping-cart"></i> Buy Now on Amazon';
+      actionsContainer.appendChild(buyButton);
+    }
+
+    // Share Button
+    if (product.affiliateLink) {
+      const shareButton = document.createElement('button');
+      shareButton.className = 'product-detail-button secondary share-button';
+      shareButton.innerHTML = '<i class="fas fa-share-alt"></i> Share'; // Changed text here
+      shareButton.addEventListener('click', () => this.shareProduct(product));
+      actionsContainer.appendChild(shareButton);
+    }
+    
+    return actionsContainer;
+  }
+
+  shareProduct(product) {
+    console.log('shareProduct called for:', product.title);
+    console.log('Affiliate link:', product.affiliateLink);
+    console.log('navigator.share available:', !!navigator.share);
+
+    if (navigator.share && product.affiliateLink) {
+      console.log('Attempting to use Web Share API...');
+      navigator.share({
+        title: product.title,
+        text: `Check out this product: ${product.title}`,
+        url: product.affiliateLink,
+      })
+      .then(() => console.log('Successful share via Web Share API'))
+      .catch((error) => console.error('Error sharing via Web Share API:', error));
+    } else if (product.affiliateLink) {
+      console.log('Web Share API not available or condition not met, falling back to prompt.');
+      prompt("Copy this link to share:", product.affiliateLink);
+    } else {
+      console.log('No affiliate link available to share.');
+      alert("No affiliate link available to share for this product.");
+    }
+  }
 }
 
 // Initialize product detail manager
 const productManager = new ProductDetailManager();
+
+// Modify the function that renders product details to ensure the correct order
+function renderProduct(product) {
+  const productInfo = document.createElement('div');
+  productInfo.className = 'product-detail-info';
+  
+  // 1. Create header with title (appears first)
+  const headerDiv = document.createElement('div');
+  headerDiv.className = 'product-detail-header';
+  const productTitle = document.createElement('h1');
+  productTitle.className = 'product-detail-title';
+  productTitle.textContent = product.name;
+  headerDiv.appendChild(productTitle);
+  
+  // 2. Create action buttons (appears second)
+  const actionsDiv = createActionButtons(product);
+  
+  // 3. Create meta section with category and ratings (appears third)
+  const metaDiv = document.createElement('div');
+  metaDiv.className = 'product-detail-meta';
+  // populate meta div with category, ratings, etc.
+  
+  // 4. Create description (appears fourth)
+  const descriptionDiv = document.createElement('div');
+  descriptionDiv.className = 'product-detail-description';
+  descriptionDiv.textContent = product.description;
+  
+  // 5. Create features section (appears last)
+  const featuresContainer = document.createElement('div');
+  featuresContainer.className = 'product-features-container';
+  // Create features title with icon
+  const featuresTitle = document.createElement('h3');
+  featuresTitle.className = 'product-detail-features-title';
+  featuresTitle.innerHTML = '<i class="fas fa-list-ul"></i> Key Features';
+  
+  // Create the features list
+  const featuresList = renderFeatures(product.features || []);
+  
+  featuresContainer.appendChild(featuresTitle);
+  featuresContainer.appendChild(featuresList);
+  
+  // Add all elements to product info in the desired order
+  productInfo.appendChild(headerDiv);        // 1. Title
+  productInfo.appendChild(actionsDiv);       // 2. Buy button
+  productInfo.appendChild(metaDiv);          // 3. Meta info
+  productInfo.appendChild(descriptionDiv);   // 4. Description
+  productInfo.appendChild(featuresContainer); // 5. Features at the bottom
+}
+
+// Helper function to create action buttons
+function createActionButtons(product) {
+  const actionsDiv = document.createElement('div');
+  actionsDiv.className = 'product-detail-actions';
+  
+  const buyButton = document.createElement('button');
+  buyButton.className = 'product-detail-button primary';
+  buyButton.innerHTML = '<i class="fas fa-shopping-cart"></i> Buy Now';
+  buyButton.onclick = () => alert(`Buying ${product.name}`);
+  
+  const wishlistButton = document.createElement('button');
+  wishlistButton.className = 'product-detail-button secondary';
+  wishlistButton.innerHTML = '<i class="fas fa-heart"></i> Add to Wishlist';
+  
+  actionsDiv.appendChild(buyButton);
+  actionsDiv.appendChild(wishlistButton);
+  
+  return actionsDiv;
+}
+
+// Helper function to render features
+function renderFeatures(features) {
+  const featuresList = document.createElement('ul');
+  featuresList.className = 'product-detail-features';
+  
+  features.forEach(feature => {
+    const featureItem = document.createElement('li');
+    featureItem.className = 'product-detail-feature';
+    
+    // Add an appropriate icon based on feature content
+    let iconClass = 'check-circle';
+    if (feature.toLowerCase().includes('battery')) iconClass = 'battery-full';
+    else if (feature.toLowerCase().includes('bluetooth')) iconClass = 'bluetooth';
+    else if (feature.toLowerCase().includes('water')) iconClass = 'tint';
+    else if (feature.toLowerCase().includes('wireless')) iconClass = 'wifi';
+    else if (feature.toLowerCase().includes('memory') || feature.toLowerCase().includes('storage')) iconClass = 'memory';
+    
+    // Create feature content with icon and formatted text
+    const featureKey = feature.split(':')[0].trim();
+    const featureValue = feature.split(':')[1]?.trim() || '';
+    
+    featureItem.innerHTML = `
+      <i class="fas fa-${iconClass}"></i>
+      <div class="feature-text">
+        <strong>${featureKey}</strong>
+        ${featureValue}
+      </div>
+    `;
+    
+    featuresList.appendChild(featureItem);
+  });
+  
+  // Add a title with an icon
+  const featuresTitle = document.createElement('h3');
+  featuresTitle.className = 'product-detail-features-title';
+  featuresTitle.innerHTML = '<i class="fas fa-list-ul"></i> Key Features';
+  
+  // Add both elements to the container
+  const featuresContainer = document.createElement('div');
+  featuresContainer.appendChild(featuresTitle);
+  featuresContainer.appendChild(featuresList);
+  
+  return featuresContainer;
+}
+
+// ...existing code...
+
+function renderProductDetail(product) {
+  // Create container
+  const productDetailContainer = document.createElement('div');
+  productDetailContainer.className = 'product-detail-container';
+
+  // Create image section
+  const productImage = document.createElement('div');
+  productImage.className = 'product-detail-image';
+  productImage.style.backgroundImage = `url(${product.image})`;
+  // ...add badge, image click handlers, etc...
+
+  // Create product info container
+  const productInfo = document.createElement('div');
+  productInfo.className = 'product-detail-info';
+
+  // 1. ADD TITLE FIRST - Create header with title
+  const headerDiv = document.createElement('div');
+  headerDiv.className = 'product-detail-header';
+  const title = document.createElement('h1');
+  title.className = 'product-detail-title';
+  title.textContent = product.name;
+  headerDiv.appendChild(title);
+  productInfo.appendChild(headerDiv); // Add title first!
+
+  // 2. ADD BUTTONS SECOND
+  // ...create and append buttons...
+
+  // 3. ADD META INFO THIRD
+  // ...create and append meta info...
+
+  // 4. ADD DESCRIPTION FOURTH
+  // ...create and append description...
+
+  // 5. ADD FEATURES LAST
+  // ...create and append features...
+
+  // Add all sections to container
+  productDetailContainer.appendChild(productImage);
+  productDetailContainer.appendChild(productInfo);
+  
+  return productDetailContainer;
+}
+
+// Function to share product using the affiliate link
+function shareProduct(product) {
+  const affiliateLink = product.affiliate_link || product.link; // Use affiliate link if available
+  const shareData = {
+      title: product.name,
+      text: `Check out this amazing product: ${product.name}`,
+      url: affiliateLink
+  };
+  
+  // Check if Web Share API is available
+  if (navigator.share && navigator.canShare(shareData)) {
+      navigator.share(shareData)
+          .then(() => console.log('Product shared successfully'))
+          .catch((error) => {
+              console.error('Error sharing:', error);
+              fallbackShare(affiliateLink);
+          });
+  } else {
+      fallbackShare(affiliateLink);
+  }
+}
+
+// Fallback share function (copy to clipboard)
+function fallbackShare(url) {
+  // Create a temporary input element
+  const tempInput = document.createElement('input');
+  tempInput.value = url;
+  document.body.appendChild(tempInput);
+  
+  // Select and copy the link
+  tempInput.select();
+  document.execCommand('copy');
+  document.body.removeChild(tempInput);
+  
+  // Show feedback to the user
+  alert('Affiliate link copied to clipboard!');
+}
+
+// ...existing code...
+
+function renderProductDetail(product) {
+  // Create container
+  const productDetailContainer = document.createElement('div');
+  productDetailContainer.className = 'product-detail-container';
+
+  // Create image section
+  const productImage = document.createElement('div');
+  productImage.className = 'product-detail-image';
+  productImage.style.backgroundImage = `url(${product.image})`;
+  // ...add badge, image click handlers, etc...
+
+  // Create product info container
+  const productInfo = document.createElement('div');
+  productInfo.className = 'product-detail-info';
+
+  // 1. ADD TITLE FIRST - Create header with title
+  const headerDiv = document.createElement('div');
+  headerDiv.className = 'product-detail-header';
+  const title = document.createElement('h1');
+  title.className = 'product-detail-title';
+  title.textContent = product.name;
+  headerDiv.appendChild(title);
+  productInfo.appendChild(headerDiv); // Add title first!
+
+  // 2. ADD BUTTONS SECOND
+  // ...create and append buttons...
+
+  // 3. ADD META INFO THIRD
+  // ...create and append meta info...
+
+  // 4. ADD DESCRIPTION FOURTH
+  // ...create and append description...
+
+  // 5. ADD FEATURES LAST
+  // ...create and append features...
+
+  // Add all sections to container
+  productDetailContainer.appendChild(productImage);
+  productDetailContainer.appendChild(productInfo);
+  
+  return productDetailContainer;
+}
+
+// ...existing code...
+
+function renderProductDetail(product) {
+    // ...existing code...
+    
+    // Create product detail HTML
+    const productDetailHTML = `
+        <div class="product-detail-container">
+            <div class="product-detail-image" style="background-image: url('${product.image}')" id="productDetailImage">
+                ${getBadgeHTML(product)}
+            </div>
+            <div class="product-detail-info">
+                <div class="product-detail-header">
+                    <h1 class="product-detail-title">${product.name}</h1>
+                    <div class="product-detail-meta">
+                        <a href="products?category=${encodeURIComponent(product.category)}" class="product-detail-category">
+                            <i class="fas fa-tag"></i> ${product.category}
+                        </a>
+                        <div class="product-detail-rating">
+                            <div class="product-detail-stars">${getStarsHTML(product.rating)}</div>
+                            <span class="product-detail-count">(${product.reviewCount})</span>
+                        </div>
+                    </div>
+                    <p class="product-detail-description">${product.description}</p>
+                </div>
+                
+                <h3 class="product-detail-features-title"><i class="fas fa-check-circle"></i> Key Features</h3>
+                <ul class="product-detail-features">
+                    ${getProductFeaturesHTML(product.features)}
+                </ul>
+                
+                <div class="product-detail-actions">
+                    <a href="${product.link}" target="_blank" class="product-detail-button primary">
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                    <button class="product-detail-button secondary" id="shareProductButton">
+                        <i class="fas fa-share-alt"></i> Share
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Update product container with the new HTML
+    productContainer.innerHTML = productDetailHTML;
+    
+    // Add event listeners after the HTML has been inserted
+    document.getElementById('productDetailImage').addEventListener('click', () => {
+        openProductZoom(product.image);
+    });
+
+    // Add event listener for the share button
+    document.getElementById('shareProductButton').addEventListener('click', () => {
+        shareProduct(product);
+    });
+    
+    // ...existing code...
+}
