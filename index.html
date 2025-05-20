@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title><span class="company-name"><span class="mark">Mark</span><span class="krypt">rypt</span></span> – Discover Curated Products</title>
-  <meta name="description" content="Discover top-curated products and insightful articles with <span class="company-name"><span class="mark">Mark</span><span class="krypt">rypt</span></span>. Your gateway to a better shopping experience with handpicked collections and recommendations.">
+  <meta name="description" content="Your gateway to a better shopping experience with handpicked collections and recommendations.">
   <meta name="keywords" content="Markrypt, curated products, online shopping, product discovery, product recommendations">
   <meta property="og:title" content="Markrypt – Discover Curated Products">
   <meta property="og:description" content="Your gateway to discovering top-curated products and insightful articles. Dive in and elevate your shopping experience.">
@@ -72,8 +72,6 @@
       height: 32px;
       margin-right: 0.5rem;
     }
-    .logo span:first-child { color: #000000; } /* Black */
-    .logo span:last-child  { color: #0000FF; } /* Blue */
     .header-controls { display: flex; gap: 1rem; position: relative; }
     .search-icon, .menu-icon { font-size: 1.2rem; cursor: pointer; color: var(--accent-color); }
 
@@ -435,7 +433,7 @@
       width: 100%;
       max-width: 1280px;
       margin: 0 auto;
-      padding: 0 2rem;
+      padding: 1.5rem 2rem; /* Modified to add padding on top and bottom */
       position: relative;
       z-index: 1;
     }
@@ -603,7 +601,7 @@
       background-color: #f9fbfd;
       position: relative;
       overflow: hidden;
-      padding-top: 6rem;
+      padding-top: 3rem; /* Reduced from 6rem to 3rem (half the original space) */
       padding-bottom: 6rem;
     }
     
@@ -1574,46 +1572,6 @@
   <div id="header-placeholder"></div>
 
   <main>
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="hero-content">
-        <h1>Discover Premium Products Curated Just For You</h1>
-        <p>Your trusted guide to finding the best products across categories, backed by real reviews and expert recommendations.</p>
-        <div class="hero-buttons">
-          <a href="products" class="btn primary" data-target="products">
-            Browse Products <i class="fas fa-arrow-right"></i>
-          </a>
-          <a href="explore" class="btn secondary" data-target="explore">
-            Explore Articles <i class="fas fa-arrow-right"></i>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="stats-container">
-      <div class="stats-wrapper">
-        <div class="stats-grid">
-          <div class="stat-item">
-            <div class="stat-number">12K+</div>
-            <div class="stat-label">Products Reviewed</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number">98%</div>
-            <div class="stat-label">Happy Customers</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number">245+</</div>
-            <div class="stat-label">Expert Categories</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number">50K+</div>
-            <div class="stat-label">Monthly Visitors</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Trending Products Section -->
     <section class="featured-products">
       <div class="container">
@@ -1798,7 +1756,7 @@
               <div class="product-rating">
                 <div class="stars">
                   <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
+                  <i class<i class="fas fa-star"></i>
                   <i class="fas fa-star"></i>
                   <i class="fas fa-star"></i>
                   <i class="far fa-star"></i>
@@ -1926,7 +1884,7 @@
     <!-- Benefits Section -->
     <section class="benefits">
       <div class="container">
-        <h2 class="section-title">Why Shop With <span class="company-name"><span class="mark">Mark</span><span class="krypt">rypt</span></span>?</h2>
+        <h2 class="section-title">Why Shop With Markrypt?</h2>
         <div class="section-heading-line"></div>
         <p class="section-subtitle">We're committed to making your shopping experience better in every way possible</p>
         
@@ -1965,15 +1923,6 @@
         </div>
       </div>
     </section>
-    
-    <!-- CTA Section -->
-    <section class="cta">
-      <div class="cta-content">
-        <h2>Ready to Discover Amazing Products?</h2>
-        <p>Join thousands of smart shoppers who trust <span class="company-name"><span class="mark">Mark</span><span class="krypt">rypt</span></span> for honest reviews and expert recommendations.</p>
-        <a href="trending" class="btn primary">Explore Trending Products <i class="fas fa-arrow-right"></i></a>
-      </div>
-    </section>
   </main>
   
   <!-- Navigation Placeholder - Will be populated by component-loader.js -->
@@ -1984,18 +1933,7 @@
   <script src="assets/js/search.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Add event listeners for hero buttons
-      const heroButtons = document.querySelectorAll('.hero-buttons .btn');
-      if (heroButtons) {
-        heroButtons.forEach(button => {
-          button.addEventListener('click', (e) => {
-            const target = e.currentTarget.dataset.target;
-            if (target) {
-              window.location.href = target;
-            }
-          });
-        });
-      }
+      // Remove hero button event listeners since we removed the hero section
     });
   </script>
   <script src="assets/js/common.js"></script>

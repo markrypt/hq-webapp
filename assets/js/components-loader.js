@@ -3,43 +3,39 @@
  * Handles loading reusable components like header and navigation
  */
 
+// Capture the script's own source URL immediately.
+// This should be valid during the initial synchronous execution of this script.
+const LOADER_SCRIPT_SRC = document.currentScript ? document.currentScript.src : null;
+
 document.addEventListener('DOMContentLoaded', () => {
-  // Determine the base path for components based on the current page's location
-  const basePath = getBasePath();
-
-  // Load header
-  loadComponent('header-placeholder', `${basePath}assets/components/header.html`, () => {
-    // After header loads, set up dropdown functionality
-    setupDropdownMenu();
-  });
-  
-  // Load navigation
-  loadComponent('navigation-placeholder', `${basePath}assets/components/navigation.html`, () => {
-    // After navigation loads, set active navigation item
-    highlightActiveNavItem();
-  });
-});
-
-/**
- * Determine the base path prefix based on the current page location
- * This helps with pages in subdirectories (e.g., /category/, /article/)
- * @returns {string} The base path prefix (e.g., '/', '../', '../../')
- */
-function getBasePath() {
-  // Get the pathname of the current page
-  const pathname = window.location.pathname;
-  
-  // Count directory levels from root
-  const pathParts = pathname.split('/').filter(part => part !== '');
-  
-  // If we're at root or in the root directory with a specific file
-  if (pathParts.length === 0 || (pathParts.length === 1 && !pathname.endsWith('/'))) {
-    return '/';
+  if (!LOADER_SCRIPT_SRC) {
+    console.error("components-loader.js: Could not determine its own script URL. Components may not load. Ensure the script is not loaded as a module or in an unusual way that prevents document.currentScript from being set.");
+    return;
   }
-  
-  // Otherwise, we need to go up one level for each subdirectory
-  return '../'.repeat(pathParts.length);
-}
+
+  // Relative path from this script (in assets/js/) to the components directory (assets/components/)
+  const headerComponentRelPath = '../components/header.html';
+  const navigationComponentRelPath = '../components/navigation.html';
+
+  try {
+    // Base URL is the loader script's own URL
+    const loaderUrl = new URL(LOADER_SCRIPT_SRC); 
+    
+    const headerPath = new URL(headerComponentRelPath, loaderUrl).href;
+    const navPath = new URL(navigationComponentRelPath, loaderUrl).href;
+
+    loadComponent('header-placeholder', headerPath, () => {
+      // After header loads, set up dropdown functionality
+      setupDropdownMenu();
+    });
+    loadComponent('navigation-placeholder', navPath, () => {
+      // After navigation loads, set active navigation item
+      highlightActiveNavItem();
+    });
+  } catch (e) {
+    console.error("Error resolving component paths in components-loader.js. Loader Script SRC:", LOADER_SCRIPT_SRC, "Error:", e);
+  }
+});
 
 /**
  * Load a component from HTML file and inject it into the specified element
@@ -63,6 +59,14 @@ function loadComponent(placeholderId, componentPath, callback) {
     })
     .then(html => {
       placeholder.innerHTML = html;
+      // Re-evaluate scripts if any in the loaded component
+      // This ensures that scripts inside header.html or navigation.html run
+      Array.from(placeholder.getElementsByTagName("script")).forEach(oldScript => {
+        const newScript = document.createElement("script");
+        Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+        newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+        oldScript.parentNode.replaceChild(newScript, oldScript);
+      });
       if (typeof callback === 'function') {
         callback();
       }

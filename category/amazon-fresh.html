@@ -45,7 +45,7 @@
     .nav-item.active { color: var(--accent-color); }
     .nav-icon { font-size: 1.5rem; display: block; margin-bottom: 2px; }
     .nav-item:focus { outline: none; }
-    @media (min-width: 768px) { .navigation { width: 600px; left: 50%; transform: translateX(-50%); border-radius: 8px 8px 0 0; } .navigation-container {} }
+    @media (min-width: 768px) { .navigation { width: 600px; left: 50%; transform: translateX(-50%); border-radius: 8px 8px 0 0; } /* Removed empty .navigation-container {} */ }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
@@ -61,21 +61,37 @@
     <div id="navigation-placeholder"></div>
   </div>
   <script>
-    // Menu functions moved to components-loader.js
-      });
+    document.addEventListener('DOMContentLoaded', () => {
+      // Calculate currentAbsolutePath for link highlighting
+      let currentPath = window.location.pathname.replace(/\/index\.html$/, '').replace(/\.html$/, '');
+      if (currentPath.endsWith('/') && currentPath !== '/') {
+        currentPath = currentPath.slice(0, -1);
+      }
+      // Ensure category pages are correctly matched, e.g. /category/amazon-fresh
+      if (!currentPath.startsWith('/')) {
+        currentPath = '/' + currentPath;
+      }
+      const currentAbsolutePath = currentPath || '/';
 
       const logoLink = document.querySelector('.header .logo a');
       if (logoLink) {
         const logoHref = logoLink.getAttribute('href');
-        const resolvedLogoUrl = new URL(logoHref, window.location.href);
-        let resolvedLogoPath = resolvedLogoUrl.pathname.replace(/\.html$/, '').replace(/\/index$/, '');
-        if (resolvedLogoPath.endsWith('/') && resolvedLogoPath !== '/') {
-            resolvedLogoPath = resolvedLogoPath.slice(0, -1);
+        let resolvedLogoPath = '';
+        if (logoHref) {
+            try {
+                const resolvedLogoUrl = new URL(logoHref, window.location.href);
+                resolvedLogoPath = resolvedLogoUrl.pathname.replace(/\/index\.html$/, '').replace(/\.html$/, '');
+                if (resolvedLogoPath.endsWith('/') && resolvedLogoPath !== '/') {
+                    resolvedLogoPath = resolvedLogoPath.slice(0, -1);
+                }
+                 if (logoHref === '../' || logoHref === '../index' || logoHref === '/') {
+                    resolvedLogoPath = '/';
+                }
+            } catch (e) {
+                console.error("Error processing logo href:", logoHref, e);
+            }
         }
-        if (logoHref === '../' || logoHref === '../index') {
-             resolvedLogoPath = '/';
-        }
-
+        
         if (resolvedLogoPath === currentAbsolutePath && currentAbsolutePath === '/') { 
             logoLink.classList.add('active');
         } else {
@@ -86,21 +102,32 @@
       document.querySelectorAll('.menu-dropdown a').forEach(link => {
         const linkHref = link.getAttribute('href');
         if (linkHref && linkHref !== '#' && !linkHref.startsWith('mailto:') && !linkHref.startsWith('tel:')) {
-          const resolvedLinkUrl = new URL(linkHref, window.location.href);
-          let resolvedLinkPath = resolvedLinkUrl.pathname.replace(/\.html$/, '').replace(/\/index$/, '');
-          if (resolvedLinkPath.endsWith('/') && resolvedLinkPath !== '/') {
-            resolvedLinkPath = resolvedLinkPath.slice(0, -1);
-          }
-          if (resolvedLinkPath === currentAbsolutePath) {
-            link.classList.add('active');
-          } else {
-            link.classList.remove('active');
+          try {
+            const resolvedLinkUrl = new URL(linkHref, window.location.href);
+            let resolvedLinkPath = resolvedLinkUrl.pathname.replace(/\/index\.html$/, '').replace(/\.html$/, '');
+            if (resolvedLinkPath.endsWith('/') && resolvedLinkPath !== '/') {
+              resolvedLinkPath = resolvedLinkPath.slice(0, -1);
+            }
+            if (!resolvedLinkPath.startsWith('/')) {
+                resolvedLinkPath = '/' + resolvedLinkPath;
+            }
+
+            if (resolvedLinkPath === currentAbsolutePath) {
+              link.classList.add('active');
+            } else {
+              link.classList.remove('active');
+            }
+          } catch (e) {
+            console.error("Error processing menu dropdown link href:", linkHref, e);
           }
         }
       });
     });
   </script>
-<script src="../assets/js/common.js"></script>\r\n<script src="../assets/js/products-data.js"></script>\r\n<script src="../assets/js/search.js"></script>\r\n<script src="../assets/js/components-loader.js"></script>
+<script src="../assets/js/common.js"></script>
+<script src="../assets/js/products-data.js"></script>
+<script src="../assets/js/search.js"></script>
+<script src="../assets/js/components-loader.js"></script>
 </body>
 </html>
 

@@ -1,31 +1,36 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
+<head>  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Explore - Markrypt Blog</title>
   <link rel="icon" href="assets/logo/favicon.ico" type="image/x-icon">
-  <link rel="shortcut icon" href="assets/logo/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="assets/logo/favicon.ico" type="image/x-icon">  <!-- Preload critical fonts and icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <!-- Preload critical resources -->
+  <script src="assets/js/preload.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Optimized CSS for better performance -->
+  <link rel="stylesheet" href="assets/css/explore-optimized.css">
   <style>
-    :root {
-      --primary-bg: #fff;
-      --text-color: #111;
-      --text-secondary: #555;
-      --accent-color: #1e90ff;
-      --secondary-color: #6cb4ee;
-      --bg-transparent: rgba(30,144,255,0.07);
-      --shadow: 0 2px 6px rgba(0,0,0,0.1);
-      --radius: 14px; /* This page has 14px, others 10px or 16px. Standardizing dropdown to 10px for now. */
-      --border-color: #e0e6ef;
+    /* Keeping only layout styles here, moved card and blog styles to external CSS */
+    .app-container {
+      position: relative;
+      min-height: 100vh;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Open Sans', sans-serif;
+    .header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 64px; /* Standardized */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1rem; /* Standardized */
       background: var(--primary-bg);
-      color: var(--text-color);
-      overflow: hidden;
+      border-bottom: 1px solid var(--border-color);
+      z-index: 100;
     }
     .app-container {
       position: relative;
@@ -97,40 +102,7 @@
       background: var(--primary-bg);
     }
     .blog-title { text-align:center; font-size:2.3rem; font-weight:800; color:var(--accent-color); margin-bottom:0.5rem; }
-    .blog-desc { text-align:center; font-size:1.15rem; color:var(--text-secondary); max-width:600px; margin:0 auto 2.2rem; }
-    .blog-grid {
-      display: flex; flex-wrap: wrap; gap:2.5rem; justify-content:flex-start;
-    }
-    .blog-card {
-      flex:1 1 22%; min-width:22%; max-width:24%; background:#fff;
-      border-radius:var(--radius); border:1.5px solid var(--border-color);
-      box-shadow:0 8px 32px rgba(30,144,255,0.1),0 1.5px 8px rgba(30,144,255,0.06);
-      display:flex; flex-direction:column; cursor:pointer;
-      overflow:hidden; transition:transform .18s,box-shadow .18s,border-color .18s;
-    }
-    .blog-card:hover {
-      transform:translateY(-10px) scale(1.03);
-      box-shadow:0 16px 40px rgba(30,144,255,0.18),0 2px 12px rgba(30,144,255,0.1);
-      border-color:var(--accent-color);
-      background:linear-gradient(120deg,#eaf6ff 0%,#fff 100%);
-    }
-    .blog-image { width:100%; height:110px; object-fit:cover; background:#eaf6ff;
-      filter:brightness(.97) saturate(1.1); transition:filter .18s;
-    }
-    .blog-card:hover .blog-image { filter:brightness(1.03) saturate(1.2); }
-    .blog-content { padding:1.1rem; display:flex;flex-direction:column;justify-content:space-between;flex:1; }
-    .blog-category { display:inline-block; font-size:.85rem; font-weight:700;
-      color:var(--accent-color);text-transform:uppercase;
-      background:rgba(30,144,255,0.08);padding:.15em .7em;border-radius:12px;
-      margin-bottom:.4rem;
-    }
-    .blog-headline { font-size:1.08rem; font-weight:800; color:var(--text-color);
-      margin-bottom:.4rem; line-height:1.25; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-      transition:color .18s;
-    }
-    .blog-card:hover .blog-headline { color:var(--accent-color); }
-    .blog-meta { font-size:.93rem; color:var(--secondary-color); margin-bottom:.5rem; font-weight:500; }
-    .blog-summary { font-size:.98rem; color:var(--text-secondary); line-height:1.5; margin-bottom:.7rem; overflow:hidden; }
+    .blog-desc { text-align:center; font-size:1.15rem; color:var(--text-secondary); max-width:600px; margin:0 auto 2.2rem; }    /* Blog styles moved to external CSS for better performance */
     .navigation {
       position: fixed;
       bottom: 0;
@@ -173,23 +145,7 @@
       }
     }
 
-    @media(min-width:768px){.navigation{width:600px;left:50%;transform:translateX(-50%);border-radius:8px 8px 0 0;}}
-
-    /* Mobile: Stack blog cards vertically */
-    @media (max-width: 700px) {
-      .blog-grid {
-        flex-direction: column;
-        gap: 1.2rem;
-      }
-      .blog-card {
-        min-width: 0;
-        max-width: 100%;
-        width: 100%;
-      }
-      .blog-image {
-        height: 150px;
-      }
-    }
+    @media(min-width:768px){.navigation{width:600px;left:50%;transform:translateX(-50%);border-radius:8px 8px 0 0;}}    /* Mobile optimizations moved to external CSS */
     .nav-item {
       flex: 1;
       text-align: center;
@@ -214,15 +170,13 @@
     }
   </style>
 </head>
-<body>
-  <div class="app-container">
+<body>  <div class="app-container">
     <div id="header-placeholder"></div>
     <main class="content">
       <div class="blog-title">Explore Markrypt Blog</div>
-      <div class="blog-desc">Insights, guides, and inspiration for health, wellness, and trending products. Discover our latest articles and curated stories.</div>
-      <div class="blog-grid">
-        <div class="blog-card" onclick="location.href='article/Top 6 Affordable Health and Wellness Must Haves'">
-          <img class="blog-image lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/hero/hero1.jpg" alt="Health and Wellness Products">
+      <div class="blog-desc">Insights, guides, and inspiration for health, wellness, and trending products. Discover our latest articles and curated stories.</div>      <div class="blog-grid">
+        <div class="blog-card" data-url="article/Top 6 Affordable Health and Wellness Must Haves">
+          <img class="blog-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/hero/hero1.jpg" alt="Health and Wellness Products">
           <div class="blog-content">
             <div>
               <div class="blog-category">Health & Wellness</div>
@@ -232,8 +186,8 @@
             </div>
           </div>
         </div>
-        <div class="blog-card" onclick="location.href='article/Top 6 Affordable Relaxation & Recovery Gadgets on Amazon'">
-          <img class="blog-image lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/hero/hero2.jpg" alt="Health and Wellness Products Collection">
+        <div class="blog-card" data-url="article/Top 6 Affordable Relaxation & Recovery Gadgets on Amazon">
+          <img class="blog-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/hero/hero2.jpg" alt="Health and Wellness Products Collection">
           <div class="blog-content">
             <div>
               <div class="blog-category">Relaxation & Recovery</div>
@@ -242,9 +196,8 @@
               <div class="blog-summary">Research-backed relaxation and recovery tools that deliver exceptional value, from eye massagers to deep tissue shiatsu devices, all highly rated.</div>
             </div>
           </div>
-        </div>
-        <div class="blog-card" onclick="location.href='article/6 Best Budget Wellness Finds Under $25 on Amazon - Markrypt'">
-          <img class="blog-image lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/hero/hero3.jpg" alt="Budget Wellness Finds">
+        </div>        <div class="blog-card" data-url="article/6 Best Budget Wellness Finds Under $25 on Amazon - Markrypt">
+          <img class="blog-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/hero/hero3.jpg" alt="Budget Wellness Finds">
           <div class="blog-content">
             <div>
               <div class="blog-category">Budget Wellness Finds</div>
@@ -254,8 +207,8 @@
             </div>
           </div>
         </div>
-        <div class="blog-card" onclick="location.href='article/Amazons Elite 5. Top Rated Home and Kitchen Best Sellers You Cannot Ignore. Markrypt'">
-          <img class="blog-image lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/hero/hero4.jpg" alt="Amazon Home & Kitchen Best Sellers">
+        <div class="blog-card" data-url="article/Amazons Elite 5. Top Rated Home and Kitchen Best Sellers You Cannot Ignore. Markrypt">
+          <img class="blog-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/hero/hero4.jpg" alt="Amazon Home & Kitchen Best Sellers">
           <div class="blog-content">
             <div>
               <div class="blog-category">Home & Kitchen</div>
@@ -264,9 +217,8 @@
               <div class="blog-summary">Discover 5 top-rated best sellers in Home & Kitchen on Amazon, from ant killers to cooling sheets and popular tumblers.</div>
             </div>
           </div>
-        </div>
-        <div class="blog-card" onclick="location.href='article/Top 5 Amazon Beauty and Personal Care Best Sellers'">
-          <img class="blog-image lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/hero/hero5.jpg" alt="Beauty and Personal Care Products">
+        </div>        <div class="blog-card" data-url="article/Top 5 Amazon Beauty and Personal Care Best Sellers">
+          <img class="blog-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/hero/hero5.jpg" alt="Beauty and Personal Care Products">
           <div class="blog-content">
             <div>
               <div class="blog-category">Beauty & Personal Care</div>
@@ -276,8 +228,8 @@
             </div>
           </div>
         </div>
-        <div class="blog-card" onclick="location.href='article/Top 5 Amazon Automotive Best Sellers. Markrypt'">
-          <img class="blog-image lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/hero/hero6.jpg" alt="Automotive Best Sellers">
+        <div class="blog-card" data-url="article/Top 5 Amazon Automotive Best Sellers. Markrypt">
+          <img class="blog-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/hero/hero6.jpg" alt="Automotive Best Sellers">
           <div class="blog-content">
             <div>
               <div class="blog-category">Automotive</div>
@@ -286,9 +238,8 @@
               <div class="blog-summary">Discover 5 top-rated best sellers in Automotive on Amazon, from microfiber cloths to motor oil and retainer clips.</div>
             </div>
           </div>
-        </div>
-        <div class="blog-card" onclick="location.href='article/Top 5 Amazon Baby Best Sellers'">
-          <img class="blog-image lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/hero/hero7.jpg" alt="Top 5 Amazon Baby Best Sellers">
+        </div>        <div class="blog-card" data-url="article/Top 5 Amazon Baby Best Sellers">
+          <img class="blog-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/hero/hero7.jpg" alt="Top 5 Amazon Baby Best Sellers">
           <div class="blog-content">
             <div>
               <div class="blog-category">Baby Products</div>
@@ -298,8 +249,8 @@
             </div>
           </div>
         </div>
-        <div class="blog-card" onclick="location.href='article/Top Gifts for Dad 2025'">
-          <img class="blog-image lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/hero/hero8.jpg" alt="Top Gifts for Dad 2025">
+        <div class="blog-card" data-url="article/Top Gifts for Dad 2025">
+          <img class="blog-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/hero/hero8.jpg" alt="Top Gifts for Dad 2025">
           <div class="blog-content">
             <div>
               <div class="blog-category">Gifts for Dad</div>
@@ -312,64 +263,32 @@
       </div>
     </main>
     <div id="navigation-placeholder"></div>
-  </div>
-  <script src="assets/js/products-data.js"></script>
-  <script src="assets/js/products-manager.js"></script>
-  <script src="assets/js/search.js"></script>
+  </div>  <script src="assets/js/products-data.js" defer></script>
+  <script src="assets/js/products-manager.js" defer></script>
+  <script src="assets/js/search.js" defer></script>
+  <!-- Load image optimizer first, without defer to ensure it runs ASAP -->
+  <script src="assets/js/image-optimizer.js"></script>
+  <!-- Use our optimized scripts -->
+  <script src="assets/js/explore-optimized.js"></script>
+  <!-- Direct image loading script to ensure all images load even if the optimizer fails -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Standardized active navigation item logic
-      const currentPathname = window.location.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
-      const normalizedCurrentPath = (currentPathname !== '/' && currentPathname.endsWith('/')) ? currentPathname.slice(0, -1) : currentPathname;
-      
-      document.querySelectorAll('.navigation .nav-item, .menu-dropdown a, .header .logo a').forEach(link => {
-        const linkHref = link.getAttribute('href');
-        if (linkHref && linkHref !== '#' && !linkHref.startsWith('mailto:') && !linkHref.startsWith('tel:')) {
-          const linkUrl = new URL(linkHref, window.location.href);
-          let linkPathname = linkUrl.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
-          const normalizedLinkPath = (linkPathname !== '/' && linkPathname.endsWith('/')) ? linkPathname.slice(0, -1) : linkPathname;
-
-          // Special handling for the root path represented by "/"
-          const targetPath = (normalizedLinkPath === '') ? '/' : normalizedLinkPath;
-          const currentActivePath = (normalizedCurrentPath === '') ? '/' : normalizedCurrentPath;
-
-          if (targetPath === currentActivePath) {
-            link.classList.add('active');
-          } else {
-            link.classList.remove('active');
-          }
+    // Ensure all images load by directly loading any that haven't loaded after 3 seconds
+    setTimeout(function() {
+      var images = document.querySelectorAll('.blog-image:not(.loaded)');
+      console.log('Final image check - Images still needing load:', images.length);
+      images.forEach(function(img) {
+        if (img.dataset.src && !img.classList.contains('loaded')) {
+          console.log('Forcing load of:', img.dataset.src);
+          img.onload = function() { 
+            this.classList.add('loaded');
+            console.log('Forced load complete:', this.dataset.src);
+          };
+          img.src = img.dataset.src;
         }
       });
+    }, 3000);
 
-      // REMOVE THE PREVIOUS CLICK HANDLER BLOCK THAT ADDED .html
-      // Default browser navigation will now handle clicks on clean hrefs.
-
-      // Lazy loading images (this logic is fine)
-      const lazyImages = document.querySelectorAll('img.lazy');
-      if ('IntersectionObserver' in window) {
-        let lazyImageObserver = new IntersectionObserver((entries, observer) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              let lazyImage = entry.target;
-              lazyImage.src = lazyImage.dataset.src;
-              lazyImage.classList.remove('lazy');
-              lazyImageObserver.unobserve(lazyImage);
-            }
-          });
-        });
-        lazyImages.forEach(lazyImage => {
-          lazyImageObserver.observe(lazyImage);
-        });
-      } else {
-        // Fallback for browsers that don't support IntersectionObserver
-        lazyImages.forEach(lazyImage => {
-          lazyImage.src = lazyImage.dataset.src;
-          lazyImage.classList.remove('lazy');
-        });
-      }
-    });
-
-    // Dropdown menu logic (ensure these are defined)
+    // Dropdown menu logic kept simple
     function toggleMenuDropdown() {
       const menu = document.getElementById('menuDropdown');
       if (menu) {
@@ -388,6 +307,6 @@
       }, 150); 
     }
   </script>
-<script src="assets/js/components-loader.js"></script>
+<script src="assets/js/components-loader.js" defer></script>
 </body>
 </html>

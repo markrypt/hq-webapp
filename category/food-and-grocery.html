@@ -222,23 +222,56 @@
   </div>
 
   <script>
-    // Dropdown menu logic
-    // Menu functions moved to components-loader.js
-      });
+    document.addEventListener('DOMContentLoaded', function() {
+      // Define currentAbsolutePath for link highlighting
+      let currentPath = window.location.pathname;
+      // Normalize to remove 'index.html' or '.html' and ensure leading/trailing slashes are consistent
+      if (currentPath.endsWith('/index.html')) {
+        currentPath = currentPath.substring(0, currentPath.length - 'index.html'.length);
+      } else if (currentPath.endsWith('.html')) {
+        currentPath = currentPath.substring(0, currentPath.length - '.html'.length);
+      }
+      // Ensure it starts with a /
+      if (!currentPath.startsWith('/')) {
+        currentPath = '/' + currentPath;
+      }
+      // Ensure it ends with a / if it's not the root
+      if (currentPath !== '/' && !currentPath.endsWith('/')) {
+        currentPath += '/';
+      }
+      // Special case for the root path
+      if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+          currentPath = '/';
+      }
+      const currentAbsolutePath = currentPath;
+
+      // Menu functions moved to components-loader.js
 
       const logoLink = document.querySelector('.header .logo a');
       if (logoLink) {
         const logoHref = logoLink.getAttribute('href');
-        const resolvedLogoUrl = new URL(logoHref, window.location.href);
-        let resolvedLogoPath = resolvedLogoUrl.pathname.replace(/\.html$/, '').replace(/\/index$/, '');
-        if (resolvedLogoPath.endsWith('/') && resolvedLogoPath !== '/') {
-            resolvedLogoPath = resolvedLogoPath.slice(0, -1);
-        }
-        if (logoHref === '../' || logoHref === '../index') {
-             resolvedLogoPath = '/';
-        }
+        let resolvedLogoPath = new URL(logoHref, window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1)).pathname;
 
-        if (resolvedLogoPath === currentAbsolutePath && currentAbsolutePath === '/') { 
+        if (resolvedLogoPath.endsWith('/index.html')) {
+            resolvedLogoPath = resolvedLogoPath.substring(0, resolvedLogoPath.length - 'index.html'.length);
+        } else if (resolvedLogoPath.endsWith('.html')) {
+            resolvedLogoPath = resolvedLogoPath.substring(0, resolvedLogoPath.length - '.html'.length);
+        }
+        if (!resolvedLogoPath.startsWith('/')) {
+            resolvedLogoPath = '/' + resolvedLogoPath;
+        }
+        if (resolvedLogoPath !== '/' && !resolvedLogoPath.endsWith('/')) {
+            resolvedLogoPath += '/';
+        }
+        if (logoHref === '../' || logoHref === '../index.html' || logoHref === '../index') {
+             const pathSegments = window.location.pathname.split('/').filter(segment => segment.length > 0);
+             if (pathSegments.length > 1 && pathSegments[0] === 'category') { 
+                resolvedLogoPath = '/';
+             }
+        }
+        if (resolvedLogoPath === '/index/') resolvedLogoPath = '/'; // Ensure root is just '/'
+
+        if (resolvedLogoPath === currentAbsolutePath) { 
             logoLink.classList.add('active');
         } else {
             logoLink.classList.remove('active');
@@ -248,11 +281,24 @@
       document.querySelectorAll('.menu-dropdown a').forEach(link => {
         const linkHref = link.getAttribute('href');
         if (linkHref && linkHref !== '#' && !linkHref.startsWith('mailto:') && !linkHref.startsWith('tel:')) {
-          const resolvedLinkUrl = new URL(linkHref, window.location.href);
-          let resolvedLinkPath = resolvedLinkUrl.pathname.replace(/\.html$/, '').replace(/\/index$/, '');
-          if (resolvedLinkPath.endsWith('/') && resolvedLinkPath !== '/') {
-            resolvedLinkPath = resolvedLinkPath.slice(0, -1);
+          let resolvedLinkPath = new URL(linkHref, window.location.href).pathname;
+
+          if (resolvedLinkPath.endsWith('/index.html')) {
+            resolvedLinkPath = resolvedLinkPath.substring(0, resolvedLinkPath.length - 'index.html'.length);
+          } else if (resolvedLinkPath.endsWith('.html')) {
+            resolvedLinkPath = resolvedLinkPath.substring(0, resolvedLinkPath.length - '.html'.length);
           }
+          if (!resolvedLinkPath.startsWith('/')) {
+            resolvedLinkPath = '/' + resolvedLinkPath;
+          }
+          if (resolvedLinkPath !== '/' && !resolvedLinkPath.endsWith('/')) {
+            resolvedLinkPath += '/';
+          }
+          if (linkHref === '../' || linkHref === '../index.html' || linkHref === '../index' || linkHref === '/' || linkHref === '/index.html') {
+             resolvedLinkPath = '/';
+          }
+          if (resolvedLinkPath === '/index/') resolvedLinkPath = '/'; // Ensure root is just '/'
+
           if (resolvedLinkPath === currentAbsolutePath) {
             link.classList.add('active');
           } else {

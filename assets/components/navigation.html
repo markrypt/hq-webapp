@@ -1,2 +1,51 @@
 ﻿<div id="navigation-placeholder"></div>
+<nav class="navigation">
+    <a href="../explore.html" class="nav-item" aria-label="Explore">
+      <i class="fas fa-compass nav-icon"></i>
+      <span>Explore</span>
+    </a>
+    <a href="../trending.html" class="nav-item" aria-label="Trending">
+      <i class="fas fa-fire nav-icon"></i>
+      <span>Trending</span>
+    </a>
+    <a href="../index.html" class="nav-item" aria-label="Home">
+      <i class="fas fa-home nav-icon"></i>
+      <span>Home</span>
+    </a>
+    <a href="../products.html" class="nav-item" aria-label="Products">
+      <i class="fas fa-box nav-icon"></i>
+      <span>Products</span>
+    </a>
+    <a href="../search-verify.html" class="nav-item" aria-label="Search">
+      <i class="fas fa-search nav-icon"></i>
+      <span>Search</span>
+    </a>
+</nav>
+<script>
+  function setActiveNavItem() {
+    const pagePath = window.location.pathname;
+    const navItems = document.querySelectorAll('.navigation .nav-item');
+
+    navItems.forEach(item => {
+      // Construct the expected path from the href, removing '../'
+      const itemPath = item.getAttribute('href').replace('../', '');
+      // Construct the current page path, removing leading '/' to match itemPath format
+      const currentPage = pagePath.startsWith('/') ? pagePath.substring(1) : pagePath;
+
+      if (itemPath === currentPage) {
+        item.classList.add('active');
+      } else {
+        item.classList.remove('active');
+      }
+    });
+  }
+
+  // Ensure the script runs after the DOM is fully loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setActiveNavItem);
+  } else {
+    // DOMContentLoaded has already fired
+    setActiveNavItem();
+  }
+</script>
 

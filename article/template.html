@@ -31,6 +31,7 @@
   <link rel="icon" href="../assets/logo/favicon.ico" type="image/x-icon">
   <link rel="shortcut icon" href="../assets/logo/favicon.ico" type="image/x-icon">
   
+  <link rel="stylesheet" href="../assets/css/styles.css"> {/* Added main stylesheet */}
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   
@@ -48,7 +49,7 @@
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html {
-      overflow: hidden;
+      /* overflow: hidden; */
       height: 100%;
     }
     body {
@@ -58,7 +59,7 @@
       height: 100%;
       margin: 0;
       padding: 0;
-      overflow: hidden;
+      /* overflow: hidden; */
     }
     .container {
       display: flex;
@@ -67,6 +68,52 @@
       width: 100%;
       position: relative;
       background: var(--primary-bg);
+    }
+    /* Add styles for navigation items to ensure correct icon and text alignment */
+    .nav-item {
+      display: flex; /* Added for consistency */
+      flex-direction: column; /* Added for consistency */
+      align-items: center; /* Added for consistency */
+      justify-content: center; /* Added for consistency */
+      flex: 1; /* Ensure items take up equal space */
+      text-align: center;
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: color 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      outline: none;
+      height: 100%; /* Ensure full height for centering */
+      padding: 0; /* Reset padding */
+      margin: 0; /* Reset margin */
+    }
+
+    .nav-item.active {
+      color: var(--accent-color);
+    }
+
+    .nav-icon {
+      font-size: 1.5rem;
+      display: block;
+      margin-bottom: 2px;
+      width: 100%; /* Ensure icon takes full width for centering */
+      text-align: center;
+      height: 24px; /* Fixed height for icon */
+      line-height: 24px; /* Vertically align icon */
+    }
+
+    .nav-item span {
+      display: block;
+      width: 100%;
+      text-align: center;
+      height: 16px; /* Fixed height for text */
+      line-height: 16px; /* Vertically align text */
+    }
+
+    .nav-item:focus {
+      outline: none;
     }
     .article-content {
       flex: 1;

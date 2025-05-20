@@ -255,5 +255,5 @@ body {
 }
 
 .company-name .krypt {
-  color: #007bff;
+  color: var(--accent-color);
 }
