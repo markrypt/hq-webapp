@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Markrypt – Discover Curated Products</title>
-  <meta name="description" content="Discover top-curated products and insightful articles with Markrypt. Your gateway to a better shopping experience with handpicked collections and recommendations.">
+  <title><span class="company-name"><span class="mark">Mark</span><span class="krypt">rypt</span></span> – Discover Curated Products</title>
+  <meta name="description" content="Discover top-curated products and insightful articles with <span class="company-name"><span class="mark">Mark</span><span class="krypt">rypt</span></span>. Your gateway to a better shopping experience with handpicked collections and recommendations.">
   <meta name="keywords" content="Markrypt, curated products, online shopping, product discovery, product recommendations">
   <meta property="og:title" content="Markrypt – Discover Curated Products">
   <meta property="og:description" content="Your gateway to discovering top-curated products and insightful articles. Dive in and elevate your shopping experience.">
@@ -72,8 +72,8 @@
       height: 32px;
       margin-right: 0.5rem;
     }
-    .logo span:first-child { color: var(--text-color); }
-    .logo span:last-child  { color: var(--accent-color); }
+    .logo span:first-child { color: #000000; } /* Black */
+    .logo span:last-child  { color: #0000FF; } /* Blue */
     .header-controls { display: flex; gap: 1rem; position: relative; }
     .search-icon, .menu-icon { font-size: 1.2rem; cursor: pointer; color: var(--accent-color); }
 
@@ -667,7 +667,7 @@
       border-radius: 50px;
       font-size: 0.95rem;
       font-weight: 600;
-      color: var(--text-secondary);
+      color: var (--text-secondary);
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 2px 8px rgba(0,0,0,0.03);
@@ -1570,30 +1570,8 @@
   </style>
 </head>
 <body>
-  <header class="header">
-    <div class="logo">
-      <a href="/">
-        <img src="assets/logo/logo.png" alt="Markrypt Logo" class="logo-image">
-        <span>Mar</span><span>krypt</span>
-      </a>
-    </div>
-    <div class="header-controls">
-      <div class="search-icon">
-        <i class="fas fa-search"></i>
-      </div>
-      <div class="menu-icon" tabindex="0" aria-haspopup="true" aria-expanded="false" onclick="toggleMenuDropdown()" onblur="closeMenuDropdown()">
-        <i class="fas fa-bars"></i>
-        <div class="menu-dropdown" id="menuDropdown">
-          <div class="dropdown-title">Legal & Info</div>
-          <a href="/privacy">Privacy Policy</a>
-          <a href="/terms">Terms of Use</a>
-          <a href="/cookies">Cookie Policy</a>
-          <a href="/about">About Markrypt</a>
-          <a href="/contact">Contact Us</a>
-        </div>
-      </div>
-    </div>
-  </header>
+  <!-- Header Placeholder - Will be populated by component-loader.js -->
+  <div id="header-placeholder"></div>
 
   <main>
     <!-- Hero Section -->
@@ -1948,7 +1926,7 @@
     <!-- Benefits Section -->
     <section class="benefits">
       <div class="container">
-        <h2 class="section-title">Why Shop With Markrypt?</h2>
+        <h2 class="section-title">Why Shop With <span class="company-name"><span class="mark">Mark</span><span class="krypt">rypt</span></span>?</h2>
         <div class="section-heading-line"></div>
         <p class="section-subtitle">We're committed to making your shopping experience better in every way possible</p>
         
@@ -1992,62 +1970,20 @@
     <section class="cta">
       <div class="cta-content">
         <h2>Ready to Discover Amazing Products?</h2>
-        <p>Join thousands of smart shoppers who trust Markrypt for honest reviews and expert recommendations.</p>
+        <p>Join thousands of smart shoppers who trust <span class="company-name"><span class="mark">Mark</span><span class="krypt">rypt</span></span> for honest reviews and expert recommendations.</p>
         <a href="trending" class="btn primary">Explore Trending Products <i class="fas fa-arrow-right"></i></a>
       </div>
     </section>
   </main>
-  <nav class="navigation">
-    <div class="navigation-container">
-      <a href="trending" class="nav-item">
-        <i class="fas fa-fire nav-icon"></i>
-        <span>Trending</span>
-      </a>
-      <a href="products" class="nav-item">
-        <i class="fas fa-tag nav-icon"></i>
-        <span>Products</a>
-      <a href="/" class="nav-item active">
-        <i class="fas fa-home nav-icon"></i>
-        <span>Home</span>
-      </a>
-      <a href="explore" class="nav-item">
-        <i class="fas fa-compass nav-icon"></i>
-        <span>Explore</span>
-      </a>
-      <a href="about" class="nav-item">
-        <i class="fas fa-info-circle nav-icon"></i>
-        <span>About</span>
-      </a>
-    </div>
-  </nav>
+  
+  <!-- Navigation Placeholder - Will be populated by component-loader.js -->
+  <div id="navigation-placeholder"></div>
+
   <script src="assets/js/products-data.js"></script>
   <script src="assets/js/products-manager.js"></script>
   <script src="assets/js/search.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Update active nav item based on current page
-      const currentPathname = window.location.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
-      const normalizedCurrentPath = (currentPathname !== '/' && currentPathname.endsWith('/')) ? currentPathname.slice(0, -1) : currentPathname;
-
-      document.querySelectorAll('.navigation .nav-item, .menu-dropdown a, .header .logo a').forEach(link => {
-        const linkHref = link.getAttribute('href');
-        if (linkHref && linkHref !== '#' && !linkHref.startsWith('mailto:') && !linkHref.startsWith('tel:')) {
-          const linkUrl = new URL(linkHref, window.location.href);
-          let linkPathname = linkUrl.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
-          const normalizedLinkPath = (linkPathname !== '/' && linkPathname.endsWith('/')) ? linkPathname.slice(0, -1) : linkPathname;
-
-          // Special handling for the root path represented by "/"
-          const targetPath = (normalizedLinkPath === '') ? '/' : normalizedLinkPath;
-          const currentActivePath = (normalizedCurrentPath === '') ? '/' : normalizedCurrentPath;
-          
-          if (targetPath === currentActivePath) {
-            link.classList.add('active');
-          } else {
-            link.classList.remove('active');
-          }
-        }
-      });
-
       // Add event listeners for hero buttons
       const heroButtons = document.querySelectorAll('.hero-buttons .btn');
       if (heroButtons) {
@@ -2061,25 +1997,9 @@
         });
       }
     });
-
-    // Dropdown menu logic
-    function toggleMenuDropdown() {
-      const menu = document.getElementById('menuDropdown');
-      menu.classList.toggle('active');
-      const icon = document.querySelector('.menu-icon');
-      icon.setAttribute('aria-expanded', menu.classList.contains('active'));
-    }
-
-    function closeMenuDropdown() {
-      // Timeout to allow click on dropdown items before it closes
-      setTimeout(() => {
-        const menu = document.getElementById('menuDropdown');
-        if (menu) menu.classList.remove('active');
-        const icon = document.querySelector('.menu-icon');
-        if (icon) icon.setAttribute('aria-expanded', 'false');
-      }, 150); 
-    }
-  </script>    <script src="assets/js/common.js"></script>
+  </script>
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/components-loader.js"></script>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",

@@ -392,30 +392,8 @@
 </head>
 <body>
   <div class="app-container">
-    <!-- Header -->
-    <header class="header">
-      <div class="logo">
-        <a href="/"> <!-- Changed from index -->
-          <img src="assets/logo/logo.png" alt="Markrypt Logo" class="logo-image">
-          <span>Mark</span><span>rypt</span>
-        </a>
-      </div>
-      <div class="header-controls">
-        <div class="search-icon" aria-label="Search">
-          <i class="fas fa-search"></i>
-        </div>        <div class="menu-icon" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-label="Menu" onclick="toggleMenuDropdown()" onblur="closeMenuDropdown()">
-          <i class="fas fa-bars"></i>
-          <div class="menu-dropdown" id="menuDropdown">
-            <div class="dropdown-title">Legal & Info</div>
-            <a href="privacy">Privacy Policy</a>
-            <a href="terms">Terms of Use</a>
-            <a href="cookies">Cookie Policy</a>
-            <a href="about">About Markrypt</a>
-            <a href="contact">Contact Us</a>
-          </div>
-        </div>
-      </div>
-    </header>
+    <!-- Header Placeholder - Will be populated by component-loader.js -->
+    <div id="header-placeholder"></div>
 
     <!-- New Scrollable Content Wrapper - Restored -->
     <div class="scrollable-content-area">
@@ -436,31 +414,8 @@
       </main>
     </div> <!-- End of .scrollable-content-area -->
 
-    <!-- Bottom Navigation -->
-    <nav class="navigation">
-      <div class="navigation-container">
-        <a href="trending" class="nav-item">
-          <i class="fas fa-fire nav-icon"></i>
-          <span>Trending</span>
-        </a>
-        <a href="products" class="nav-item"> <!-- Active on this page -->
-          <i class="fas fa-tag nav-icon"></i>
-          <span>Products</span>
-        </a>
-        <a href="/" class="nav-item"> <!-- Changed from index -->
-          <i class="fas fa-home nav-icon"></i>
-          <span>Home</span>
-        </a>
-        <a href="explore" class="nav-item">
-          <i class="fas fa-compass nav-icon"></i>
-          <span>Explore</span>
-        </a>
-        <a href="about" class="nav-item">
-          <i class="fas fa-info-circle nav-icon"></i>
-          <span>About</span>
-        </a>
-      </div>
-    </nav>
+    <!-- Navigation Placeholder - Will be populated by component-loader.js -->
+    <div id="navigation-placeholder"></div>
   </div>
 
   <script src="assets/js/products-data.js"></script>
@@ -630,50 +585,9 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       initializeCategories();
-      
-      // Standardized active navigation item logic
-      const currentPathname = window.location.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
-      const normalizedCurrentPath = (currentPathname !== '/' && currentPathname.endsWith('/')) ? currentPathname.slice(0, -1) : currentPathname;
-      
-      document.querySelectorAll('.navigation .nav-item, .menu-dropdown a, .header .logo a').forEach(link => {
-        const linkHref = link.getAttribute('href');
-        if (linkHref && linkHref !== '#' && !linkHref.startsWith('mailto:') && !linkHref.startsWith('tel:')) {
-          const linkUrl = new URL(linkHref, window.location.href);
-          let linkPathname = linkUrl.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
-          const normalizedLinkPath = (linkPathname !== '/' && linkPathname.endsWith('/')) ? linkPathname.slice(0, -1) : linkPathname;
-
-          // Special handling for the root path represented by "/"
-          const targetPath = (normalizedLinkPath === '') ? '/' : normalizedLinkPath;
-          const currentActivePath = (normalizedCurrentPath === '') ? '/' : normalizedCurrentPath;
-
-          if (targetPath === currentActivePath) {
-            link.classList.add('active');
-          } else {
-            link.classList.remove('active');
-          }
-        }
-      });
     });
-
-    // Dropdown menu logic (ensure these are defined)
-    function toggleMenuDropdown() {
-      const menu = document.getElementById('menuDropdown');
-      if (menu) {
-        menu.classList.toggle('active');
-        const icon = document.querySelector('.menu-icon');
-        if (icon) icon.setAttribute('aria-expanded', menu.classList.contains('active'));
-      }
-    }
-    function closeMenuDropdown() { 
-      setTimeout(() => {
-        const menu = document.getElementById('menuDropdown');
-        if (menu) menu.classList.remove('active');
-        const icon = document.querySelector('.menu-icon');
-        if (icon) icon.setAttribute('aria-expanded', 'false');      }, 150);
-    }
   </script>
   <script src="assets/js/common.js"></script>
-  <script src="assets/js/products-data.js"></script>
-  <script src="assets/js/search.js"></script>
+  <script src="assets/js/components-loader.js"></script>
 </body>
 </html>

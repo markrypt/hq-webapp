@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -179,29 +179,7 @@
   </style>
 </head>
 <body>
-  <header class="header">
-    <div class="logo">
-      <a href="/"> <!-- Changed from index -->
-        <img src="assets/logo/logo.png" alt="Markrypt Logo" class="logo-image">
-        <span>Mark</span><span>rypt</span>
-      </a>
-    </div>
-    <div class="header-controls">
-      <div class="search-icon" aria-label="Search">
-        <i class="fas fa-search"></i>
-      </div>      <div class="menu-icon" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-label="Menu" onclick="toggleMenuDropdown()" onblur="closeMenuDropdown()">
-        <i class="fas fa-bars"></i>
-        <div class="menu-dropdown" id="menuDropdown">
-          <div class="dropdown-title">Legal & Info</div>
-          <a href="privacy">Privacy Policy</a>
-          <a href="terms">Terms of Use</a>
-          <a href="cookies">Cookie Policy</a>
-          <a href="about">About Markrypt</a>
-          <a href="contact">Contact Us</a>
-        </div>
-      </div>
-    </div>
-  </header>
+  <div id="header-placeholder"></div>
 
   <div class="container">
     <h1>Contact Us</h1>
@@ -210,30 +188,7 @@
     <p>Address: 123 Markrypt Lane, Web City, WC 12345</p>
   </div>
 
-  <nav class="navigation">
-    <div class="navigation-container">
-      <a href="trending" class="nav-item">
-        <i class="fas fa-fire nav-icon"></i>
-        <span>Trending</span>
-      </a>
-      <a href="products" class="nav-item">
-        <i class="fas fa-tag nav-icon"></i>
-        <span>Products</span>
-      </a>
-      <a href="/" class="nav-item"> <!-- Changed from index -->
-        <i class="fas fa-home nav-icon"></i>
-        <span>Home</span>
-      </a>
-      <a href="explore" class="nav-item">
-        <i class="fas fa-compass nav-icon"></i>
-        <span>Explore</span>
-      </a>
-      <a href="about" class="nav-item">
-        <i class="fas fa-info-circle nav-icon"></i>
-        <span>About</span>
-      </a>
-    </div>
-  </nav>
+  <div id="navigation-placeholder"></div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -275,6 +230,8 @@
   <script src="assets/js/common.js"></script>
   <script src="assets/js/products-data.js"></script>
   <script src="assets/js/search.js"></script>
+<script src="assets/js/components-loader.js"></script>
 </body>
 </html>
+
 

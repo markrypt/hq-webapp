@@ -249,3 +249,11 @@ body {
     margin: 1rem auto;
   }
 }
+
+.company-name .mark {
+  color: black;
+}
+
+.company-name .krypt {
+  color: #007bff;
+}
