@@ -18,24 +18,11 @@ RewriteRule ^index(\.html)?$ / [R=301,L]
 # RewriteCond %{REQUEST_FILENAME} -d
 # RewriteRule ^(.*[^/])$ /$1/ [R=301,L]
 
-# Internally rewrite clean URL to .html file
+# Internally rewrite clean URL to .html file (handles optional trailing slash)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
-RewriteRule ^(.*)$ $1.html [L,QSA]
+RewriteRule ^(.+?)/?$ $1.html [L,QSA] # Rule updated
 
 # Set default document as index.html
 DirectoryIndex index.html
-
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteBase /
-  
-  # if the request doesn't map to a real file or dir…
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  # …but a corresponding .html file _does_ exist…
-  RewriteCond %{REQUEST_FILENAME}.html -f
-  # …internally rewrite "/foo" → "/foo.html"
-  RewriteRule ^(.+?)/?$ $1.html [L,QSA]
-</IfModule>

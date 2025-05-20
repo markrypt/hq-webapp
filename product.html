@@ -442,60 +442,20 @@
     </div>
   </nav>
   <script src="assets/js/products-data.js"></script>
+  <script src="assets/js/common.js"></script>
   <script src="assets/js/products-manager.js"></script>
   <script src="assets/js/search.js"></script>
   <script src="assets/js/product-detail.js"></script>
   <script>
-    console.log('Product page scripts loaded');
-    // Verify that productsData is available
-    if (typeof productsData !== 'undefined') {
-      console.log(`Product data loaded with ${productsData.length} products`);
+    // This script block is for product.html specific logging or minor initializations.
+    console.log('[ProductHTML] All page-specific scripts loaded.');
+    if (typeof productsData !== 'undefined' && productsData) {
+      console.log(`[ProductHTML] productsData is available with ${productsData.length} products.`);
     } else {
-      console.error('Products data is not available!');
+      console.error('[ProductHTML] CRITICAL: productsData is NOT available or empty after script loading!');
     }
-  </script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Update active nav item based on current page
-      const currentPathname = window.location.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
-      const normalizedCurrentPath = (currentPathname !== '/' && currentPathname.endsWith('/')) ? currentPathname.slice(0, -1) : currentPathname;
-
-      document.querySelectorAll('.navigation .nav-item, .menu-dropdown a, .header .logo a').forEach(link => {
-        const linkHref = link.getAttribute('href');
-        if (linkHref && linkHref !== '#' && !linkHref.startsWith('mailto:') && !linkHref.startsWith('tel:')) {
-          const linkUrl = new URL(linkHref, window.location.href);
-          let linkPathname = linkUrl.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
-          const normalizedLinkPath = (linkPathname !== '/' && linkPathname.endsWith('/')) ? linkPathname.slice(0, -1) : linkPathname;
-
-          // Special handling for the root path represented by "/"
-          const targetPath = (normalizedLinkPath === '') ? '/' : normalizedLinkPath;
-          const currentActivePath = (normalizedCurrentPath === '') ? '/' : normalizedCurrentPath;
-          
-          if (targetPath === currentActivePath) {
-            link.classList.add('active');
-          } else {
-            link.classList.remove('active');
-          }
-        }
-      });
-    });
-
-    // Dropdown menu logic
-    function toggleMenuDropdown() {
-      const menu = document.getElementById('menuDropdown');
-      menu.classList.toggle('active');
-      const icon = document.querySelector('.menu-icon');
-      icon.setAttribute('aria-expanded', menu.classList.contains('active'));
-    }
-
-    function closeMenuDropdown() {
-      // Timeout to allow click on dropdown items before it closes
-      setTimeout(() => {
-        const menu = document.getElementById('menuDropdown');
-        if (menu) menu.classList.remove('active');
-        const icon = document.querySelector('.menu-icon');
-        if (icon) icon.setAttribute('aria-expanded', 'false');
-      }, 150); 
-    }
+    // The product-detail.js script handles its own initialization.
+    // Malformed JavaScript block, duplicate script tags, and redundant inline scripts previously present after this point have been removed.
   </script>
 </body>
 </html>
