@@ -7,9 +7,7 @@
   <link rel="shortcut icon" href="assets/logo/favicon.ico" type="image/x-icon">  <!-- Preload critical fonts and icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-  <!-- Preload critical resources -->
-  <script src="assets/js/preload.js"></script>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>  <!-- Preload is now handled by optimized-core.js -->
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Optimized CSS for better performance -->
@@ -266,47 +264,11 @@
   </div>  <script src="assets/js/products-data.js" defer></script>
   <script src="assets/js/products-manager.js" defer></script>
   <script src="assets/js/search.js" defer></script>
-  <!-- Load image optimizer first, without defer to ensure it runs ASAP -->
-  <script src="assets/js/image-optimizer.js"></script>
-  <!-- Use our optimized scripts -->
-  <script src="assets/js/explore-optimized.js"></script>
-  <!-- Direct image loading script to ensure all images load even if the optimizer fails -->
-  <script>
-    // Ensure all images load by directly loading any that haven't loaded after 3 seconds
-    setTimeout(function() {
-      var images = document.querySelectorAll('.blog-image:not(.loaded)');
-      console.log('Final image check - Images still needing load:', images.length);
-      images.forEach(function(img) {
-        if (img.dataset.src && !img.classList.contains('loaded')) {
-          console.log('Forcing load of:', img.dataset.src);
-          img.onload = function() { 
-            this.classList.add('loaded');
-            console.log('Forced load complete:', this.dataset.src);
-          };
-          img.src = img.dataset.src;
-        }
-      });
-    }, 3000);
-
-    // Dropdown menu logic kept simple
-    function toggleMenuDropdown() {
-      const menu = document.getElementById('menuDropdown');
-      if (menu) {
-        menu.classList.toggle('active');
-        const icon = document.querySelector('.menu-icon');
-        if (icon) icon.setAttribute('aria-expanded', menu.classList.contains('active'));
-      }
-    }
-
-    function closeMenuDropdown() { 
-      setTimeout(() => {
-        const menu = document.getElementById('menuDropdown');
-        if (menu) menu.classList.remove('active');
-        const icon = document.querySelector('.menu-icon');
-        if (icon) icon.setAttribute('aria-expanded', 'false');
-      }, 150); 
-    }
-  </script>
-<script src="assets/js/components-loader.js" defer></script>
+  
+  <!-- Consolidated optimized core script -->
+  <script src="assets/js/optimized-core.js"></script>
+  
+  <!-- Component loader must be loaded after optimized-core.js -->
+  <script src="assets/js/components-loader.js"></script>
 </body>
 </html>

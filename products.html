@@ -417,7 +417,6 @@
     <!-- Navigation Placeholder - Will be populated by component-loader.js -->
     <div id="navigation-placeholder"></div>
   </div>
-
   <script src="assets/js/products-data.js"></script>
   <script src="assets/js/products-manager.js"></script>
   <script src="assets/js/search.js"></script>
@@ -585,9 +584,10 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       initializeCategories();
-    });
-  </script>
-  <script src="assets/js/common.js"></script>
+    });  </script>
+  <!-- Consolidated optimized core script -->
+  <script src="assets/js/optimized-core.js"></script>
+  <!-- Component loader must be loaded after optimized-core.js -->
   <script src="assets/js/components-loader.js"></script>
 </body>
 </html>
