@@ -369,7 +369,7 @@ class SearchManager {
     searchResults.innerHTML = '';
     results.forEach(product => {
       const resultItem = document.createElement('a');
-      resultItem.href = `product.html?id=${product.id}`; // Changed to use query parameter format
+      resultItem.href = `/product.html?id=${product.id}`; // Ensure product link is root-relative
       resultItem.className = 'search-result-item';
       
       let badgeHTML = '';
@@ -378,7 +378,7 @@ class SearchManager {
       }
       
       resultItem.innerHTML = `
-        <div class="search-result-image" style="background-image: url('${product.image}')"></div>
+        <div class="search-result-image" style="background-image: url('/${product.image}')"></div>
         <div class="search-result-content">
           <div class="search-result-title">
             ${product.title} ${badgeHTML}

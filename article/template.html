@@ -131,14 +131,16 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       padding: 0.4rem 1rem;
-      border-radius: 30px;
+      border-radius: 4px; /* Changed from 30px for a square look */
       display: inline-block;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem; /* Adjusted from 2rem */
       transition: all 0.2s;
+      text-decoration: none; /* Ensure no underline */
     }
     .article-category:hover {
       background: var(--secondary-color);
       transform: translateY(-2px);
+      text-decoration: none; /* Ensure no underline on hover */
     }
     .article-hero-title {
       font-size: clamp(2rem, 5vw, 3.5rem);
@@ -620,7 +622,6 @@
     <div class="article-hero">
       <img src="../assets/hero/hero1.jpg" alt="Featured Image" class="article-hero-image">
       <div class="article-hero-overlay">
-        <a href="../category/technology.html" class="article-category">Technology</a>
         <h1 class="article-hero-title">Your Article Title Here</h1>
         <div class="article-meta">
           <img src="../assets/authors/author1.jpg" alt="Author" class="article-author-avatar">
@@ -647,6 +648,7 @@
       <!-- Main Article Content -->
       <main class="article-main">
         <article class="article-content">
+          <a href="../category/technology.html" class="article-category">Technology</a> <!-- Moved here -->
           <p class="article-intro">Your article introduction goes here. This should be an engaging hook that gives readers a preview of what they'll learn and why they should continue reading.</p>
           
           <p>Your article content goes here. This is the main body of your article where you'll develop your ideas in detail, providing valuable information to your readers.</p>
@@ -804,7 +806,9 @@
     });
   </script>
   <!-- Consolidated scripts for faster loading -->
-  <script src="../assets/js/optimized-core.js"></script>
+  <!-- <script src="../assets/js/optimized-core.js"></script> -->
+  <script src="../assets/js/products-data.js"></script>
+  <script src="../assets/js/search.js"></script>
   <script src="../assets/js/components-loader.js"></script>
 </body>
 </html>
