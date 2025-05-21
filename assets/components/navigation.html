@@ -1,51 +1,75 @@
 ﻿<div id="navigation-placeholder"></div>
 <nav class="navigation">
-    <a href="../explore.html" class="nav-item" aria-label="Explore">
+    <a href="/explore" class="nav-item" aria-label="Explore">
       <i class="fas fa-compass nav-icon"></i>
       <span>Explore</span>
     </a>
-    <a href="../trending.html" class="nav-item" aria-label="Trending">
+    <a href="/trending" class="nav-item" aria-label="Trending">
       <i class="fas fa-fire nav-icon"></i>
       <span>Trending</span>
     </a>
-    <a href="../index.html" class="nav-item" aria-label="Home">
+    <a href="/" class="nav-item" aria-label="Home">
       <i class="fas fa-home nav-icon"></i>
       <span>Home</span>
     </a>
-    <a href="../products.html" class="nav-item" aria-label="Products">
+    <a href="/products" class="nav-item" aria-label="Products">
       <i class="fas fa-box nav-icon"></i>
       <span>Products</span>
     </a>
-    <a href="../search-verify.html" class="nav-item" aria-label="Search">
+    <a href="/search-verify" class="nav-item" aria-label="Search">
       <i class="fas fa-search nav-icon"></i>
       <span>Search</span>
     </a>
 </nav>
 <script>
-  function setActiveNavItem() {
-    const pagePath = window.location.pathname;
-    const navItems = document.querySelectorAll('.navigation .nav-item');
+document.addEventListener('DOMContentLoaded', () => {
+  function normalizePath(pathStr) {
+    let normalized = pathStr;
+    // Replace /index.html with / or index.html at root with empty string (then handled)
+    normalized = normalized.replace(/\/?index\.html$/, '/');
+    // Remove .html extension
+    normalized = normalized.replace(/\.html$/, '');
 
-    navItems.forEach(item => {
-      // Construct the expected path from the href, removing '../'
-      const itemPath = item.getAttribute('href').replace('../', '');
-      // Construct the current page path, removing leading '/' to match itemPath format
-      const currentPage = pagePath.startsWith('/') ? pagePath.substring(1) : pagePath;
+    // Remove trailing slash for non-root paths
+    if (normalized !== '/' && normalized.endsWith('/')) {
+      normalized = normalized.slice(0, -1);
+    }
+    
+    // Ensure root path is represented as '/'
+    if (normalized === '' || normalized === '/index') {
+      normalized = '/';
+    }
 
-      if (itemPath === currentPage) {
+    // Ensure leading slash for paths that are not root and don't have one
+    // (Mainly for robustness, window.location.pathname usually behaves well)
+    if (normalized !== '/' && !normalized.startsWith('/')) {
+      normalized = '/' + normalized;
+    }
+    return normalized;
+  }
+
+  const currentNormalizedPagePath = normalizePath(window.location.pathname);
+  const navItems = document.querySelectorAll('.navigation .nav-item');
+
+  navItems.forEach(item => {
+    const hrefAttribute = item.getAttribute('href');
+    if (!hrefAttribute || hrefAttribute === '#' || hrefAttribute.startsWith('mailto:') || hrefAttribute.startsWith('tel:')) {
+      return;
+    }
+
+    try {
+      // Href attributes are now root-relative like "/explore" or "/"
+      const linkNormalizedPath = normalizePath(hrefAttribute);
+
+      if (linkNormalizedPath === currentNormalizedPagePath) {
         item.classList.add('active');
       } else {
         item.classList.remove('active');
       }
-    });
-  }
-
-  // Ensure the script runs after the DOM is fully loaded
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setActiveNavItem);
-  } else {
-    // DOMContentLoaded has already fired
-    setActiveNavItem();
-  }
+    } catch (e) {
+      console.error('Error processing nav link href:', hrefAttribute, e);
+    }
+  });
+});
 </script>
 
