@@ -72,12 +72,12 @@ class ProductDetailManager {
       this.showProductNotFound();
       return;
     }
-    
-    console.log(`Product found: ${this.product.title}`);
+      console.log(`Product found: ${this.product.title}`);
     console.log(`Product affiliate link: ${this.product.affiliateLink}`); // Log the affiliate link
     
-    // Set page title
-    document.title = `${this.product.title} - Markrypt`;
+    // Set page title and update schema markup
+    document.title = `Markrypt - ${this.product.title} Reviews, Ratings & Best Price`;
+    this.updateProductSchema();
     
     // Render the product details
     this.renderProductDetails();
@@ -342,6 +342,60 @@ class ProductDetailManager {
     }
   }
   
+  /**
+   * Update schema.org product markup with current product data
+   */
+  updateProductSchema() {
+    if (!this.product) return;
+    
+    const schemaScript = document.getElementById('productSchema');
+    if (!schemaScript) return;
+    
+    const schemaData = {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": this.product.name,
+      "image": this.product.image,
+      "description": this.product.description,
+      "brand": {
+        "@type": "Brand",
+        "name": this.product.brand || this.product.manufacturer || ""
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": this.product.rating.toString(),
+        "reviewCount": this.product.reviewCount.toString()
+      },
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "USD",
+        "lowPrice": this.product.price ? (this.product.price - (this.product.price * 0.1)).toFixed(2) : "",
+        "highPrice": this.product.price ? this.product.price.toString() : "",
+        "offerCount": "1",
+        "availability": "https://schema.org/InStock"
+      },
+      "review": []
+    };
+    
+    // Add sample reviews if available
+    if (this.product.reviews && this.product.reviews.length) {
+      schemaData.review = this.product.reviews.map(review => ({
+        "@type": "Review",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": review.rating.toString()
+        },
+        "author": {
+          "@type": "Person",
+          "name": review.author || "Anonymous"
+        },
+        "reviewBody": review.text
+      }));
+    }
+    
+    schemaScript.textContent = JSON.stringify(schemaData);
+  }
+
   /**
    * Convert a string to a URL-friendly slug
    */

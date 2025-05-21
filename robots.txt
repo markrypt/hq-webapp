@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /assets/components/
+Disallow: /assets/docs/
+
+Sitemap: https://www.markrypt.com/sitemap.xml
