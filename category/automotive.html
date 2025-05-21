@@ -194,9 +194,6 @@
         transform: translateX(-50%);
         border-radius: 8px 8px 0 0;
       }
-      .navigation-container { /* On larger screens, the container itself doesn't need full width if navigation is centered */
-         /* Max-width is already set, this ensures it doesn't try to be 100% of a potentially wider parent if .navigation was full width */
-      }
     }
      @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
@@ -206,82 +203,64 @@
 </head>
 <body>
   <div class="app-container">
-    <!-- Header -->
     <div id="header-placeholder"></div>
-
-    <!-- Scrollable Content Area -->
     <div class="scrollable-content-area">
       <main class="product-main-content">
-        <h1>Automotive Products</h1>
-        <p>Find a wide range of automotive products.</p>
+        <h1>Automotive</h1>
+        <p>Explore products in Automotive.</p>
       </main>
-    </div> <!-- End of .scrollable-content-area -->
-
-    <!-- Bottom Navigation -->
+    </div>
     <div id="navigation-placeholder"></div>
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Calculate currentAbsolutePath for link highlighting
-      let currentPath = window.location.pathname.replace(/\/index\.html$/, '').replace(/\.html$/, '');
-      if (currentPath.endsWith('/') && currentPath !== '/') {
-        currentPath = currentPath.slice(0, -1);
+      let pagePath = window.location.pathname;
+      let currentNormalizedPath = pagePath.replace(/\/?index\.html$/, '/').replace(/\.html$/, '');
+      if (currentNormalizedPath !== '/' && currentNormalizedPath.endsWith('/')) {
+        currentNormalizedPath = currentNormalizedPath.slice(0, -1);
       }
-      // Ensure category pages are correctly matched
-      if (!currentPath.startsWith('/')) {
-        currentPath = '/' + currentPath;
-      }
-      const currentAbsolutePath = currentPath || '/';
+      if (currentNormalizedPath === '' || currentNormalizedPath === '/index') currentNormalizedPath = '/';
+      if (!currentNormalizedPath.startsWith('/')) currentNormalizedPath = '/' + currentNormalizedPath;
+
+      const setActiveLink = (linkElement, hrefAttribute) => {
+        if (!hrefAttribute || hrefAttribute === '#' || hrefAttribute.startsWith('mailto:') || hrefAttribute.startsWith('tel:')) {
+          return;
+        }
+        try {
+          const linkUrl = new URL(hrefAttribute, window.location.href);
+          let linkNormalizedPath = linkUrl.pathname.replace(/\/?index\.html$/, '/').replace(/\.html$/, '');
+          if (linkNormalizedPath !== '/' && linkNormalizedPath.endsWith('/')) {
+            linkNormalizedPath = linkNormalizedPath.slice(0, -1);
+          }
+          if (linkNormalizedPath === '' || linkNormalizedPath === '/index') linkNormalizedPath = '/';
+          if (!linkNormalizedPath.startsWith('/')) linkNormalizedPath = '/' + linkNormalizedPath;
+
+          if ((hrefAttribute === '../' || hrefAttribute === '../index' || hrefAttribute === '../index.html') && linkElement.closest('.logo')) {
+            linkNormalizedPath = '/';
+          }
+          
+          if (linkNormalizedPath === currentNormalizedPath) {
+            linkElement.classList.add('active');
+          } else {
+            linkElement.classList.remove('active');
+          }
+        } catch (e) {
+          console.error('Error processing link href:', hrefAttribute, e);
+        }
+      };
 
       const logoLink = document.querySelector('.header .logo a');
       if (logoLink) {
-        const logoHref = logoLink.getAttribute('href');
-        let resolvedLogoPath = '';
-        if (logoHref) {
-            try {
-                const resolvedLogoUrl = new URL(logoHref, window.location.href);
-                resolvedLogoPath = resolvedLogoUrl.pathname.replace(/\/index\.html$/, '').replace(/\.html$/, '');
-                if (resolvedLogoPath.endsWith('/') && resolvedLogoPath !== '/') {
-                    resolvedLogoPath = resolvedLogoPath.slice(0, -1);
-                }
-                if (logoHref === '../' || logoHref === '../index' || logoHref === '/') {
-                    resolvedLogoPath = '/';
-                }
-            } catch (e) {
-                console.error("Error processing logo href:", logoHref, e);
-            }
-        }
-
-        if (resolvedLogoPath === currentAbsolutePath && currentAbsolutePath === '/') { 
-            logoLink.classList.add('active');
-        } else {
-            logoLink.classList.remove('active');
-        }
+        setActiveLink(logoLink, logoLink.getAttribute('href'));
       }
 
       document.querySelectorAll('.menu-dropdown a').forEach(link => {
-        const linkHref = link.getAttribute('href');
-        if (linkHref && linkHref !== '#' && !linkHref.startsWith('mailto:') && !linkHref.startsWith('tel:')) {
-          try {
-            const resolvedLinkUrl = new URL(linkHref, window.location.href);
-            let resolvedLinkPath = resolvedLinkUrl.pathname.replace(/\/index\.html$/, '').replace(/\.html$/, '');
-            if (resolvedLinkPath.endsWith('/') && resolvedLinkPath !== '/') {
-              resolvedLinkPath = resolvedLinkPath.slice(0, -1);
-            }
-            if (!resolvedLinkPath.startsWith('/')) {
-                resolvedLinkPath = '/' + resolvedLinkPath;
-            }
-
-            if (resolvedLinkPath === currentAbsolutePath) {
-              link.classList.add('active');
-            } else {
-              link.classList.remove('active');
-            }
-          } catch (e) {
-            console.error("Error processing menu dropdown link href:", linkHref, e);
-          }
-        }
+        setActiveLink(link, link.getAttribute('href'));
+      });
+      
+      document.querySelectorAll('.navigation .nav-item[href]').forEach(link => {
+         setActiveLink(link, link.getAttribute('href'));
       });
     });
   </script>

@@ -216,15 +216,12 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       let pagePath = window.location.pathname;
-      // Normalize: remove index.html, .html, ensure leading slash, remove trailing for non-root
       let currentNormalizedPath = pagePath.replace(/\/?index\.html$/, '/').replace(/\.html$/, '');
       if (currentNormalizedPath !== '/' && currentNormalizedPath.endsWith('/')) {
         currentNormalizedPath = currentNormalizedPath.slice(0, -1);
       }
-      // Ensure root path is represented as '/'
       if (currentNormalizedPath === '' || currentNormalizedPath === '/index') currentNormalizedPath = '/';
       if (!currentNormalizedPath.startsWith('/')) currentNormalizedPath = '/' + currentNormalizedPath;
-
 
       const setActiveLink = (linkElement, hrefAttribute) => {
         if (!hrefAttribute || hrefAttribute === '#' || hrefAttribute.startsWith('mailto:') || hrefAttribute.startsWith('tel:')) {
@@ -239,7 +236,6 @@
           if (linkNormalizedPath === '' || linkNormalizedPath === '/index') linkNormalizedPath = '/';
           if (!linkNormalizedPath.startsWith('/')) linkNormalizedPath = '/' + linkNormalizedPath;
 
-          // Special case for logo/home link pointing to root via relative path from subfolder
           if ((hrefAttribute === '../' || hrefAttribute === '../index' || hrefAttribute === '../index.html') && linkElement.closest('.logo')) {
             linkNormalizedPath = '/';
           }
@@ -254,27 +250,24 @@
         }
       };
 
-      // Logo link
       const logoLink = document.querySelector('.header .logo a');
       if (logoLink) {
         setActiveLink(logoLink, logoLink.getAttribute('href'));
       }
 
-      // Menu dropdown links
       document.querySelectorAll('.menu-dropdown a').forEach(link => {
         setActiveLink(link, link.getAttribute('href'));
       });
       
-      // Bottom navigation links
       document.querySelectorAll('.navigation .nav-item[href]').forEach(link => {
          setActiveLink(link, link.getAttribute('href'));
       });
     });
   </script>
-<script src="../assets/js/common.js"></script>
-<script src="../assets/js/products-data.js"></script>
-<script src="../assets/js/search.js"></script>
-<script src="../assets/js/components-loader.js"></script>
+  <script src="../assets/js/common.js"></script>
+  <script src="../assets/js/products-data.js"></script>
+  <script src="../assets/js/search.js"></script>
+  <script src="../assets/js/components-loader.js"></script>
 </body>
 </html>
 
