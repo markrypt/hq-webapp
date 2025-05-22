@@ -5,7 +5,7 @@ const automotiveProducts = [
     title: "Example Automotive Product 1",
     category: "Automotive",
     subcategory: "Example Subcategory",
-    tags: ["automotive", "example", "product"],
+    tags: ["automotive", "car-accessories", "auto-maintenance", "auto-parts"],
     rating: 4.5,
     reviewCount: 1234,
     image: "assets/products/placeholder.jpg",

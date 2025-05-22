@@ -5,7 +5,7 @@ const clothingShoesJewelryAndWatchesProducts = [
     title: "Nike Air Zoom Pegasus 38 Running Shoes",
     category: "Clothing",
     subcategory: "Shoes",
-    tags: ["shoes", "running", "athletic", "nike", "clothing-shoes-jewelry-and-watches"],
+    tags: ["clothing-shoes-jewelry-and-watches", "shoes", "running", "athletic", "nike"],
     rating: 4.7,
     reviewCount: 8923,
     image: "assets/products/nike-pegasus-38.jpg",

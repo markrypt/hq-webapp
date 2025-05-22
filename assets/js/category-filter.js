@@ -37,12 +37,10 @@ class ProductFilterSystem {
             // Get current page category from URL path
             const currentCategory = this.getCurrentPageCategory();
             console.log('Current page category:', currentCategory);
-            
-            // Filter products to only show those with matching tags or category
+              // Filter products to only show those with exactly matching tags
             if (currentCategory) {
                 this.products = productsData.filter(product => 
-                    (product.tags && product.tags.includes(currentCategory)) ||
-                    (product.category && this.normalizeCategoryName(product.category) === currentCategory)
+                    product.tags && product.tags.includes(currentCategory)
                 );
                 console.log(`Filtered ${this.products.length} products matching category: ${currentCategory}`);
             } else {

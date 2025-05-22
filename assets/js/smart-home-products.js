@@ -5,7 +5,7 @@ const smarthomeProducts = [
     title: "Example Smart Home Product 1",
     category: "Smart Home",
     subcategory: "Example Subcategory",
-    tags: ["smart-home", "example", "product"],
+    tags: ["smart-home", "smart-home-security", "automation"],
     rating: 4.5,
     reviewCount: 1234,
     image: "assets/products/placeholder.jpg",
