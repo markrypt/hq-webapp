@@ -1,52 +1,43 @@
 // Product data for Automotive category
-const automotiveProducts = [
+const productsData = [
   {
     id: "automotive-product-1",
-    title: "Example Automotive Product 1",
+    title: "Car Engine Oil Filter",
     category: "Automotive",
-    subcategory: "Example Subcategory",
-    tags: ["automotive", "car-accessories", "auto-maintenance", "auto-parts"],
+    subcategory: "Filters",
+    tags: ["automotive", "car-accessories", "auto-maintenance", "auto-parts", "filters"],
     rating: 4.5,
     reviewCount: 1234,
-    image: "assets/products/placeholder.jpg",
-    description: "This is an example product for the Automotive category.",
-    affiliateLink: 'YOUR_AFFILIATE_LINK_HERE',
+    image: "../assets/products/placeholder.jpg",
+    description: "High-quality engine oil filter for most car makes and models. Ensures clean oil circulation for better engine performance.",
+    affiliateLink: 'https://amazon.com/automotive/oil-filter',
     features: [
-      "Feature 1",
-      "Feature 2",
-      "Feature 3"
+      "99% dirt removal efficiency",
+      "Compatible with synthetic and conventional oil",
+      "Easy installation",
+      "Long-lasting performance"
     ],
-    colors: ["black", "white"],
-    brand: "Example Brand"
+    colors: ["black"],
+    brand: "AutoCare Pro"
   },
   {
     id: "automotive-product-2",
-    title: "Example Automotive Product 2",
+    title: "Premium Microfiber Car Wash Mitt",
     category: "Automotive",
-    subcategory: "Another Subcategory",
-    tags: ["automotive", "example", "product"],
+    subcategory: "Car Care",
+    tags: ["automotive", "car-care", "cleaning", "accessories"],
     rating: 4.7,
     reviewCount: 5678,
-    image: "assets/products/placeholder.jpg",
-    description: "Another example product for the Automotive category.",
-    affiliateLink: 'YOUR_AFFILIATE_LINK_HERE',
+    image: "../assets/products/placeholder.jpg",
+    description: "Ultra-soft microfiber wash mitt that's gentle on your car's paint while effectively removing dirt and grime.",
+    affiliateLink: 'https://amazon.com/automotive/wash-mitt',
     features: [
-      "Feature 1",
-      "Feature 2",
-      "Feature 3"
+      "Premium microfiber material",
+      "Extra large size",
+      "Machine washable",
+      "Scratch-free cleaning"
     ],
-    colors: ["red", "blue"],
-    brand: "Another Brand"
+    colors: ["blue"],
+    brand: "CleanDrive"
   }
 ];
-
-// Add Automotive products to the main products data array
-if (typeof productsData !== 'undefined') {
-  automotiveProducts.forEach(product => {
-    // Add the category tag to ensure it shows up on the category page
-    if (product.tags && !product.tags.includes('automotive')) {
-      product.tags.push('automotive');
-    }
-    productsData.push(product);
-  });
-}

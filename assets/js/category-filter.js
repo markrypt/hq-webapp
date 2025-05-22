@@ -3,12 +3,12 @@
  * Provides functionality to filter products by categories, subcategories, sellers, and colors
  */
 
-class ProductFilterSystem {    constructor() {
+class ProductFilterSystem {
+    constructor() {
         this.filters = {
             category: 'all',
             subcategory: 'all',
-            seller: 'all',
-            color: 'all'
+            seller: 'all'
         };
         
         this.products = [];
@@ -18,8 +18,7 @@ class ProductFilterSystem {    constructor() {
         this.filterOptions = {
             categories: new Set(),
             subcategories: new Set(),
-            sellers: new Set(),
-            colors: new Set()
+            sellers: new Set()
         };
         
         // Initialize when DOM is ready
@@ -101,7 +100,6 @@ class ProductFilterSystem {    constructor() {
         this.filterOptions.categories.clear();
         this.filterOptions.subcategories.clear();
         this.filterOptions.sellers.clear();
-        this.filterOptions.colors.clear();
         
         // Track related subcategories for each category
         const categorySubcategories = new Map();
@@ -123,26 +121,19 @@ class ProductFilterSystem {    constructor() {
                 categorySubcategories.get(product.category).add(product.subcategory);
             }
             
-            // Extract seller information (using brand/manufacturer as seller)
+            // Extract seller information
             if (product.brand) {
                 this.filterOptions.sellers.add(product.brand);
             } else if (product.manufacturer) {
                 this.filterOptions.sellers.add(product.manufacturer);
-            }
-            
-            // Extract colors (if present)
-            if (product.colors && Array.isArray(product.colors)) {
-                product.colors.forEach(color => {
-                    this.filterOptions.colors.add(color);
-                });
             }
         });
         
         // Store the category-subcategory mapping
         this.categorySubcategories = categorySubcategories;
         
-        // Convert sets to sorted arrays for UI creation (except categorySubcategories)
-        for (const key of ['categories', 'subcategories', 'sellers', 'colors']) {
+        // Convert sets to sorted arrays for UI creation
+        for (const key of ['categories', 'subcategories', 'sellers']) {
             this.filterOptions[key] = Array.from(this.filterOptions[key]).sort();
         }
     }
@@ -150,11 +141,9 @@ class ProductFilterSystem {    constructor() {
     /**
      * Create the filter UI with sections for categories, subcategories, sellers, and colors
      */    createFilterUI() {
-        // Create main filter container
         const filterContainer = document.createElement('div');
         filterContainer.className = 'filter-container fade-in';
         
-        // Add filter summary
         const filterSummary = document.createElement('div');
         filterSummary.className = 'filter-summary';
         filterSummary.innerHTML = `
@@ -195,13 +184,6 @@ class ProductFilterSystem {    constructor() {
                 'seller', 
                 this.filterOptions.sellers
             ));
-        }          // Add color filter section if available
-        if (this.filterOptions.colors.length > 0) {
-            filterContainer.appendChild(this.createColorFilterSection(
-                'Colors', 
-                'palette', 
-                this.filterOptions.colors
-            ));
         }
         
         // Add reset button
@@ -215,7 +197,9 @@ class ProductFilterSystem {    constructor() {
         const sidebar = document.querySelector('.category-sidebar');
         if (sidebar) {
             sidebar.appendChild(filterContainer);
-        }        // Create product grid container with header
+        }
+        
+        // Create product grid container with header
         const gridContainer = document.createElement('div');
         gridContainer.className = 'category-content-inner fade-in';
         
@@ -246,7 +230,8 @@ class ProductFilterSystem {    constructor() {
         productGrid.id = 'productGrid';
         
         gridContainer.appendChild(gridHeader);
-        gridContainer.appendChild(productGrid);        // Add grid container to the page
+        gridContainer.appendChild(productGrid);
+        
         const content = document.querySelector('.category-content');
         if (content) {
             content.appendChild(gridContainer);
@@ -397,28 +382,6 @@ class ProductFilterSystem {    constructor() {
                 this.filters[filterType] = filterValue;
                 this.applyFilters();
             }
-            
-            // Handle color option clicks
-            if (event.target.classList.contains('color-option')) {
-                const filterType = event.target.getAttribute('data-filter-type');
-                const filterValue = event.target.getAttribute('data-filter-value');
-                
-                // Toggle active class on clicked color
-                if (event.target.classList.contains('active')) {
-                    event.target.classList.remove('active');
-                    this.filters[filterType] = 'all';
-                } else {
-                    // Remove active class from all color options
-                    const colorOptions = document.querySelectorAll('.color-option');
-                    colorOptions.forEach(option => option.classList.remove('active'));
-                    
-                    // Add active class to clicked option
-                    event.target.classList.add('active');
-                    this.filters[filterType] = filterValue;
-                }
-                
-                this.applyFilters();
-            }
         });
     }
       /**
@@ -457,11 +420,6 @@ class ProductFilterSystem {    constructor() {
             this.filteredProducts = this.filteredProducts.filter(product => 
                 product.brand === this.filters.seller || 
                 product.manufacturer === this.filters.seller
-            );
-        }        // Apply color filter
-        if (this.filters.color !== 'all') {
-            this.filteredProducts = this.filteredProducts.filter(product => 
-                product.colors && product.colors.includes(this.filters.color)
             );
         }
         
@@ -511,8 +469,7 @@ class ProductFilterSystem {    constructor() {
         this.filters = {
             category: 'all',
             subcategory: 'all',
-            seller: 'all',
-            color: 'all'
+            seller: 'all'
         };
         
         // Reset UI active states
@@ -524,10 +481,6 @@ class ProductFilterSystem {    constructor() {
                 btn.classList.remove('active');
             }
         });
-        
-        // Reset color options
-        const colorOptions = document.querySelectorAll('.color-option');
-        colorOptions.forEach(option => option.classList.remove('active'));
         
         // Reset filtered products and update display
         this.filteredProducts = [...this.products];

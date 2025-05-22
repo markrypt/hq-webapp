@@ -241,8 +241,18 @@
     <div id="header-placeholder"></div>
     <div class="scrollable-content-area">
       <main class="product-main-content">
-        <h1>Industrial & Scientific</h1>
-        <p>Explore products in Industrial & Scientific. Filter by category, subcategory, seller, or color to find exactly what you're looking for.</p>
+        <div class="category-header">
+          <h1>Industrial & Scientific</h1>
+          <p>Explore products in Industrial & Scientific. Filter by category, subcategory, seller, or color to find exactly what you're looking for.</p>
+        </div>
+        <div class="category-layout">
+          <aside class="category-sidebar">
+            <!-- Filter container will be inserted here -->
+          </aside>
+          <div class="category-content">
+            <!-- Product grid will be inserted here -->
+          </div>
+        </div>
       </main>
     </div>
     <div id="navigation-placeholder"></div>
@@ -298,12 +308,16 @@
          setActiveLink(link, link.getAttribute('href'));
       });
     });
+  </script>  <script src="../assets/js/common.js"></script>
+  <!-- Load industrial-and-scientific-products.js which defines industrialAndScientificProducts -->
+  <script src="../assets/js/industrial-and-scientific-products.js"></script>
+  <script>
+    // For the category page, explicitly set productsData to industrialAndScientificProducts
+    window.productsData = window.industrialAndScientificProducts;
   </script>
-  <script src="../assets/js/common.js"></script>
-  <script src="../assets/js/products-data.js"></script>
   <script src="../assets/js/category-filter.js"></script>
   <script src="../assets/js/search.js"></script>
-  <script src="../assets/js/industrial-and-scientific-products.js"></script>
   <script src="../assets/js/components-loader.js"></script>
 </body>
 </html>
+

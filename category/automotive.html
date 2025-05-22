@@ -143,11 +143,11 @@
       right: 0;
       overflow-y: auto;
       background: var(--primary-bg);
-      padding: 1.5rem; /* Basic padding for content */
+      padding: 1.5rem 0; /* Removed horizontal padding */
     }
 
     .product-main-content {
-        max-width: 1200px;
+        width: 100%; /* Use full available width within parent's padding */
         margin: 0 auto;
     }
 
@@ -308,17 +308,16 @@
          setActiveLink(link, link.getAttribute('href'));
       });
     });
-  </script>
-  <script src="../assets/js/common.js"></script>
-  <!-- Load automotive-products.js which defines automotiveProducts -->
+  </script>  <script src="../assets/js/common.js"></script>
+  <!-- Load automotive-products.js which defines productsData -->
   <script src="../assets/js/automotive-products.js"></script>
   <script>
-    // For the category page, explicitly set productsData to automotiveProducts
-    window.productsData = window.automotiveProducts;
+    // For the category page, explicitly set productsData to match the automotive products
+    window.productsData = productsData;
   </script>
   <script src="../assets/js/category-filter.js"></script>
   <script src="../assets/js/search.js"></script>
-  <script src="../assets/js/automotive-products.js"></script>
   <script src="../assets/js/components-loader.js"></script>
 </body>
 </html>
+

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -142,11 +142,11 @@
       right: 0;
       overflow-y: auto;
       background: var(--primary-bg);
-      padding: 1.5rem; /* Basic padding for content */
+      padding: 1.5rem 0; /* Removed horizontal padding */
     }
 
     .product-main-content {
-        max-width: 1200px;
+        width: 100%; /* Use full available width within parent's padding */
         margin: 0 auto;
     }
 
@@ -240,8 +240,18 @@
     <div id="header-placeholder"></div>
     <div class="scrollable-content-area">
       <main class="product-main-content">
-        <h1>Clothing, Shoes, Jewelry & Watches</h1>
-        <p>Explore products in Clothing, Shoes, Jewelry & Watches. Filter by category, subcategory, seller, or color to find exactly what you're looking for.</p>
+        <div class="category-header">
+          <h1>Clothing, Shoes, Jewelry & Watches</h1>
+          <p>Explore products in Clothing, Shoes, Jewelry & Watches. Filter by category, subcategory, seller, or color to find exactly what you're looking for.</p>
+        </div>
+        <div class="category-layout">
+          <aside class="category-sidebar">
+            <!-- Filter container will be inserted here -->
+          </aside>
+          <div class="category-content">
+            <!-- Product grid will be inserted here -->
+          </div>
+        </div>
       </main>
     </div>
     <div id="navigation-placeholder"></div>
@@ -298,13 +308,18 @@
       });
     });
   </script>  <script src="../assets/js/common.js"></script>
-  <script src="../assets/js/products-data.js"></script>
+  <!-- Load clothing-shoes-jewelry-and-watches-products.js which defines clothingShoesJewelryAndWatchesProducts -->
   <script src="../assets/js/clothing-shoes-jewelry-and-watches-products.js"></script>
+  <script>
+    // For the category page, explicitly set productsData to clothingShoesJewelryAndWatchesProducts
+    window.productsData = window.clothingShoesJewelryAndWatchesProducts;
+  </script>
   <script src="../assets/js/category-filter.js"></script>
   <script src="../assets/js/search.js"></script>
   <script src="../assets/js/components-loader.js"></script>
 </body>
 </html>
+
 
 
 

@@ -238,8 +238,9 @@
       <main class="product-main-content">
         <div class="category-header">
           <h1>Electronics</h1>
-          <p>Browse our selection of electronics, including smartphones, laptops, TVs, cameras, and accessories. Discover the latest tech innovations with expert reviews and recommendations.</p>
-        </div>        <div class="category-layout">
+          <p>Explore products in Electronics. Filter by category, subcategory, seller, or color to find exactly what you're looking for.</p>
+        </div>
+        <div class="category-layout">
           <aside class="category-sidebar">
             <!-- Filter container will be inserted here -->
           </aside>
@@ -310,13 +311,16 @@
       });
     });
   </script>  <script src="../assets/js/common.js"></script>
-  <script src="../assets/js/electronics-products.js"></script>  <script>
+  <!-- Load electronics-products.js which defines electronicsProducts -->
+  <script src="../assets/js/electronics-products.js"></script>
+  <script>
     // For the category page, explicitly set productsData to electronicsProducts
-    window.productsData = electronicsProducts;
+    window.productsData = window.electronicsProducts;
   </script>
   <script src="../assets/js/category-filter.js"></script>
   <script src="../assets/js/search.js"></script>
   <script src="../assets/js/components-loader.js"></script>
 </body>
 </html>
+
 
