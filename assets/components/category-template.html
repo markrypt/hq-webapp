@@ -236,13 +236,22 @@
     }
   </style>
 </head>
-<body>
-  <div class="app-container">
+<body>  <div class="app-container">
     <div id="header-placeholder"></div>
     <div class="scrollable-content-area">
       <main class="product-main-content">
-        <h1>[CATEGORY_NAME]</h1>
-        <p>Explore products in [CATEGORY_NAME]. Filter by category, subcategory, seller, or color to find exactly what you're looking for.</p>
+        <div class="category-header">
+          <h1>[CATEGORY_NAME]</h1>
+          <p>Explore products in [CATEGORY_NAME]. Filter by category, subcategory, seller, or color to find exactly what you're looking for.</p>
+        </div>
+        <div class="category-layout">
+          <aside class="category-sidebar">
+            <!-- Filter container will be inserted here -->
+          </aside>
+          <div class="category-content">
+            <!-- Product grid will be inserted here -->
+          </div>
+        </div>
       </main>
     </div>
     <div id="navigation-placeholder"></div>
