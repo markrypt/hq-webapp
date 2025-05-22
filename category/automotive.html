@@ -1,24 +1,26 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">  <title>Markrypt - Automotive Product Reviews, Car Accessory Guides & Auto Tool Comparisons</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Markrypt - Automotive Product Reviews, Car Accessory Guides & Auto Tool Comparisons</title>
   <meta name="description" content="Detailed automotive product reviews and accessory buying guides at Markrypt. Find expert comparisons of car parts, tools, and maintenance products for your vehicle.">
   <meta name="keywords" content="automotive product reviews, car accessory guides, auto tool comparisons, vehicle maintenance products, car part recommendations, truck accessories, automotive gadgets, Markrypt">
   <link rel="canonical" href="https://www.markrypt.com/category/automotive">
-  <meta property="og:title" content="Markrypt - Automotive Product Reviews, Car Accessory Guides & Auto Tool Comparisons">
-  <meta property="og:description" content="Detailed automotive product reviews and accessory buying guides at Markrypt. Find expert comparisons of car parts, tools, and maintenance products for your vehicle.">
+  <meta property="og:title" content="Markrypt - Automotive Reviews, Comparisons & Top Recommendations">
+  <meta property="og:description" content="Discover detailed Automotive reviews, product comparisons, and top recommendations at Markrypt. Find the best products with expert advice.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.markrypt.com/category/automotive">
   <meta property="og:image" content="https://www.markrypt.com/assets/logo/logo.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Markrypt - Automotive Product Reviews, Car Accessory Guides & Auto Tool Comparisons">
-  <meta name="twitter:description" content="Detailed automotive product reviews and accessory buying guides at Markrypt. Find expert comparisons of car parts, tools, and maintenance products for your vehicle.">
+  <meta name="twitter:title" content="Markrypt - Automotive Reviews, Comparisons & Top Recommendations">
+  <meta name="twitter:description" content="Discover detailed Automotive reviews, product comparisons, and top recommendations at Markrypt. Find the best products with expert advice.">
   <meta name="twitter:image" content="https://www.markrypt.com/assets/logo/logo.png">
   <link rel="icon" href="../assets/logo/favicon.ico" type="image/x-icon">
   <link rel="shortcut icon" href="../assets/logo/favicon.ico" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/category-filter.css">
   <style>
     :root {
       --primary-bg: #fff;
@@ -126,7 +128,7 @@
     }
     .menu-dropdown .dropdown-title {
       font-size: 0.95rem;
-      color: var(--text-secondary);
+      color: var (--text-secondary);
       font-weight: 700;
       padding: 0.5rem 1.2rem 0.2rem 1.2rem;
       letter-spacing: 0.03em;
@@ -145,7 +147,7 @@
     }
 
     .product-main-content {
-        max-width: 800px;
+        max-width: 1200px;
         margin: 0 auto;
     }
 
@@ -198,6 +200,28 @@
       outline: none;
     }
 
+    .no-results {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-secondary);
+    }
+    
+    .no-results i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--accent-color);
+      opacity: 0.5;
+    }
+    
+    .no-results h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .no-results p {
+      font-size: 1rem;
+    }
+
     @media (min-width: 768px) {
       .navigation {
         width: 600px;
@@ -218,7 +242,7 @@
     <div class="scrollable-content-area">
       <main class="product-main-content">
         <h1>Automotive</h1>
-        <p>Explore products in Automotive.</p>
+        <p>Explore products in Automotive. Filter by category, subcategory, seller, or color to find exactly what you're looking for.</p>
       </main>
     </div>
     <div id="navigation-placeholder"></div>
@@ -277,10 +301,9 @@
   </script>
   <script src="../assets/js/common.js"></script>
   <script src="../assets/js/products-data.js"></script>
+  <script src="../assets/js/category-filter.js"></script>
   <script src="../assets/js/search.js"></script>
+  <script src="../assets/js/automotive-products.js"></script>
   <script src="../assets/js/components-loader.js"></script>
 </body>
 </html>
-
-
-

@@ -19,6 +19,7 @@
   <link rel="shortcut icon" href="../assets/logo/favicon.ico" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/category-filter.css">
   <style>
     :root {
       --primary-bg: #fff;
@@ -145,7 +146,7 @@
     }
 
     .product-main-content {
-        max-width: 800px;
+        max-width: 1200px;
         margin: 0 auto;
     }
 
@@ -198,6 +199,28 @@
       outline: none;
     }
 
+    .no-results {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-secondary);
+    }
+    
+    .no-results i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--accent-color);
+      opacity: 0.5;
+    }
+    
+    .no-results h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .no-results p {
+      font-size: 1rem;
+    }
+
     @media (min-width: 768px) {
       .navigation {
         width: 600px;
@@ -218,7 +241,7 @@
     <div class="scrollable-content-area">
       <main class="product-main-content">
         <h1>Clothing, Shoes, Jewelry & Watches</h1>
-        <p>Explore products in Clothing, Shoes, Jewelry & Watches.</p>
+        <p>Explore products in Clothing, Shoes, Jewelry & Watches. Filter by category, subcategory, seller, or color to find exactly what you're looking for.</p>
       </main>
     </div>
     <div id="navigation-placeholder"></div>
@@ -274,9 +297,10 @@
          setActiveLink(link, link.getAttribute('href'));
       });
     });
-  </script>
-  <script src="../assets/js/common.js"></script>
+  </script>  <script src="../assets/js/common.js"></script>
   <script src="../assets/js/products-data.js"></script>
+  <script src="../assets/js/clothing-shoes-jewelry-and-watches-products.js"></script>
+  <script src="../assets/js/category-filter.js"></script>
   <script src="../assets/js/search.js"></script>
   <script src="../assets/js/components-loader.js"></script>
 </body>

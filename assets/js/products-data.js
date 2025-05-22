@@ -18,9 +18,10 @@ const productsData = [
       "Bluetooth 5.1 connectivity",
       "Built-in noise-cancelling speakerphone",
       "Available in multiple colors"
-    ]
-  },
-  {
+    ],
+    colors: ["black", "blue", "red", "orange"],
+    brand: "JBL"
+  },  {
     id: "beskar-foot-massager",
     title: "Beskar Foot Massager",
     category: "Health & Wellness",
@@ -36,9 +37,10 @@ const productsData = [
       "3 massage intensities and 3 modes",
       "Easy to clean removable cover",
       "Fits up to men's size 12"
-    ]
-  },
-  {
+    ],
+    colors: ["black", "gray"],
+    brand: "Beskar"
+  },  {
     id: "hooga-grounding-mat",
     title: "Hooga Grounding Mat",
     category: "Health & Wellness",
@@ -55,7 +57,9 @@ const productsData = [
       "Machine washable fabric",
       "Includes 15ft grounding cord",
       "Lab tested for conductivity"
-    ]
+    ],
+    colors: ["gray", "white", "blue"],
+    brand: "Hooga"
   },
   {
     id: "kukka-tea-tree-oil",
@@ -76,13 +80,12 @@ const productsData = [
       "Cruelty-free and vegan",
       "Comes with glass dropper"
     ]
-  },
-  {
+  },  {
     id: "apple-airpods-max",
     title: "Apple AirPods Max - Coral",
     category: "Electronics",
     subcategory: "Headphones",
-    tags: ["headphones", "apple", "wireless", "noise-cancelling"],
+    tags: ["headphones", "apple", "wireless", "noise-cancelling", "electronics"],
     rating: 5.0,
     reviewCount: 4217,
     image: "assets/products/apple-airpods-max-orange.jpg",
@@ -94,7 +97,9 @@ const productsData = [
       "Spatial audio with dynamic head tracking",
       "Up to 20 hours of listening time",
       "Memory foam ear cushions"
-    ]
+    ],
+    colors: ["coral", "silver", "blue", "pink", "green"],
+    brand: "Apple"
   },
   {
     id: "etekcity-smart-scale",
@@ -152,13 +157,12 @@ const productsData = [
       "Dermatologist-tested formula",
       "Comes in multiple scents"
     ]
-  },
-  {
+  },  {
     id: "amazon-basics-sheets",
     title: "Amazon Basics Microfiber Sheet Set",
     category: "Home & Garden",
     subcategory: "Bedding",
-    tags: ["bedding", "sheets", "microfiber", "home"],
+    tags: ["bedding", "sheets", "microfiber", "home", "clothing-shoes-jewelry-and-watches", "home-garden-and-tools"],
     rating: 4.5,
     reviewCount: 12467,
     image: "assets/products/amazon-basics-sheets.jpg",
@@ -170,7 +174,9 @@ const productsData = [
       "Deep pockets fit mattresses up to 16 inches",
       "Available in multiple colors and sizes",
       "Easy machine wash and dry"
-    ]
+    ],
+    colors: ["white", "gray", "navy", "beige"],
+    brand: "Amazon Basics"
   },
   // Smart Home - Smart Lighting Products
   {

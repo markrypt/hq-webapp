@@ -1,24 +1,26 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">  <title>Markrypt - Food Product Reviews, Grocery Comparisons & Meal Delivery Guides</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Markrypt - Food Product Reviews, Grocery Comparisons & Meal Delivery Guides</title>
   <meta name="description" content="Expert food product reviews and grocery comparison guides at Markrypt. Find honest evaluations of pantry staples, specialty foods, and meal delivery services to enhance your culinary experience.">
   <meta name="keywords" content="food product reviews, grocery comparisons, meal delivery guides, pantry staples, specialty foods, gourmet products, organic food reviews, Markrypt">
   <link rel="canonical" href="https://www.markrypt.com/category/food-and-grocery">
-  <meta property="og:title" content="Markrypt - Food Product Reviews, Grocery Comparisons & Meal Delivery Guides">
-  <meta property="og:description" content="Expert food product reviews and grocery comparison guides at Markrypt. Find honest evaluations of pantry staples, specialty foods, and meal delivery services to enhance your culinary experience.">
+  <meta property="og:title" content="Markrypt - Food & Grocery Reviews, Comparisons & Top Recommendations">
+  <meta property="og:description" content="Discover detailed Food & Grocery reviews, product comparisons, and top recommendations at Markrypt. Find the best products with expert advice.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.markrypt.com/category/food-and-grocery">
   <meta property="og:image" content="https://www.markrypt.com/assets/logo/logo.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Markrypt - Food Product Reviews, Grocery Comparisons & Meal Delivery Guides">
-  <meta name="twitter:description" content="Expert food product reviews and grocery comparison guides at Markrypt. Find honest evaluations of pantry staples, specialty foods, and meal delivery services to enhance your culinary experience.">
+  <meta name="twitter:title" content="Markrypt - Food & Grocery Reviews, Comparisons & Top Recommendations">
+  <meta name="twitter:description" content="Discover detailed Food & Grocery reviews, product comparisons, and top recommendations at Markrypt. Find the best products with expert advice.">
   <meta name="twitter:image" content="https://www.markrypt.com/assets/logo/logo.png">
   <link rel="icon" href="../assets/logo/favicon.ico" type="image/x-icon">
   <link rel="shortcut icon" href="../assets/logo/favicon.ico" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/category-filter.css">
   <style>
     :root {
       --primary-bg: #fff;
@@ -145,7 +147,7 @@
     }
 
     .product-main-content {
-        max-width: 800px;
+        max-width: 1200px;
         margin: 0 auto;
     }
 
@@ -198,6 +200,28 @@
       outline: none;
     }
 
+    .no-results {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-secondary);
+    }
+    
+    .no-results i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--accent-color);
+      opacity: 0.5;
+    }
+    
+    .no-results h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .no-results p {
+      font-size: 1rem;
+    }
+
     @media (min-width: 768px) {
       .navigation {
         width: 600px;
@@ -218,7 +242,7 @@
     <div class="scrollable-content-area">
       <main class="product-main-content">
         <h1>Food & Grocery</h1>
-        <p>Explore products in Food & Grocery.</p>
+        <p>Explore products in Food & Grocery. Filter by category, subcategory, seller, or color to find exactly what you're looking for.</p>
       </main>
     </div>
     <div id="navigation-placeholder"></div>
@@ -227,15 +251,12 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       let pagePath = window.location.pathname;
-      // Normalize: remove index.html, .html, ensure leading slash, remove trailing for non-root
       let currentNormalizedPath = pagePath.replace(/\/?index\.html$/, '/').replace(/\.html$/, '');
       if (currentNormalizedPath !== '/' && currentNormalizedPath.endsWith('/')) {
         currentNormalizedPath = currentNormalizedPath.slice(0, -1);
       }
-      // Ensure root path is represented as '/'
       if (currentNormalizedPath === '' || currentNormalizedPath === '/index') currentNormalizedPath = '/';
       if (!currentNormalizedPath.startsWith('/')) currentNormalizedPath = '/' + currentNormalizedPath;
-
 
       const setActiveLink = (linkElement, hrefAttribute) => {
         if (!hrefAttribute || hrefAttribute === '#' || hrefAttribute.startsWith('mailto:') || hrefAttribute.startsWith('tel:')) {
@@ -250,7 +271,6 @@
           if (linkNormalizedPath === '' || linkNormalizedPath === '/index') linkNormalizedPath = '/';
           if (!linkNormalizedPath.startsWith('/')) linkNormalizedPath = '/' + linkNormalizedPath;
 
-          // Special case for logo/home link pointing to root via relative path from subfolder
           if ((hrefAttribute === '../' || hrefAttribute === '../index' || hrefAttribute === '../index.html') && linkElement.closest('.logo')) {
             linkNormalizedPath = '/';
           }
@@ -265,29 +285,24 @@
         }
       };
 
-      // Logo link
       const logoLink = document.querySelector('.header .logo a');
       if (logoLink) {
         setActiveLink(logoLink, logoLink.getAttribute('href'));
       }
 
-      // Menu dropdown links
       document.querySelectorAll('.menu-dropdown a').forEach(link => {
         setActiveLink(link, link.getAttribute('href'));
       });
       
-      // Bottom navigation links
       document.querySelectorAll('.navigation .nav-item[href]').forEach(link => {
          setActiveLink(link, link.getAttribute('href'));
       });
     });
-  </script>
-<script src="../assets/js/common.js"></script>
-<script src="../assets/js/products-data.js"></script>
-<script src="../assets/js/search.js"></script>
-<script src="../assets/js/components-loader.js"></script>
+  </script>  <script src="../assets/js/common.js"></script>
+  <script src="../assets/js/products-data.js"></script>
+  <script src="../assets/js/food-and-grocery-products.js"></script>
+  <script src="../assets/js/category-filter.js"></script>
+  <script src="../assets/js/search.js"></script>
+  <script src="../assets/js/components-loader.js"></script>
 </body>
 </html>
-
-
-
