@@ -1,26 +1,26 @@
-// Electronics category products
+// Electronics category products data
 const electronicsProducts = [
   {
     id: "sony-wh1000xm5",
     title: "Sony WH-1000XM5 Wireless Noise Cancelling Headphones",
     category: "Electronics",
     subcategory: "Headphones",
-    tags: ["headphones", "sony", "wireless", "noise-cancelling", "electronics"],
     rating: 4.9,
     reviewCount: 5678,
-    image: "assets/products/sony-wh1000xm5.jpg",
+    brand: "Sony",
+    image: "../assets/products/sony-wh1000xm5.jpg",
     badge: "premium",
+    colors: ["black", "silver"],
+    affiliateLink: "https://amazon.com/sony-wh1000xm5",
+    tags: ["electronics", "headphones", "sony", "wireless", "noise-cancelling"],
     description: "Industry-leading noise cancellation and exceptional sound quality with up to 30 hours of battery life.",
-    affiliateLink: 'YOUR_AFFILIATE_LINK_HERE',
     features: [
       "Industry-leading noise cancellation with 8 microphones",
       "Up to 30 hours of battery life with quick charging",
       "Crystal clear hands-free calling with 4 beamforming microphones",
       "Multipoint connection allows pairing with two Bluetooth devices at once",
       "Lightweight design with soft-fit leather for all-day comfort"
-    ],
-    colors: ["black", "silver", "blue"],
-    brand: "Sony"
+    ]
   },
   {
     id: "samsung-galaxy-s23-ultra",
@@ -30,10 +30,9 @@ const electronicsProducts = [
     tags: ["smartphone", "samsung", "android", "galaxy", "electronics"],
     rating: 4.8,
     reviewCount: 12345,
-    image: "assets/products/samsung-s23-ultra.jpg",
-    badge: "bestseller",
-    description: "Samsung's flagship smartphone with a powerful 200MP camera, S Pen, and advanced AI features.",
-    affiliateLink: 'YOUR_AFFILIATE_LINK_HERE',
+    image: "../assets/products/samsung-s23-ultra.jpg",
+    badge: "bestseller",    description: "Samsung's flagship smartphone with a powerful 200MP camera, S Pen, and advanced AI features.",
+    affiliateLink: "https://amazon.com/samsung-galaxy-s23-ultra",
     features: [
       "200MP main camera with advanced nightography capabilities",
       "Built-in S Pen for note-taking and creative tasks",
@@ -52,10 +51,9 @@ const electronicsProducts = [
     tags: ["tv", "oled", "lg", "smart tv", "electronics"],
     rating: 4.9,
     reviewCount: 8765,
-    image: "assets/products/lg-c3-oled.jpg",
-    badge: "premium",
-    description: "Stunning OLED TV with self-lit pixels, AI-powered processing, and premium gaming features.",
-    affiliateLink: 'YOUR_AFFILIATE_LINK_HERE',
+    image: "../assets/products/lg-c3-oled.jpg",
+    badge: "premium",    description: "Stunning OLED TV with self-lit pixels, AI-powered processing, and premium gaming features.",
+    affiliateLink: "https://amazon.com/lg-c3-oled-65-inch",
     features: [
       "OLED evo technology for superior brightness and color accuracy",
       "α9 Gen6 AI Processor 4K for enhanced picture and sound",

@@ -88,18 +88,61 @@ class ProductDetailManager {
     
     // Setup event listeners
     this.setupEventListeners();
-  }
-  
-  /**   * Find a product by ID from the products data
+  }  /**   
+   * Find a product by ID from the products data
    */
   findProduct(id) {
-    // Check if productsData is available
-    if (typeof productsData === 'undefined' || !productsData) {
-      console.error('productsData is not available');
-      return null;
+    console.log(`Attempting to find product with ID: "${id}"`);
+    
+    // First try the global productsData
+    if (typeof productsData !== 'undefined' && productsData && productsData.length > 0) {
+      console.log(`Looking in global productsData (${productsData.length} products)...`);
+      
+      const product = productsData.find(product => product.id === id);
+      if (product) {
+        console.log(`Found product in global productsData: "${product.title}"`);
+        return product;
+      }
+    } else {
+      console.warn('Global productsData is not available or empty.');
     }
     
-    return productsData.find(product => product.id === id);
+    // If not found, try amazonFreshProducts separately
+    if (typeof window.amazonFreshProducts !== 'undefined' && window.amazonFreshProducts && window.amazonFreshProducts.length > 0) {
+      console.log(`Looking in window.amazonFreshProducts (${window.amazonFreshProducts.length} products)...`);
+      
+      const freshProduct = window.amazonFreshProducts.find(product => product.id === id);
+      if (freshProduct) {
+        console.log(`Found product in amazonFreshProducts: "${freshProduct.title}"`);
+        return freshProduct;
+      }
+    } else {
+      console.warn('window.amazonFreshProducts is not available or empty.');
+    }
+    
+    // Check if there's a raw amazonFreshProducts (not on window)
+    if (typeof amazonFreshProducts !== 'undefined' && amazonFreshProducts && amazonFreshProducts.length > 0) {
+      console.log(`Looking in local amazonFreshProducts (${amazonFreshProducts.length} products)...`);
+      
+      const localFreshProduct = amazonFreshProducts.find(product => product.id === id);
+      if (localFreshProduct) {
+        console.log(`Found product in local amazonFreshProducts: "${localFreshProduct.title}"`);
+        return localFreshProduct;
+      }
+    }
+    
+    // Last resort: Try to access a specific product directly (specifically for debugging Amazon Fresh products)
+    if (id === 'organic-bananas' && typeof amazonFreshProducts !== 'undefined' && amazonFreshProducts) {
+      console.log('Attempting emergency lookup for organic-bananas...');
+      const firstProduct = amazonFreshProducts[0];
+      if (firstProduct && firstProduct.id === 'organic-bananas') {
+        console.log('Emergency lookup successful for organic-bananas');
+        return firstProduct;
+      }
+    }
+    
+    console.error(`Product with id "${id}" not found in any data source`);
+    return null;
   }
   
   /**
@@ -140,9 +183,12 @@ class ProductDetailManager {
       ? `<span class="product-detail-badge ${product.badge}">${product.badge}</span>` 
       : '';
     
-    container.innerHTML = `
-      <div class="product-detail-container">
-        <div class="product-detail-image" style="background-image: url('${product.image}');" id="productImage">
+    container.innerHTML = `        <div class="product-detail-container">
+        <div class="product-detail-image-container" id="productImageContainer">
+          <img src="${this.getFormattedImagePath(product.image)}" 
+               alt="${product.title}" 
+               class="product-detail-img"
+               onerror="this.onerror=null; this.src='assets/logo/logo.png';">
           ${badgeHtml}
         </div>
         
@@ -366,14 +412,6 @@ class ProductDetailManager {
         "ratingValue": this.product.rating.toString(),
         "reviewCount": this.product.reviewCount.toString()
       },
-      "offers": {
-        "@type": "AggregateOffer",
-        "priceCurrency": "USD",
-        "lowPrice": this.product.price ? (this.product.price - (this.product.price * 0.1)).toFixed(2) : "",
-        "highPrice": this.product.price ? this.product.price.toString() : "",
-        "offerCount": "1",
-        "availability": "https://schema.org/InStock"
-      },
       "review": []
     };
     
@@ -506,6 +544,34 @@ class ProductDetailManager {
       console.log('No affiliate link available to share.');
       alert("No affiliate link available to share for this product.");
     }
+  }
+
+  /**
+   * Get a properly formatted image path from a product's image property
+   * @param {string} imagePath - The image path from the product object
+   * @returns {string} A properly formatted image path
+   */
+  getFormattedImagePath(imagePath) {
+    if (!imagePath) return 'assets/logo/logo.png';
+
+    // If path is already a full URL (http:// or https://) return as is
+    if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+      return imagePath;
+    }
+    
+    // Remove '../' prefix if it exists since product page is at root level
+    if (imagePath.startsWith('../')) {
+      imagePath = imagePath.substring(3);
+    }
+    
+    // If path starts with 'assets/', return as is
+    if (imagePath.startsWith('assets/')) {
+      return imagePath;
+    }
+    
+    // For other cases, ensure it points to products directory
+    const filename = imagePath.split('/').pop();
+    return `assets/products/${filename}`;
   }
 }
 

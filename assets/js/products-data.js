@@ -478,5 +478,5 @@ if (typeof module !== 'undefined' && module.exports) {
   module.exports = { productsData };
 } else {
   // For browser use
-  window.productsData = productsData;
+  // window.productsData = productsData; // Keep productsData local to this file
 }

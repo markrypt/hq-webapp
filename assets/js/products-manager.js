@@ -158,7 +158,8 @@ class ProductsManager {
         <div class="product-content">
           <h3 class="product-title">${product.title}</h3>
           <div class="product-meta">
-            <!-- Price removed -->
+            <span class="product-category">${product.category}</span>
+            ${product.subcategory ? `<span class="product-subcategory">${product.subcategory}</span>` : ''}
           </div>
           <div class="product-rating">
             <div class="stars">

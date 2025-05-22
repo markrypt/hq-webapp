@@ -3,8 +3,7 @@
  * Provides functionality to filter products by categories, subcategories, sellers, and colors
  */
 
-class ProductFilterSystem {
-    constructor() {
+class ProductFilterSystem {    constructor() {
         this.filters = {
             category: 'all',
             subcategory: 'all',
@@ -15,9 +14,7 @@ class ProductFilterSystem {
         this.products = [];
         this.filteredProducts = [];
         this.currentPage = 1;
-        this.productsPerPage = 5;
-        
-        // Collection of unique filter values
+        this.productsPerPage = 10; // Show more products per page        // Collection of unique filter values
         this.filterOptions = {
             categories: new Set(),
             subcategories: new Set(),
@@ -99,17 +96,31 @@ class ProductFilterSystem {
     
     /**
      * Extract all unique filter options from products data
-     */
-    extractFilterOptions() {
+     */    extractFilterOptions() {
+        // Clear existing options
+        this.filterOptions.categories.clear();
+        this.filterOptions.subcategories.clear();
+        this.filterOptions.sellers.clear();
+        this.filterOptions.colors.clear();
+        
+        // Track related subcategories for each category
+        const categorySubcategories = new Map();
+        
         this.products.forEach(product => {
             // Extract categories
             if (product.category) {
                 this.filterOptions.categories.add(product.category);
+                
+                // Initialize subcategories array for this category if not exists
+                if (!categorySubcategories.has(product.category)) {
+                    categorySubcategories.set(product.category, new Set());
+                }
             }
             
-            // Extract subcategories
-            if (product.subcategory) {
+            // Extract subcategories and map to categories
+            if (product.subcategory && product.category) {
                 this.filterOptions.subcategories.add(product.subcategory);
+                categorySubcategories.get(product.category).add(product.subcategory);
             }
             
             // Extract seller information (using brand/manufacturer as seller)
@@ -127,36 +138,53 @@ class ProductFilterSystem {
             }
         });
         
-        // Convert sets to sorted arrays for UI creation
-        for (const key in this.filterOptions) {
+        // Store the category-subcategory mapping
+        this.categorySubcategories = categorySubcategories;
+        
+        // Convert sets to sorted arrays for UI creation (except categorySubcategories)
+        for (const key of ['categories', 'subcategories', 'sellers', 'colors']) {
             this.filterOptions[key] = Array.from(this.filterOptions[key]).sort();
         }
     }
     
     /**
      * Create the filter UI with sections for categories, subcategories, sellers, and colors
-     */
-    createFilterUI() {
+     */    createFilterUI() {
         // Create main filter container
         const filterContainer = document.createElement('div');
-        filterContainer.className = 'filter-container';
+        filterContainer.className = 'filter-container fade-in';
+        
+        // Add filter summary
+        const filterSummary = document.createElement('div');
+        filterSummary.className = 'filter-summary';
+        filterSummary.innerHTML = `
+            <div class="filter-count">
+                <i class="fas fa-filter"></i>
+                <span>${this.products.length} Products</span>
+            </div>
+        `;
+        filterContainer.appendChild(filterSummary);
         
         // Add category filter section
-        filterContainer.appendChild(this.createFilterSection(
+        const categorySection = this.createFilterSection(
             'Categories', 
             'tag', 
             'category', 
             this.filterOptions.categories
-        ));
+        );
+        categorySection.setAttribute('data-filter-type', 'category');
+        filterContainer.appendChild(categorySection);
         
         // Add subcategory filter section if available
         if (this.filterOptions.subcategories.length > 0) {
-            filterContainer.appendChild(this.createFilterSection(
+            const subcategorySection = this.createFilterSection(
                 'Subcategories', 
                 'layer-group', 
                 'subcategory', 
                 this.filterOptions.subcategories
-            ));
+            );
+            subcategorySection.setAttribute('data-filter-type', 'subcategory');
+            filterContainer.appendChild(subcategorySection);
         }
         
         // Add seller filter section if available
@@ -167,9 +195,7 @@ class ProductFilterSystem {
                 'seller', 
                 this.filterOptions.sellers
             ));
-        }
-        
-        // Add color filter section if available
+        }          // Add color filter section if available
         if (this.filterOptions.colors.length > 0) {
             filterContainer.appendChild(this.createColorFilterSection(
                 'Colors', 
@@ -189,18 +215,59 @@ class ProductFilterSystem {
         const sidebar = document.querySelector('.category-sidebar');
         if (sidebar) {
             sidebar.appendChild(filterContainer);
-        }
+        }        // Create product grid container with header
+        const gridContainer = document.createElement('div');
+        gridContainer.className = 'category-content-inner fade-in';
         
-        // Create product grid container
+        const gridHeader = document.createElement('div');
+        gridHeader.className = 'grid-header';
+        gridHeader.innerHTML = `
+            <div class="grid-actions">
+                <div class="sort-dropdown">
+                    <select id="sortSelect" class="sort-select">
+                        <option value="popular">Most Popular</option>
+                        <option value="newest">Newest First</option>
+                        <option value="rating">Highest Rated</option>
+                    </select>
+                </div>
+                <div class="view-options">
+                    <button class="view-btn grid active" data-view="grid">
+                        <i class="fas fa-th-large"></i>
+                    </button>
+                    <button class="view-btn list" data-view="list">
+                        <i class="fas fa-th-list"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+        
         const productGrid = document.createElement('div');
         productGrid.className = 'product-grid';
         productGrid.id = 'productGrid';
         
-        // Add product grid after filter container
+        gridContainer.appendChild(gridHeader);
+        gridContainer.appendChild(productGrid);        // Add grid container to the page
         const content = document.querySelector('.category-content');
         if (content) {
-            content.appendChild(productGrid);
+            content.appendChild(gridContainer);
         }
+        
+        // Set up event listeners for sort and view options
+        const sortSelect = document.getElementById('sortSelect');
+        if (sortSelect) {
+            sortSelect.addEventListener('change', (e) => {
+                this.sortProducts(e.target.value);
+            });
+        }
+        
+        const viewButtons = document.querySelectorAll('.view-btn');
+        viewButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                viewButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                productGrid.className = `product-grid ${btn.dataset.view}-view`;
+            });
+        });
     }
     
     /**
@@ -232,27 +299,39 @@ class ProductFilterSystem {
         allButton.setAttribute('data-filter-value', 'all');
         allButton.innerHTML = 'All';
         optionsContainer.appendChild(allButton);
-        
-        // Create button for each option
+          // Create button for each option
         options.forEach(option => {
             const button = document.createElement('button');
             button.className = 'filter-btn';
             button.setAttribute('data-filter-type', filterType);
-            button.setAttribute('data-filter-value', option);
+            button.setAttribute('data-filter-value', typeof option === 'object' ? option.value : option);
             
-            // Count products for this option
-            const count = this.products.filter(product => {
-                if (filterType === 'category') {
-                    return product.category === option;
-                } else if (filterType === 'subcategory') {
-                    return product.subcategory === option;
-                } else if (filterType === 'seller') {
-                    return product.brand === option || product.manufacturer === option;
-                }
-                return false;
-            }).length;
+            // Count products for this option (skipped for price and rating)
+            let count = 0;
+            if (filterType !== 'price' && filterType !== 'rating') {
+                count = this.products.filter(product => {
+                    if (filterType === 'category') {
+                        return product.category === option;
+                    } else if (filterType === 'subcategory') {
+                        return product.subcategory === option;
+                    } else if (filterType === 'seller') {
+                        return product.brand === option || product.manufacturer === option;
+                    }
+                    return false;
+                }).length;
+            }
             
-            button.innerHTML = `${option} <span class="filter-badge">${count}</span>`;
+            // Use the label property if the option is an object
+            const displayText = typeof option === 'object' ? option.label : option;
+            
+            if (filterType === 'rating') {
+                button.innerHTML = `${displayText}`;
+            } else if (count > 0) {
+                button.innerHTML = `${displayText} <span class="filter-badge">${count}</span>`;
+            } else {
+                button.innerHTML = displayText;
+            }
+            
             optionsContainer.appendChild(button);
         });
         
@@ -342,11 +421,9 @@ class ProductFilterSystem {
             }
         });
     }
-    
-    /**
+      /**
      * Apply current filters to products and update display
-     */
-    applyFilters() {
+     */    applyFilters() {
         // Start with all products
         this.filteredProducts = [...this.products];
         
@@ -356,6 +433,15 @@ class ProductFilterSystem {
                 product.category === this.filters.category ||
                 (product.tags && product.tags.includes(this.filters.category))
             );
+            
+            // Update available subcategories for this category
+            if (this.categorySubcategories) {
+                const availableSubcategories = this.categorySubcategories.get(this.filters.category);
+                this.updateSubcategoryOptions(Array.from(availableSubcategories || []));
+            }
+        } else {
+            // Reset subcategory options when no category is selected
+            this.updateSubcategoryOptions(Array.from(this.filterOptions.subcategories));
         }
         
         // Apply subcategory filter
@@ -372,9 +458,7 @@ class ProductFilterSystem {
                 product.brand === this.filters.seller || 
                 product.manufacturer === this.filters.seller
             );
-        }
-        
-        // Apply color filter
+        }        // Apply color filter
         if (this.filters.color !== 'all') {
             this.filteredProducts = this.filteredProducts.filter(product => 
                 product.colors && product.colors.includes(this.filters.color)
@@ -386,9 +470,43 @@ class ProductFilterSystem {
     }
     
     /**
-     * Reset all filters to default state
+     * Update the subcategory options in the UI based on the selected category
+     * @param {Array} subcategories - Array of available subcategories
      */
-    resetFilters() {
+    updateSubcategoryOptions(subcategories) {
+        const subcategorySection = document.querySelector('.filter-section[data-filter-type="subcategory"]');
+        if (!subcategorySection) return;
+        
+        const optionsContainer = subcategorySection.querySelector('.filter-options');
+        if (!optionsContainer) return;
+        
+        // Clear existing options except "All"
+        const allButton = optionsContainer.querySelector('[data-filter-value="all"]');
+        optionsContainer.innerHTML = '';
+        if (allButton) optionsContainer.appendChild(allButton);
+        
+        // Add buttons for available subcategories
+        subcategories.forEach(subcategory => {
+            const button = document.createElement('button');
+            button.className = 'filter-btn';
+            button.setAttribute('data-filter-type', 'subcategory');
+            button.setAttribute('data-filter-value', subcategory);
+            
+            // Count products for this subcategory
+            const count = this.products.filter(product => product.subcategory === subcategory).length;
+            button.innerHTML = `${subcategory} <span class="filter-badge">${count}</span>`;
+            
+            // Add active class if this subcategory is currently selected
+            if (this.filters.subcategory === subcategory) {
+                button.classList.add('active');
+            }
+            
+            optionsContainer.appendChild(button);
+        });
+    }
+      /**
+     * Reset all filters to default state
+     */    resetFilters() {
         // Reset filter values
         this.filters = {
             category: 'all',
@@ -516,13 +634,37 @@ class ProductFilterSystem {
             content.appendChild(pagination);
         }
     }
+      /**
+     * Get a properly formatted image path from a product's image property
+     * @param {string} imagePath - The image path from the product object
+     * @returns {string} A properly formatted image path
+     */
+    getFormattedImagePath(imagePath) {
+        // If path is already a full URL (http:// or https://) return as is
+        if (imagePath && (imagePath.startsWith('http://') || imagePath.startsWith('https://'))) {
+            return imagePath;
+        }
+        
+        // If path already starts with '../assets', return as is
+        if (imagePath && imagePath.startsWith('../assets')) {
+            return imagePath;
+        }
+        
+        // If path starts with 'assets/', add '../' prefix
+        if (imagePath && imagePath.startsWith('assets/')) {
+            return '../' + imagePath;
+        }
+        
+        // For other cases, ensure it points to products directory
+        const filename = imagePath.split('/').pop();
+        return `../assets/products/${filename}`;
+    }
     
     /**
      * Create a product card element
      * @param {Object} product - Product data
      * @returns {HTMLElement} Product card element
-     */
-    createProductCard(product) {
+     */    createProductCard(product) {
         const card = document.createElement('a');
         card.className = 'product-card';
         card.href = `../product.html?id=${product.id}`;
@@ -535,9 +677,12 @@ class ProductFilterSystem {
             ? `<span class="product-badge ${product.badge}">${product.badge}</span>` 
             : '';
         
-        card.innerHTML = `
+        // Format image path
+        const imagePath = this.getFormattedImagePath(product.image);          card.innerHTML = `
             ${badgeHtml}
-            <div class="product-image" style="background-image: url('${product.image}');"></div>
+            <div class="product-image-container">
+                <img src="${imagePath}" alt="${product.title}" class="product-img" onerror="this.onerror=null; this.src='../assets/logo/logo.png';">
+            </div>
             <div class="product-content">
                 <h3 class="product-title">${product.title}</h3>
                 <div class="product-meta">
@@ -623,3 +768,41 @@ class ProductFilterSystem {
 
 // Initialize the product filter system
 const productFilterSystem = new ProductFilterSystem();
+
+// Add an event listener to ensure images are loaded properly
+document.addEventListener('DOMContentLoaded', function() {
+    // Force reload images after a short delay to ensure they're displayed correctly
+    setTimeout(() => {
+        document.querySelectorAll('.product-img').forEach(img => {
+            const currentSrc = img.src;
+            img.src = '';
+            img.src = currentSrc;
+        });
+    }, 500);
+});
+
+function displayProducts(productsToDisplay, categoryTitle) {
+    const products = productsToDisplay || productsData; // Default to productsData if no specific list provided
+    // ...existing code...
+}
+
+function initCategoryPage() {
+    // ...existing code...
+    let categoryKey = getCategoryKeyFromPath();
+    let productsToDisplay = productsData; // Default to all products
+    let categoryTitle = "All Products";
+
+    if (categoryKey === 'amazon-fresh' && window.amazonFreshProducts) {
+        productsToDisplay = window.amazonFreshProducts;
+        categoryTitle = "Amazon Fresh";
+    } else if (categoryKey === 'smart-home' && window.smartHomeProducts) { // Example for another category
+        productsToDisplay = window.smartHomeProducts;
+        categoryTitle = "Smart Home";
+    }
+    // Add more else if blocks for other specific categories if needed
+
+    displayProducts(productsToDisplay, categoryTitle);
+    // ...existing code...
+}
+
+document.addEventListener('DOMContentLoaded', initCategoryPage);

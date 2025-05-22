@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">  <title>Markrypt - Electronics Product Reviews, Buying Guides & Price Comparison</title>
-  <meta name="description" content="Expert reviews and buying advice for electronics at Markrypt. Compare prices on TVs, audio systems, cameras, wearables, and smart devices from trusted retailers.">
-  <meta name="keywords" content="electronics reviews, product comparisons, TVs buying guide, audio systems, cameras, wearables, tech gadgets, Markrypt, electronics deals">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Shop Electronics Products Online - Markrypt</title>
+  <meta name="description" content="Explore a wide selection of electronics, including smartphones, laptops, TVs, cameras, and accessories. Find detailed reviews and comparisons at Markrypt.">
+  <meta name="keywords" content="electronics, smartphones, laptops, TVs, cameras, gadgets, Markrypt, shopping">
   <link rel="canonical" href="https://www.markrypt.com/category/electronics">
-  <meta property="og:title" content="Markrypt - Electronics Product Reviews, Buying Guides & Price Comparison">
-  <meta property="og:description" content="Expert reviews and buying advice for electronics at Markrypt. Compare prices on TVs, audio systems, cameras, wearables, and smart devices from trusted retailers.">
+  <meta property="og:title" content="Markrypt - Electronics Reviews, Comparisons & Top Recommendations">
+  <meta property="og:description" content="Discover detailed electronics product reviews, comparisons, and expert recommendations at Markrypt. Find the best gadgets with expert advice.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.markrypt.com/category/electronics">
   <meta property="og:image" content="https://www.markrypt.com/assets/logo/logo.png">
@@ -131,9 +132,7 @@
       padding: 0.5rem 1.2rem 0.2rem 1.2rem;
       letter-spacing: 0.03em;
       pointer-events: none;
-    }
-
-    .scrollable-content-area {
+    }    .scrollable-content-area {
       position: absolute;
       top: 64px; /* Height of header */
       bottom: 60px; /* Height of navbar */
@@ -141,11 +140,11 @@
       right: 0;
       overflow-y: auto;
       background: var(--primary-bg);
-      padding: 1.5rem; /* Basic padding for content */
+      padding: 1.5rem 0; /* Removed horizontal padding */
     }
 
     .product-main-content {
-        max-width: 800px;
+        width: 100%; /* Use full available width within parent's padding */
         margin: 0 auto;
     }
 
@@ -196,9 +195,7 @@
     }
     .nav-item:focus {
       outline: none;
-    }
-
-    @media (min-width: 768px) {
+    }    @media (min-width: 768px) {
       .navigation {
         width: 600px;
         left: 50%;
@@ -206,18 +203,50 @@
         border-radius: 8px 8px 0 0;
       }
     }
-     @keyframes fadeIn {
+
+    .no-results {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-secondary);
+    }
+    
+    .no-results i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--accent-color);
+      opacity: 0.5;
+    }
+    
+    .no-results h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .no-results p {
+      font-size: 1rem;
+    }
+
+    @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
-<body>
-  <div class="app-container">
-    <div id="header-placeholder"></div>    <div class="scrollable-content-area">
+<body>  <div class="app-container">
+    <div id="header-placeholder"></div>
+    <div class="scrollable-content-area">
       <main class="product-main-content">
-        <h1>Electronics</h1>
-        <p>Explore products in Electronics. Filter by category, subcategory, seller, or color to find exactly what you're looking for.</p>
+        <div class="category-header">
+          <h1>Electronics</h1>
+          <p>Browse our selection of electronics, including smartphones, laptops, TVs, cameras, and accessories. Discover the latest tech innovations with expert reviews and recommendations.</p>
+        </div>        <div class="category-layout">
+          <aside class="category-sidebar">
+            <!-- Filter container will be inserted here -->
+          </aside>
+          <div class="category-content">
+            <!-- Product grid will be inserted here -->
+          </div>
+        </div>
       </main>
     </div>
     <div id="navigation-placeholder"></div>
@@ -280,13 +309,14 @@
          setActiveLink(link, link.getAttribute('href'));
       });
     });
+  </script>  <script src="../assets/js/common.js"></script>
+  <script src="../assets/js/electronics-products.js"></script>  <script>
+    // For the category page, explicitly set productsData to electronicsProducts
+    window.productsData = electronicsProducts;
   </script>
-<script src="../assets/js/common.js"></script>
-<script src="../assets/js/products-data.js"></script>
-<script src="../assets/js/electronics-products.js"></script>
-<script src="../assets/js/category-filter.js"></script>
-<script src="../assets/js/search.js"></script>
-<script src="../assets/js/components-loader.js"></script>
+  <script src="../assets/js/category-filter.js"></script>
+  <script src="../assets/js/search.js"></script>
+  <script src="../assets/js/components-loader.js"></script>
 </body>
 </html>
 

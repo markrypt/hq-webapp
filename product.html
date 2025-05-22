@@ -23,8 +23,7 @@
   <!-- Schema.org Product Markup - Dynamically populated by JavaScript -->
   <script type="application/ld+json" id="productSchema">
   {
-    "@context": "https://schema.org/",
-    "@type": "Product",
+    "@context": "https://schema.org/",    "@type": "Product",
     "name": "",
     "image": "",
     "description": "",
@@ -36,14 +35,6 @@
       "@type": "AggregateRating",
       "ratingValue": "",
       "reviewCount": ""
-    },
-    "offers": {
-      "@type": "AggregateOffer",
-      "priceCurrency": "USD",
-      "lowPrice": "",
-      "highPrice": "",
-      "offerCount": "",
-      "availability": "https://schema.org/InStock"
     },
     "review": []
   }
@@ -88,19 +79,38 @@
         grid-template-columns: minmax(300px, 45%) 1fr;
         padding: 2.5rem;
       }
-    }
-
-    .product-detail-image {
+    }    .product-detail-image-container {
       border-radius: 12px;
       overflow: hidden;
       height: 400px;
       position: relative;
       box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
+    }
+
+    .product-detail-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background-color: #fff;
+      transition: transform 0.3s ease;
       cursor: zoom-in;
       border: 1px solid rgba(0,0,0,0.03);
+    }
+
+    .product-detail-img:hover {
+      transform: scale(1.03);
+    }
+
+    /* Add a light background for the image container */
+    .product-detail-image-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #f8f8f8;
+      z-index: -1;
     }
 
     .product-detail-badge {
@@ -519,11 +529,51 @@
     </div>
   </div>
 
-  <div id="navigation-placeholder"></div>  <script src="assets/js/products-data.js"></script>
-  <!-- Consolidated optimized core script -->
-  <script src="assets/js/optimized-core.js"></script>
-  <!-- <script src="assets/js/products-manager.js"></script> -->
-  <!-- <script src="assets/js/search.js"></script> -->
+  <div id="navigation-placeholder"></div>
+  
+  <!-- Load product data scripts -->
+  <script src="assets/js/products-data.js"></script>
+  <script src="assets/js/amazon-fresh-products.js"></script>
+  
+  <!-- Make sure all product data is combined and available -->
+  <script>
+    // Debug logging
+    console.log('Product data loading sequence started...');
+    
+    // Store the original arrays if they exist
+    const mainProducts = typeof productsData !== 'undefined' ? productsData : [];
+    const freshProducts = typeof amazonFreshProducts !== 'undefined' ? amazonFreshProducts : [];
+    
+    console.log(`Main products count: ${mainProducts.length}`);
+    console.log(`Amazon Fresh products count: ${freshProducts.length}`);
+    
+    // Create a master product array with all products
+    const allProducts = [...mainProducts];
+    
+    // Add Amazon Fresh products if they're not already included
+    if (freshProducts.length > 0) {
+      // Only add if they're not the same reference (avoids duplication)
+      if (mainProducts !== freshProducts) {
+        for (const product of freshProducts) {
+          // Check if this product ID is already in the main list
+          if (!allProducts.some(p => p.id === product.id)) {
+            allProducts.push(product);
+          }
+        }
+      }
+    }
+    
+    // Set as the global productsData for all scripts to use
+    window.productsData = allProducts;
+    
+    console.log(`Combined product list now has ${window.productsData.length} products total`);
+    
+    // Verify we have the Amazon Fresh products
+    const bananas = window.productsData.find(p => p.id === 'organic-bananas');
+    console.log(`Organic bananas found in combined list: ${bananas ? 'YES' : 'NO'}`);
+  </script>
+  
+  <!-- Load product detail script -->
   <script src="assets/js/product-detail.js"></script>
   <script>
     // This script block is for product.html specific logging or minor initializations.
@@ -534,7 +584,6 @@
       console.error('[ProductHTML] CRITICAL: productsData is NOT available or empty after script loading!');
     }
     // The product-detail.js script handles its own initialization.
-    // Malformed JavaScript block, duplicate script tags, and redundant inline scripts previously present after this point have been removed.
   </script>
 <script src="assets/js/components-loader.js"></script>
 </body>

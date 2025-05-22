@@ -143,11 +143,11 @@
       right: 0;
       overflow-y: auto;
       background: var(--primary-bg);
-      padding: 1.5rem; /* Basic padding for content */
+      padding: 1.5rem 0; /* Removed horizontal padding */
     }
 
     .product-main-content {
-        max-width: 1200px;
+        width: 100%; /* Use full available width within parent's padding */
         margin: 0 auto;
     }
 
@@ -236,13 +236,22 @@
     }
   </style>
 </head>
-<body>
-  <div class="app-container">
+<body>  <div class="app-container">
     <div id="header-placeholder"></div>
     <div class="scrollable-content-area">
       <main class="product-main-content">
-        <h1>Amazon Fresh</h1>
-        <p>Explore products in Amazon Fresh. Filter by category, subcategory, seller, or color to find exactly what you're looking for.</p>
+        <div class="category-header">
+          <h1>Amazon Fresh</h1>
+          <p>Explore products in Amazon Fresh. Filter by category, subcategory, seller, or color to find exactly what you're looking for.</p>
+        </div>
+        <div class="category-layout">
+          <aside class="category-sidebar">
+            <!-- Filter container will be inserted here -->
+          </aside>
+          <div class="category-content">
+            <!-- Product grid will be inserted here -->
+          </div>
+        </div>
       </main>
     </div>
     <div id="navigation-placeholder"></div>
@@ -298,12 +307,15 @@
          setActiveLink(link, link.getAttribute('href'));
       });
     });
+  </script>  <script src="../assets/js/common.js"></script>
+  <!-- Load amazon-fresh-products.js which defines amazonFreshProducts -->
+  <script src="../assets/js/amazon-fresh-products.js"></script>
+  <script>
+    // For the category page, explicitly set productsData to amazonFreshProducts
+    window.productsData = window.amazonFreshProducts;
   </script>
-  <script src="../assets/js/common.js"></script>
-  <script src="../assets/js/products-data.js"></script>
   <script src="../assets/js/category-filter.js"></script>
   <script src="../assets/js/search.js"></script>
-  <script src="../assets/js/amazon-fresh-products.js"></script>
   <script src="../assets/js/components-loader.js"></script>
 </body>
 </html>
