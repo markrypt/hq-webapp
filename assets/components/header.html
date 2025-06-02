@@ -23,19 +23,36 @@
 </header>
 <script>
   function initializeSearch() {
-    if (window.searchManager && typeof window.searchManager.openSearchModal === 'function') {
-      window.searchManager.openSearchModal();
-    } else {
-      // Create new instance of SearchManager if it doesn't exist
-      if (!window.searchManager) {
-        window.searchManager = new SearchManager();
-        window.searchManager.init().then(() => {
-          window.searchManager.openSearchModal();
-        }).catch(err => {
-          console.error('Error initializing search:', err);
-        });
+    console.log('Search icon clicked');
+    
+    // Function to try opening the search modal
+    const tryOpenSearch = () => {
+      if (window.searchManager && typeof window.searchManager.openSearchModal === 'function') {
+        window.searchManager.openSearchModal();
+        return true;
       }
+      return false;
+    };
+
+    // First attempt to open search modal
+    if (tryOpenSearch()) return;
+
+    // If SearchManager exists but isn't ready, wait for initialization
+    if (window.searchManager) {
+      console.log('Waiting for SearchManager initialization...');
+      setTimeout(tryOpenSearch, 500);
+      return;
     }
+
+    // If no SearchManager exists, create and initialize it
+    console.log('Creating new SearchManager...');
+    window.searchManager = new SearchManager();
+    window.searchManager.init().then(() => {
+      console.log('SearchManager initialized, opening modal...');
+      window.searchManager.openSearchModal();
+    }).catch(err => {
+      console.error('Failed to initialize search:', err);
+    });
   }
 </script>
 

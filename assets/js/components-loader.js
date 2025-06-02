@@ -22,11 +22,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const loaderUrl = new URL(LOADER_SCRIPT_SRC); 
     
     const headerPath = new URL(headerComponentRelPath, loaderUrl).href;
-    const navPath = new URL(navigationComponentRelPath, loaderUrl).href;
-
-    loadComponent('header-placeholder', headerPath, () => {
+    const navPath = new URL(navigationComponentRelPath, loaderUrl).href;    loadComponent('header-placeholder', headerPath, () => {
       // After header loads, set up dropdown functionality
       setupDropdownMenu();
+      
+      // Initialize global search if not already initialized
+      if (!window.searchManager) {
+        console.log('Initializing global search...');
+        try {
+          window.searchManager = new SearchManager();
+          window.searchManager.init().then(() => {
+            console.log('Search initialization complete');
+          }).catch(err => {
+            console.error('Error initializing search:', err);
+          });
+        } catch (err) {
+          console.error('Failed to create SearchManager:', err);
+        }
+      }
     });
     loadComponent('navigation-placeholder', navPath, () => {
       // After navigation loads, set active navigation item
