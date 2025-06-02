@@ -1,5 +1,12 @@
+// Initialize window.MARKRYPT if not exists
+window.MARKRYPT = window.MARKRYPT || {};
+
+
+// Initialize window.MARKRYPT if not exists
+window.MARKRYPT = window.MARKRYPT || {};
+
 // Product data for Home, Garden & Tools category
-const homeGardenProducts = [
+const homeGardenAndToolsProducts = [
   {
     id: "dewalt-power-drill",
     title: "DEWALT 20V MAX Cordless Drill / Driver Kit",
@@ -66,6 +73,12 @@ const homeGardenProducts = [
     brand: "Weber"
   }
 ];
+
+// Assign products to global scope
+window.MARKRYPT.homeGardenAndToolsProducts = homeGardenAndToolsProducts;
+
+// Log product loading status
+console.log('[Home Garden & Tools] Products loaded:', homeGardenAndToolsProducts.length);
 
 // Add home & garden products to the main products data array
 if (typeof productsData !== 'undefined') {

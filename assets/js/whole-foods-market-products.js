@@ -1,5 +1,5 @@
 // Product data for Whole Foods Market category
-const wholefoodsmarketProducts = [
+const wholeFoodsMarketProducts = [
   {
     id: "whole-foods-market-product-1",
     title: "Example Whole Foods Market Product 1",
@@ -40,9 +40,12 @@ const wholefoodsmarketProducts = [
   }
 ];
 
+// Assign wholeFoodsMarketProducts to window object so it's globally accessible
+window.wholeFoodsMarketProducts = wholeFoodsMarketProducts;
+
 // Add Whole Foods Market products to the main products data array
 if (typeof productsData !== 'undefined') {
-  wholefoodsmarketProducts.forEach(product => {
+  wholeFoodsMarketProducts.forEach(product => {
     // Add the category tag to ensure it shows up on the category page
     if (product.tags && !product.tags.includes('whole-foods-market')) {
       product.tags.push('whole-foods-market');

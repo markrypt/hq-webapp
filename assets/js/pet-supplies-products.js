@@ -66,6 +66,9 @@ const petSuppliesProducts = [
   }
 ];
 
+// Assign to window object so it can be accessed globally
+window.petSuppliesProducts = petSuppliesProducts;
+
 // Add pet supplies products to the main products data array
 if (typeof productsData !== 'undefined') {
   petSuppliesProducts.forEach(product => {

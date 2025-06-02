@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Movies, Music & Games - Markrypt</title>
-  <meta name="description" content="Discover detailed Movies, Music & Games reviews, product comparisons, and top recommendations at Markrypt. Find the best products with expert advice.">
-  <meta name="keywords" content="movies, music, and, games, reviews, product comparisons, recommendations, Markrypt">
+  <meta name="description" content="Find the best entertainment products on Markrypt. Expert reviews of movies, music, video games, and more to elevate your entertainment experience.">
+  <meta name="keywords" content="movies, music, video games, entertainment, streaming, gaming, Markrypt">
   <link rel="canonical" href="https://www.markrypt.com/category/movies-music-and-games">
   <meta property="og:title" content="Markrypt - Movies, Music & Games Reviews, Comparisons & Top Recommendations">
   <meta property="og:description" content="Discover detailed Movies, Music & Games reviews, product comparisons, and top recommendations at Markrypt. Find the best products with expert advice.">
@@ -137,18 +137,18 @@
 
     .scrollable-content-area {
       position: absolute;
-      top: 64px; /* Height of header */
-      bottom: 60px; /* Height of navbar */
+      top: 64px;
+      bottom: 60px;
       left: 0;
       right: 0;
       overflow-y: auto;
       background: var(--primary-bg);
-      padding: 1.5rem; /* Basic padding for content */
+      padding: 1.5rem 0;
     }
 
     .product-main-content {
-        max-width: 1200px;
-        margin: 0 auto;
+      width: 100%;
+      padding: 0 1.5rem;
     }
 
     .navigation {
@@ -240,10 +240,10 @@
   <div class="app-container">
     <div id="header-placeholder"></div>
     <div class="scrollable-content-area">
-      <main class="product-main-content">
+      <div class="product-main-content">
         <div class="category-header">
           <h1>Movies, Music & Games</h1>
-          <p>Explore products in Movies, Music & Games. Filter by category, subcategory, seller, or color to find exactly what you're looking for.</p>
+          <p>Find the best in entertainment, from latest releases to timeless classics. Browse movies, music, video games, and more, filtered by genre, platform, or format.</p>
         </div>
         <div class="category-layout">
           <aside class="category-sidebar">
@@ -253,71 +253,105 @@
             <!-- Product grid will be inserted here -->
           </div>
         </div>
-      </main>
+      </div>
     </div>
     <div id="navigation-placeholder"></div>
   </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      let pagePath = window.location.pathname;
-      let currentNormalizedPath = pagePath.replace(/\/?index\.html$/, '/').replace(/\.html$/, '');
-      if (currentNormalizedPath !== '/' && currentNormalizedPath.endsWith('/')) {
-        currentNormalizedPath = currentNormalizedPath.slice(0, -1);
-      }
-      if (currentNormalizedPath === '' || currentNormalizedPath === '/index') currentNormalizedPath = '/';
-      if (!currentNormalizedPath.startsWith('/')) currentNormalizedPath = '/' + currentNormalizedPath;
-
-      const setActiveLink = (linkElement, hrefAttribute) => {
-        if (!hrefAttribute || hrefAttribute === '#' || hrefAttribute.startsWith('mailto:') || hrefAttribute.startsWith('tel:')) {
-          return;
-        }
-        try {
-          const linkUrl = new URL(hrefAttribute, window.location.href);
-          let linkNormalizedPath = linkUrl.pathname.replace(/\/?index\.html$/, '/').replace(/\.html$/, '');
-          if (linkNormalizedPath !== '/' && linkNormalizedPath.endsWith('/')) {
-            linkNormalizedPath = linkNormalizedPath.slice(0, -1);
-          }
-          if (linkNormalizedPath === '' || linkNormalizedPath === '/index') linkNormalizedPath = '/';
-          if (!linkNormalizedPath.startsWith('/')) linkNormalizedPath = '/' + linkNormalizedPath;
-
-          if ((hrefAttribute === '../' || hrefAttribute === '../index' || hrefAttribute === '../index.html') && linkElement.closest('.logo')) {
-            linkNormalizedPath = '/';
-          }
-          
-          if (linkNormalizedPath === currentNormalizedPath) {
-            linkElement.classList.add('active');
-          } else {
-            linkElement.classList.remove('active');
-          }
-        } catch (e) {
-          console.error('Error processing link href:', hrefAttribute, e);
-        }
-      };
-
-      const logoLink = document.querySelector('.header .logo a');
-      if (logoLink) {
-        setActiveLink(logoLink, logoLink.getAttribute('href'));
-      }
-
-      document.querySelectorAll('.menu-dropdown a').forEach(link => {
-        setActiveLink(link, link.getAttribute('href'));
-      });
-      
-      document.querySelectorAll('.navigation .nav-item[href]').forEach(link => {
-         setActiveLink(link, link.getAttribute('href'));
-      });
-    });
-  </script>  <script src="../assets/js/common.js"></script>
+  <script src="../assets/js/common.js"></script>
   <!-- Load movies-music-and-games-products.js which defines moviesMusicAndGamesProducts -->
   <script src="../assets/js/movies-music-and-games-products.js"></script>
   <script>
     // For the category page, explicitly set productsData to moviesMusicAndGamesProducts
     window.productsData = window.moviesMusicAndGamesProducts;
+    console.log('Movies, Music & Games products loaded:', window.productsData ? window.productsData.length + ' products found' : 'No products found');
   </script>
   <script src="../assets/js/category-filter.js"></script>
   <script src="../assets/js/search.js"></script>
   <script src="../assets/js/components-loader.js"></script>
+  <script>
+    // Fallback: Manually render products if the filter system doesn't work
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        // Check if products were rendered by the filter system
+        const existingProducts = document.querySelectorAll('.product-grid .product-card');
+        if (existingProducts.length === 0 && window.moviesMusicAndGamesProducts && window.moviesMusicAndGamesProducts.length > 0) {
+          console.log('No products rendered by filter system, using manual rendering fallback');
+          const contentDiv = document.querySelector('.category-content');
+          contentDiv.innerHTML = '';
+          const productGrid = document.createElement('div');
+          productGrid.className = 'product-grid';
+          
+          window.moviesMusicAndGamesProducts.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            
+            const imageDiv = document.createElement('div');
+            imageDiv.className = 'product-image';
+            
+            const img = document.createElement('img');
+            img.src = product.image && product.image.startsWith('../') ? product.image : '../' + product.image;
+            img.alt = product.title;
+            imageDiv.appendChild(img);
+            
+            const productInfo = document.createElement('div');
+            productInfo.className = 'product-info';
+            
+            const title = document.createElement('h3');
+            title.className = 'product-title';
+            title.textContent = product.title;
+            
+            const rating = document.createElement('div');
+            rating.className = 'product-rating';
+            rating.innerHTML = `${product.rating} <i class="fas fa-star"></i> (${product.reviewCount})`;
+            
+            const category = document.createElement('div');
+            category.className = 'product-category';
+            category.textContent = `${product.category} › ${product.subcategory}`;
+            
+            const link = document.createElement('a');
+            link.href = product.affiliateLink || '#';
+            link.className = 'product-link';
+            link.textContent = 'View Product';
+            link.target = '_blank';
+            
+            productInfo.appendChild(title);
+            productInfo.appendChild(rating);
+            productInfo.appendChild(category);
+            productInfo.appendChild(link);
+            
+            productCard.appendChild(imageDiv);
+            productCard.appendChild(productInfo);
+            
+            productGrid.appendChild(productCard);
+          });
+          
+          contentDiv.appendChild(productGrid);
+          console.log('Manually created product cards for movies, music & games products');
+        } else if (!window.moviesMusicAndGamesProducts || window.moviesMusicAndGamesProducts.length === 0) {
+          console.error('No movies, music & games products data available');
+        } else {
+          console.log('Products already rendered or content div not found');
+        }
+      }, 500);
+    });
+  </script>
+  
+  <script>
+    // Final diagnostic check to ensure products are properly loaded
+    window.addEventListener('load', () => {
+      console.log('Page fully loaded, running diagnostic checks...');
+      console.log('window.moviesMusicAndGamesProducts:', window.moviesMusicAndGamesProducts ? window.moviesMusicAndGamesProducts.length + ' products' : 'undefined');
+      console.log('window.productsData:', window.productsData ? window.productsData.length + ' products' : 'undefined');
+      
+      const productCards = document.querySelectorAll('.product-card');
+      console.log('Product cards rendered:', productCards.length);
+      
+      if (productCards.length === 0 && window.moviesMusicAndGamesProducts && window.moviesMusicAndGamesProducts.length > 0) {
+        console.warn('Products data exists but no cards were rendered - potential filter issue');
+      }
+    });
+  </script>
 </body>
 </html>
 

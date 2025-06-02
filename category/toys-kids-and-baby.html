@@ -133,9 +133,7 @@
       padding: 0.5rem 1.2rem 0.2rem 1.2rem;
       letter-spacing: 0.03em;
       pointer-events: none;
-    }
-
-    .scrollable-content-area {
+    }    .scrollable-content-area {
       position: absolute;
       top: 64px; /* Height of header */
       bottom: 60px; /* Height of navbar */
@@ -143,11 +141,11 @@
       right: 0;
       overflow-y: auto;
       background: var(--primary-bg);
-      padding: 1.5rem; /* Basic padding for content */
+      padding: 1.5rem 0; /* Removed horizontal padding */
     }
 
     .product-main-content {
-        max-width: 1200px;
+        width: 100%; /* Use full available width within parent's padding */
         margin: 0 auto;
     }
 
@@ -309,15 +307,100 @@
       });
     });
   </script>  <script src="../assets/js/common.js"></script>
+  <!-- Load toys-kids-and-baby-products.js which defines toysKidsAndBabyProducts -->  <script src="../assets/js/common.js"></script>
   <!-- Load toys-kids-and-baby-products.js which defines toysKidsAndBabyProducts -->
   <script src="../assets/js/toys-kids-and-baby-products.js"></script>
   <script>
     // For the category page, explicitly set productsData to toysKidsAndBabyProducts
     window.productsData = window.toysKidsAndBabyProducts;
+    console.log('Toys, Kids & Baby products loaded:', window.productsData ? window.productsData.length + ' products found' : 'No products found');
   </script>
   <script src="../assets/js/category-filter.js"></script>
   <script src="../assets/js/search.js"></script>
   <script src="../assets/js/components-loader.js"></script>
+  <script>
+    // Fallback: Manually render products if the filter system doesn't work
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        // Check if products were rendered by the filter system
+        const existingProducts = document.querySelectorAll('.product-grid .product-card');
+        if (existingProducts.length === 0 && window.toysKidsAndBabyProducts && window.toysKidsAndBabyProducts.length > 0) {
+          console.log('No products rendered by filter system, using manual rendering fallback');
+          const contentDiv = document.querySelector('.category-content');
+          contentDiv.innerHTML = '';
+          const productGrid = document.createElement('div');
+          productGrid.className = 'product-grid';
+          
+          window.toysKidsAndBabyProducts.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            
+            const imageDiv = document.createElement('div');
+            imageDiv.className = 'product-image';
+            
+            const img = document.createElement('img');
+            img.src = product.image && product.image.startsWith('../') ? product.image : '../' + product.image;
+            img.alt = product.title;
+            imageDiv.appendChild(img);
+            
+            const productInfo = document.createElement('div');
+            productInfo.className = 'product-info';
+            
+            const title = document.createElement('h3');
+            title.className = 'product-title';
+            title.textContent = product.title;
+            
+            const rating = document.createElement('div');
+            rating.className = 'product-rating';
+            rating.innerHTML = `${product.rating} <i class="fas fa-star"></i> (${product.reviewCount})`;
+            
+            const category = document.createElement('div');
+            category.className = 'product-category';
+            category.textContent = `${product.category} › ${product.subcategory}`;
+            
+            const link = document.createElement('a');
+            link.href = product.affiliateLink || '#';
+            link.className = 'product-link';
+            link.textContent = 'View Product';
+            link.target = '_blank';
+            
+            productInfo.appendChild(title);
+            productInfo.appendChild(rating);
+            productInfo.appendChild(category);
+            productInfo.appendChild(link);
+            
+            productCard.appendChild(imageDiv);
+            productCard.appendChild(productInfo);
+            
+            productGrid.appendChild(productCard);
+          });
+          
+          contentDiv.appendChild(productGrid);
+          console.log('Manually created product cards for toys, kids & baby products');
+        } else if (!window.toysKidsAndBabyProducts || window.toysKidsAndBabyProducts.length === 0) {
+          console.error('No toys, kids & baby products data available');
+        } else {
+          console.log('Products already rendered or content div not found');
+        }
+      }, 500);
+    });
+  </script>
+  
+  <script>
+    // Final diagnostic check to ensure products are properly loaded
+    window.addEventListener('load', () => {
+      console.log('Page fully loaded, running diagnostic checks...');
+      console.log('window.toysKidsAndBabyProducts:', window.toysKidsAndBabyProducts ? window.toysKidsAndBabyProducts.length + ' products' : 'undefined');
+      console.log('window.productsData:', window.productsData ? window.productsData.length + ' products' : 'undefined');
+      
+      const productCards = document.querySelectorAll('.product-card');
+      console.log('Product cards rendered:', productCards.length);
+      
+      if (productCards.length === 0 && window.toysKidsAndBabyProducts && window.toysKidsAndBabyProducts.length > 0) {
+        console.warn('Products data exists but no cards were rendered - potential filter issue');
+      }
+    });
+  </script>
 </body>
 </html>
 

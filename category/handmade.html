@@ -137,18 +137,18 @@
 
     .scrollable-content-area {
       position: absolute;
-      top: 64px; /* Height of header */
-      bottom: 60px; /* Height of navbar */
+      top: 64px;
+      bottom: 60px;
       left: 0;
       right: 0;
       overflow-y: auto;
       background: var(--primary-bg);
-      padding: 1.5rem; /* Basic padding for content */
+      padding: 1.5rem 0;
     }
 
     .product-main-content {
-        max-width: 1200px;
-        margin: 0 auto;
+      width: 100%;
+      padding: 0 1.5rem;
     }
 
     .navigation {
@@ -240,10 +240,10 @@
   <div class="app-container">
     <div id="header-placeholder"></div>
     <div class="scrollable-content-area">
-      <main class="product-main-content">
+      <div class="product-main-content">
         <div class="category-header">
           <h1>Handmade</h1>
-          <p>Explore products in Handmade. Filter by category, subcategory, seller, or color to find exactly what you're looking for.</p>
+          <p>Discover unique handmade creations from skilled artisans. Filter by category, creator, material, or style to find one-of-a-kind items you'll love.</p>
         </div>
         <div class="category-layout">
           <aside class="category-sidebar">
@@ -253,62 +253,12 @@
             <!-- Product grid will be inserted here -->
           </div>
         </div>
-      </main>
+      </div>
     </div>
     <div id="navigation-placeholder"></div>
   </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      let pagePath = window.location.pathname;
-      let currentNormalizedPath = pagePath.replace(/\/?index\.html$/, '/').replace(/\.html$/, '');
-      if (currentNormalizedPath !== '/' && currentNormalizedPath.endsWith('/')) {
-        currentNormalizedPath = currentNormalizedPath.slice(0, -1);
-      }
-      if (currentNormalizedPath === '' || currentNormalizedPath === '/index') currentNormalizedPath = '/';
-      if (!currentNormalizedPath.startsWith('/')) currentNormalizedPath = '/' + currentNormalizedPath;
-
-      const setActiveLink = (linkElement, hrefAttribute) => {
-        if (!hrefAttribute || hrefAttribute === '#' || hrefAttribute.startsWith('mailto:') || hrefAttribute.startsWith('tel:')) {
-          return;
-        }
-        try {
-          const linkUrl = new URL(hrefAttribute, window.location.href);
-          let linkNormalizedPath = linkUrl.pathname.replace(/\/?index\.html$/, '/').replace(/\.html$/, '');
-          if (linkNormalizedPath !== '/' && linkNormalizedPath.endsWith('/')) {
-            linkNormalizedPath = linkNormalizedPath.slice(0, -1);
-          }
-          if (linkNormalizedPath === '' || linkNormalizedPath === '/index') linkNormalizedPath = '/';
-          if (!linkNormalizedPath.startsWith('/')) linkNormalizedPath = '/' + linkNormalizedPath;
-
-          if ((hrefAttribute === '../' || hrefAttribute === '../index' || hrefAttribute === '../index.html') && linkElement.closest('.logo')) {
-            linkNormalizedPath = '/';
-          }
-          
-          if (linkNormalizedPath === currentNormalizedPath) {
-            linkElement.classList.add('active');
-          } else {
-            linkElement.classList.remove('active');
-          }
-        } catch (e) {
-          console.error('Error processing link href:', hrefAttribute, e);
-        }
-      };
-
-      const logoLink = document.querySelector('.header .logo a');
-      if (logoLink) {
-        setActiveLink(logoLink, logoLink.getAttribute('href'));
-      }
-
-      document.querySelectorAll('.menu-dropdown a').forEach(link => {
-        setActiveLink(link, link.getAttribute('href'));
-      });
-      
-      document.querySelectorAll('.navigation .nav-item[href]').forEach(link => {
-         setActiveLink(link, link.getAttribute('href'));
-      });
-    });
-  </script>  <script src="../assets/js/common.js"></script>
+  <script src="../assets/js/common.js"></script>
   <!-- Load handmade-products.js which defines handmadeProducts -->
   <script src="../assets/js/handmade-products.js"></script>
   <script>

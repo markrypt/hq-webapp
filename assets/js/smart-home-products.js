@@ -1,5 +1,5 @@
 // Product data for Smart Home category
-const smarthomeProducts = [
+const smartHomeProducts = [
   {
     id: "smart-home-product-1",
     title: "Example Smart Home Product 1",
@@ -40,9 +40,12 @@ const smarthomeProducts = [
   }
 ];
 
+// Assign to window object so it can be accessed globally
+window.smartHomeProducts = smartHomeProducts;
+
 // Add Smart Home products to the main products data array
 if (typeof productsData !== 'undefined') {
-  smarthomeProducts.forEach(product => {
+  smartHomeProducts.forEach(product => {
     // Add the category tag to ensure it shows up on the category page
     if (product.tags && !product.tags.includes('smart-home')) {
       product.tags.push('smart-home');

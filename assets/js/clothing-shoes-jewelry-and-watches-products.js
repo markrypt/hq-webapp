@@ -1,3 +1,6 @@
+// Initialize window.MARKRYPT if not exists
+window.MARKRYPT = window.MARKRYPT || {};
+
 // Product data for Clothing, Shoes, Jewelry & Watches category
 const clothingShoesJewelryAndWatchesProducts = [
   {
@@ -67,7 +70,13 @@ const clothingShoesJewelryAndWatchesProducts = [
   }
 ];
 
-// Add clothing, shoes, jewelry and watches products to the main products data array
+// Assign products to global scope
+window.MARKRYPT.clothingShoesJewelryAndWatchesProducts = clothingShoesJewelryAndWatchesProducts;
+
+// Log product loading status
+console.log('[Clothing, Shoes, Jewelry & Watches] Products loaded:', clothingShoesJewelryAndWatchesProducts.length);
+
+// Add Clothing products to the main products data array
 if (typeof productsData !== 'undefined') {
   clothingShoesJewelryAndWatchesProducts.forEach(product => {
     // Add the category tag to ensure it shows up on the category page

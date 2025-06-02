@@ -1,5 +1,5 @@
 // Product data for Sports & Outdoors category
-const sportsOutdoorsProducts = [
+const sportsAndOutdoorsProducts = [
   {
     id: "yeti-tundra-cooler",
     title: "YETI Tundra 45 Cooler",
@@ -67,9 +67,12 @@ const sportsOutdoorsProducts = [
   }
 ];
 
+// Assign to window object so it can be accessed globally
+window.sportsAndOutdoorsProducts = sportsAndOutdoorsProducts;
+
 // Add sports & outdoors products to the main products data array
 if (typeof productsData !== 'undefined') {
-  sportsOutdoorsProducts.forEach(product => {
+  sportsAndOutdoorsProducts.forEach(product => {
     // Add the category tag to ensure it shows up on the category page
     if (product.tags && !product.tags.includes('sports-and-outdoors')) {
       product.tags.push('sports-and-outdoors');

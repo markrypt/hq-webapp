@@ -1,5 +1,5 @@
 // Product data for Industrial & Scientific category
-const industrialandscientificProducts = [
+const industrialAndScientificProducts = [
   {
     id: "industrial-and-scientific-product-1",
     title: "Example Industrial & Scientific Product 1",
@@ -40,9 +40,12 @@ const industrialandscientificProducts = [
   }
 ];
 
+// Assign to window object so it can be accessed globally
+window.industrialAndScientificProducts = industrialAndScientificProducts;
+
 // Add Industrial & Scientific products to the main products data array
 if (typeof productsData !== 'undefined') {
-  industrialandscientificProducts.forEach(product => {
+  industrialAndScientificProducts.forEach(product => {
     // Add the category tag to ensure it shows up on the category page
     if (product.tags && !product.tags.includes('industrial-and-scientific')) {
       product.tags.push('industrial-and-scientific');

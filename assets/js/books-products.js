@@ -67,6 +67,9 @@ const booksProducts = [
 ];
 
 // Add books products to the main products data array
+// Assign to window object so it can be accessed globally
+window.booksProducts = booksProducts;
+
 if (typeof productsData !== 'undefined') {
   booksProducts.forEach(product => {
     // Add the category tag to ensure it shows up on the category page

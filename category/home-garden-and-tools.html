@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Markrypt - Home & Garden Product Reviews, DIY Guides & Tool Comparisons</title>
-  <meta name="description" content="Comprehensive home and garden product reviews at Markrypt. Find expert DIY guides, tool comparisons, and honest recommendations for furniture, decor, and garden supplies.">
-  <meta name="keywords" content="home product reviews, garden tool comparisons, DIY guides, furniture recommendations, home improvement advice, decor ideas, tool buying guides, Markrypt">
+  <title>Home, Garden & Tools - Markrypt</title>
+  <meta name="description" content="Find the best home improvement, garden, and tool products on Markrypt. Discover expert reviews and recommendations for your home and garden needs.">
+  <meta name="keywords" content="home improvement, garden tools, power tools, home decor, gardening supplies, Markrypt">
   <link rel="canonical" href="https://www.markrypt.com/category/home-garden-and-tools">
   <meta property="og:title" content="Markrypt - Home, Garden & Tools Reviews, Comparisons & Top Recommendations">
   <meta property="og:description" content="Discover detailed Home, Garden & Tools reviews, product comparisons, and top recommendations at Markrypt. Find the best products with expert advice.">
@@ -133,22 +133,20 @@
       padding: 0.5rem 1.2rem 0.2rem 1.2rem;
       letter-spacing: 0.03em;
       pointer-events: none;
-    }
-
-    .scrollable-content-area {
+    }    .scrollable-content-area {
       position: absolute;
-      top: 64px; /* Height of header */
-      bottom: 60px; /* Height of navbar */
+      top: 64px;
+      bottom: 60px;
       left: 0;
       right: 0;
       overflow-y: auto;
       background: var(--primary-bg);
-      padding: 1.5rem; /* Basic padding for content */
+      padding: 1.5rem 0;
     }
 
     .product-main-content {
-        max-width: 1200px;
-        margin: 0 auto;
+      width: 100%;
+      padding: 0 1.5rem;
     }
 
     .navigation {
@@ -222,6 +220,20 @@
       font-size: 1rem;
     }
 
+    .error-message {
+      text-align: center;
+      padding: 2rem;
+      margin: 2rem auto;
+      max-width: 600px;
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .error-message h2 {
+      color: #ff4444;
+      margin-bottom: 1rem;
+    }
+
     @media (min-width: 768px) {
       .navigation {
         width: 600px;
@@ -240,10 +252,10 @@
   <div class="app-container">
     <div id="header-placeholder"></div>
     <div class="scrollable-content-area">
-      <main class="product-main-content">
+      <div class="product-main-content">
         <div class="category-header">
           <h1>Home, Garden & Tools</h1>
-          <p>Explore products in Home, Garden & Tools. Filter by category, subcategory, seller, or color to find exactly what you're looking for.</p>
+          <p>Discover everything you need for your home and garden. From power tools to decor, find top-rated products that help you create your perfect space.</p>
         </div>
         <div class="category-layout">
           <aside class="category-sidebar">
@@ -253,67 +265,55 @@
             <!-- Product grid will be inserted here -->
           </div>
         </div>
-      </main>
+      </div>
     </div>
     <div id="navigation-placeholder"></div>
   </div>
-
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      let pagePath = window.location.pathname;
-      let currentNormalizedPath = pagePath.replace(/\/?index\.html$/, '/').replace(/\.html$/, '');
-      if (currentNormalizedPath !== '/' && currentNormalizedPath.endsWith('/')) {
-        currentNormalizedPath = currentNormalizedPath.slice(0, -1);
+    // Initialize MARKRYPT namespace
+    window.MARKRYPT = window.MARKRYPT || {};
+    
+    // Log page initialization
+    console.log('[Home Garden & Tools] Initializing page...');
+
+    // Error handler for product loading
+    window.handleProductLoadError = function() {
+      console.error('[Home Garden & Tools] Failed to load products');
+      const mainContent = document.querySelector('.category-content');
+      if (mainContent) {
+        mainContent.innerHTML = `
+          <div class="error-message">
+            <h2>Unable to load products</h2>
+            <p>Please try refreshing the page. If the problem persists, contact support.</p>
+          </div>
+        `;
       }
-      if (currentNormalizedPath === '' || currentNormalizedPath === '/index') currentNormalizedPath = '/';
-      if (!currentNormalizedPath.startsWith('/')) currentNormalizedPath = '/' + currentNormalizedPath;
+    };
 
-      const setActiveLink = (linkElement, hrefAttribute) => {
-        if (!hrefAttribute || hrefAttribute === '#' || hrefAttribute.startsWith('mailto:') || hrefAttribute.startsWith('tel:')) {
-          return;
-        }
-        try {
-          const linkUrl = new URL(hrefAttribute, window.location.href);
-          let linkNormalizedPath = linkUrl.pathname.replace(/\/?index\.html$/, '/').replace(/\.html$/, '');
-          if (linkNormalizedPath !== '/' && linkNormalizedPath.endsWith('/')) {
-            linkNormalizedPath = linkNormalizedPath.slice(0, -1);
-          }
-          if (linkNormalizedPath === '' || linkNormalizedPath === '/index') linkNormalizedPath = '/';
-          if (!linkNormalizedPath.startsWith('/')) linkNormalizedPath = '/' + linkNormalizedPath;
-
-          if ((hrefAttribute === '../' || hrefAttribute === '../index' || hrefAttribute === '../index.html') && linkElement.closest('.logo')) {
-            linkNormalizedPath = '/';
-          }
-          
-          if (linkNormalizedPath === currentNormalizedPath) {
-            linkElement.classList.add('active');
-          } else {
-            linkElement.classList.remove('active');
-          }
-        } catch (e) {
-          console.error('Error processing link href:', hrefAttribute, e);
-        }
-      };
-
-      const logoLink = document.querySelector('.header .logo a');
-      if (logoLink) {
-        setActiveLink(logoLink, logoLink.getAttribute('href'));
+    // Product initialization check
+    window.checkProductsLoaded = function() {
+      if (!window.MARKRYPT || !window.MARKRYPT.homeGardenAndToolsProducts) {
+        console.error('[Home Garden & Tools] Products not initialized');
+        window.handleProductLoadError();
+        return false;
       }
-
-      document.querySelectorAll('.menu-dropdown a').forEach(link => {
-        setActiveLink(link, link.getAttribute('href'));
-      });
-      
-      document.querySelectorAll('.navigation .nav-item[href]').forEach(link => {
-         setActiveLink(link, link.getAttribute('href'));
-      });
+      return true;
+    };
+  </script>
+  <script src="../assets/js/common.js"></script>
+  
+  <!-- Product Data -->
+  <script src="../assets/js/home-garden-and-tools-products.js" onerror="handleProductLoadError()"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Verify products are loaded
+      if (checkProductsLoaded()) {
+        console.log('[Home Garden & Tools] Page ready');
+        // Set the products data for the filter system
+        window.productsData = window.MARKRYPT.homeGardenAndToolsProducts;
+      }
     });
-  </script>  <script src="../assets/js/common.js"></script>
-  <!-- Load home-garden-and-tools-products.js which defines homeGardenAndToolsProducts -->
-  <script src="../assets/js/home-garden-and-tools-products.js"></script>
-  <script>
-    // For the category page, explicitly set productsData to homeGardenAndToolsProducts
-    window.productsData = window.homeGardenAndToolsProducts;
   </script>
   <script src="../assets/js/category-filter.js"></script>
   <script src="../assets/js/search.js"></script>

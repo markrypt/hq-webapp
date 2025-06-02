@@ -560,6 +560,9 @@ if (typeof window.globalAmazonFreshProducts === 'undefined') {
     window.globalAmazonFreshProducts = amazonFreshProducts;
 }
 
+// Assign to window object so it can be accessed globally
+window.amazonFreshProducts = amazonFreshProducts;
+
 // For category pages, set productsData if it's not already defined
 if (typeof productsData === 'undefined') {
     console.log('Setting global productsData to Amazon Fresh products');

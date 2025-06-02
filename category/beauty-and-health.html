@@ -132,9 +132,8 @@
       font-weight: 700;
       padding: 0.5rem 1.2rem 0.2rem 1.2rem;
       letter-spacing: 0.03em;
-      pointer-events: none;
-    }
-
+      pointer-events: none;    }
+    
     .scrollable-content-area {
       position: absolute;
       top: 64px; /* Height of header */
@@ -147,8 +146,8 @@
     }
 
     .product-main-content {
-        width: 100%; /* Use full available width within parent's padding */
-        margin: 0 auto;
+      width: 100%; /* Use full available width within parent's padding */
+      padding: 0 1.5rem;
     }
 
     .navigation {
@@ -198,9 +197,7 @@
     }
     .nav-item:focus {
       outline: none;
-    }
-
-    .no-results {
+    }    .no-results {
       text-align: center;
       padding: 3rem 1rem;
       color: var(--text-secondary);
@@ -222,6 +219,91 @@
       font-size: 1rem;
     }
 
+    /* Additional product card styles */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 0 1rem;
+    }
+    
+    .product-card {
+      background: var(--primary-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(30,144,255,0.12);
+    }
+    
+    .product-image {
+      height: 200px;
+      overflow: hidden;
+    }
+    
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #f9f9f9;
+    }
+    
+    .product-info {
+      padding: 15px;
+    }
+    
+    .product-info h3 {
+      font-size: 1rem;
+      margin-bottom: 8px;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .product-rating {
+      display: flex;
+      align-items: center;
+      color: var(--accent-color);
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .product-rating i {
+      margin-right: 5px;
+    }
+    
+    .product-rating span {
+      color: var(--text-secondary);
+      margin-left: 5px;
+    }
+    
+    .product-category {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+    
+    .product-link {
+      display: inline-block;
+      padding: 8px 16px;
+      background-color: var(--accent-color);
+      color: white;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: background-color 0.2s;
+    }
+    
+    .product-link:hover {
+      background-color: var(--secondary-color);
+    }
+
     @media (min-width: 768px) {
       .navigation {
         width: 600px;
@@ -236,8 +318,7 @@
     }
   </style>
 </head>
-<body>
-  <div class="app-container">
+<body>  <div class="app-container">
     <div id="header-placeholder"></div>
     <div class="scrollable-content-area">
       <main class="product-main-content">
@@ -308,16 +389,100 @@
          setActiveLink(link, link.getAttribute('href'));
       });
     });
-  </script>  <script src="../assets/js/common.js"></script>
-  <!-- Load beauty-and-health-products.js which defines beautyAndHealthProducts -->
+  </script>
+  <script src="../assets/js/common.js"></script>
   <script src="../assets/js/beauty-and-health-products.js"></script>
   <script>
-    // For the category page, explicitly set productsData to beautyAndHealthProducts
+    // Set productsData to beauty and health products
     window.productsData = window.beautyAndHealthProducts;
+    console.log('Beauty and health products loaded:', window.productsData ? window.productsData.length + ' products found' : 'No products found');
   </script>
   <script src="../assets/js/category-filter.js"></script>
   <script src="../assets/js/search.js"></script>
   <script src="../assets/js/components-loader.js"></script>
+  <script>
+    // Fallback: Manually render products if the filter system doesn't work
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        // Check if products were rendered by the filter system
+        const existingProducts = document.querySelectorAll('.product-grid .product-card');
+        if (existingProducts.length === 0 && window.beautyAndHealthProducts && window.beautyAndHealthProducts.length > 0) {
+          console.log('No products rendered by filter system, using manual rendering fallback');
+          const contentDiv = document.querySelector('.category-content');
+          contentDiv.innerHTML = '';
+          const productGrid = document.createElement('div');
+          productGrid.className = 'product-grid';
+          
+          window.beautyAndHealthProducts.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            
+            const imageDiv = document.createElement('div');
+            imageDiv.className = 'product-image';
+            
+            const img = document.createElement('img');
+            img.src = product.image && product.image.startsWith('../') ? product.image : '../' + product.image;
+            img.alt = product.title;
+            imageDiv.appendChild(img);
+            
+            const productInfo = document.createElement('div');
+            productInfo.className = 'product-info';
+            
+            const title = document.createElement('h3');
+            title.className = 'product-title';
+            title.textContent = product.title;
+            
+            const rating = document.createElement('div');
+            rating.className = 'product-rating';
+            rating.innerHTML = `${product.rating} <i class="fas fa-star"></i> (${product.reviewCount})`;
+            
+            const category = document.createElement('div');
+            category.className = 'product-category';
+            category.textContent = `${product.category} › ${product.subcategory}`;
+            
+            const link = document.createElement('a');
+            link.href = product.affiliateLink || '#';
+            link.className = 'product-link';
+            link.textContent = 'View Product';
+            link.target = '_blank';
+            
+            productInfo.appendChild(title);
+            productInfo.appendChild(rating);
+            productInfo.appendChild(category);
+            productInfo.appendChild(link);
+            
+            productCard.appendChild(imageDiv);
+            productCard.appendChild(productInfo);
+            
+            productGrid.appendChild(productCard);
+          });
+          
+          contentDiv.appendChild(productGrid);
+          console.log('Manually created product cards for beauty and health products');
+        } else if (!window.beautyAndHealthProducts || window.beautyAndHealthProducts.length === 0) {
+          console.error('No beauty and health products data available');
+        } else {
+          console.log('Products already rendered or content div not found');
+        }
+      }, 500);
+    });
+  </script>
+  
+  <script>
+    // Final diagnostic check to ensure products are properly loaded
+    window.addEventListener('load', () => {
+      console.log('Page fully loaded, running diagnostic checks...');
+      console.log('window.beautyAndHealthProducts:', window.beautyAndHealthProducts ? window.beautyAndHealthProducts.length + ' products' : 'undefined');
+      console.log('window.productsData:', window.productsData ? window.productsData.length + ' products' : 'undefined');
+      
+      const productCards = document.querySelectorAll('.product-card');
+      console.log('Product cards rendered:', productCards.length);
+      
+      if (productCards.length === 0 && window.beautyAndHealthProducts && window.beautyAndHealthProducts.length > 0) {
+        console.warn('Products data exists but no cards were rendered - potential filter issue');
+      }
+    });
+  </script>
 </body>
 </html>
 

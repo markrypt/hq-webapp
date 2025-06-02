@@ -40,6 +40,9 @@ const computersProducts = [
   }
 ];
 
+// Assign to window object so it can be accessed globally
+window.computersProducts = computersProducts;
+
 // Add Computers products to the main products data array
 if (typeof productsData !== 'undefined') {
   computersProducts.forEach(product => {

@@ -1,5 +1,5 @@
 // Product data for Food & Grocery category
-const foodandgroceryProducts = [
+const foodAndGroceryProducts = [
   {
     id: "food-and-grocery-product-1",
     title: "Example Food & Grocery Product 1",
@@ -40,9 +40,12 @@ const foodandgroceryProducts = [
   }
 ];
 
+// Assign to window object so it can be accessed globally
+window.foodAndGroceryProducts = foodAndGroceryProducts;
+
 // Add Food & Grocery products to the main products data array
 if (typeof productsData !== 'undefined') {
-  foodandgroceryProducts.forEach(product => {
+  foodAndGroceryProducts.forEach(product => {
     // Add the category tag to ensure it shows up on the category page
     if (product.tags && !product.tags.includes('food-and-grocery')) {
       product.tags.push('food-and-grocery');

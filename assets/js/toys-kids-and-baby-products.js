@@ -1,5 +1,5 @@
 // Product data for Toys, Kids & Baby category
-const toysKidsBabyProducts = [
+const toysKidsAndBabyProducts = [
   {
     id: "melissa-doug-wooden-puzzle",
     title: "Melissa & Doug Wooden Farm Puzzles Set",
@@ -67,9 +67,12 @@ const toysKidsBabyProducts = [
   }
 ];
 
+// Assign to window object so it can be accessed globally
+window.toysKidsAndBabyProducts = toysKidsAndBabyProducts;
+
 // Add toys, kids & baby products to the main products data array
 if (typeof productsData !== 'undefined') {
-  toysKidsBabyProducts.forEach(product => {
+  toysKidsAndBabyProducts.forEach(product => {
     // Add the category tag to ensure it shows up on the category page
     if (product.tags && !product.tags.includes('toys-kids-and-baby')) {
       product.tags.push('toys-kids-and-baby');

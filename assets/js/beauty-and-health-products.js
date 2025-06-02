@@ -67,25 +67,16 @@ const beautyHealthProducts = [
   }
 ];
 
-// Add beauty & health products to the main products data array
-if (typeof productsData !== 'undefined') {
+// Assign to window object so it can be accessed globally
+window.beautyAndHealthProducts = beautyHealthProducts;
+
+// Add Beauty & Health products to the main products data array
+if (typeof window.productsData !== 'undefined') {
   beautyHealthProducts.forEach(product => {
-    // Add the category tag to ensure it shows up on the category page
+    // Add the category tag if not already present
     if (product.tags && !product.tags.includes('beauty-and-health')) {
       product.tags.push('beauty-and-health');
     }
-    productsData.push(product);
-  });
-}
-
-// Also add these products to the beauty category
-if (typeof productsData !== 'undefined') {
-  beautyHealthProducts.forEach(product => {
-    // Add the beauty tag for those products that should also appear in beauty category
-    if (product.tags && product.subcategory === "Skincare" || product.subcategory === "Hair Care") {
-      if (!product.tags.includes('beauty')) {
-        product.tags.push('beauty');
-      }
-    }
+    window.productsData.push(product);
   });
 }

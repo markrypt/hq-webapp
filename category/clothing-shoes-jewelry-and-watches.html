@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>  <meta charset="UTF-8">
+<head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Markrypt - Fashion Reviews, Style Guides & Accessory Recommendations</title>
-  <meta name="description" content="Discover detailed fashion reviews, style guides, and accessory recommendations at Markrypt. Find the best clothing, shoes, jewelry, and watches with expert advice.">
-  <meta name="keywords" content="fashion reviews, style guides, clothing recommendations, shoe reviews, jewelry, watch comparisons, accessory buying guide, Markrypt">
+  <title>Clothing, Shoes, Jewelry & Watches - Markrypt</title>
+  <meta name="description" content="Discover the latest fashion trends and accessories on Markrypt. Find expert reviews and recommendations for clothing, shoes, jewelry, and watches.">
+  <meta name="keywords" content="clothing, shoes, jewelry, watches, fashion, accessories, style, Markrypt">
   <link rel="canonical" href="https://www.markrypt.com/category/clothing-shoes-jewelry-and-watches">
-  <meta property="og:title" content="Markrypt - Fashion Reviews, Style Guides & Accessory Recommendations">
-  <meta property="og:description" content="Discover detailed fashion reviews, style guides, and accessory recommendations at Markrypt. Find the best clothing, shoes, jewelry, and watches with expert advice.">
+  <meta property="og:title" content="Markrypt - Fashion Reviews, Comparisons & Top Recommendations">
+  <meta property="og:description" content="Discover detailed fashion reviews, product comparisons, and top recommendations at Markrypt. Find the best products with expert advice.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.markrypt.com/category/clothing-shoes-jewelry-and-watches">
   <meta property="og:image" content="https://www.markrypt.com/assets/logo/logo.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Markrypt - Fashion Reviews, Style Guides & Accessory Recommendations">
-  <meta name="twitter:description" content="Discover detailed fashion reviews, style guides, and accessory recommendations at Markrypt. Find the best clothing, shoes, jewelry, and watches with expert advice.">
+  <meta name="twitter:title" content="Markrypt - Fashion Reviews, Comparisons & Top Recommendations">
+  <meta name="twitter:description" content="Discover detailed fashion reviews, product comparisons, and top recommendations at Markrypt. Find the best products with expert advice.">
   <meta name="twitter:image" content="https://www.markrypt.com/assets/logo/logo.png">
   <link rel="icon" href="../assets/logo/favicon.ico" type="image/x-icon">
   <link rel="shortcut icon" href="../assets/logo/favicon.ico" type="image/x-icon">
@@ -136,18 +137,18 @@
 
     .scrollable-content-area {
       position: absolute;
-      top: 64px; /* Height of header */
-      bottom: 60px; /* Height of navbar */
+      top: 64px;
+      bottom: 60px;
       left: 0;
       right: 0;
       overflow-y: auto;
       background: var(--primary-bg);
-      padding: 1.5rem 0; /* Removed horizontal padding */
+      padding: 1.5rem 0;
     }
 
     .product-main-content {
-        width: 100%; /* Use full available width within parent's padding */
-        margin: 0 auto;
+      width: 100%;
+      padding: 0 1.5rem;
     }
 
     .navigation {
@@ -239,10 +240,10 @@
   <div class="app-container">
     <div id="header-placeholder"></div>
     <div class="scrollable-content-area">
-      <main class="product-main-content">
+      <div class="product-main-content">
         <div class="category-header">
           <h1>Clothing, Shoes, Jewelry & Watches</h1>
-          <p>Explore products in Clothing, Shoes, Jewelry & Watches. Filter by category, subcategory, seller, or color to find exactly what you're looking for.</p>
+          <p>Explore the latest fashion trends and accessories. Filter by category, style, size, or brand to find your perfect look.</p>
         </div>
         <div class="category-layout">
           <aside class="category-sidebar">
@@ -252,67 +253,56 @@
             <!-- Product grid will be inserted here -->
           </div>
         </div>
-      </main>
+      </div>
     </div>
     <div id="navigation-placeholder"></div>
   </div>
-
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      let pagePath = window.location.pathname;
-      let currentNormalizedPath = pagePath.replace(/\/?index\.html$/, '/').replace(/\.html$/, '');
-      if (currentNormalizedPath !== '/' && currentNormalizedPath.endsWith('/')) {
-        currentNormalizedPath = currentNormalizedPath.slice(0, -1);
+    // Initialize MARKRYPT namespace
+    window.MARKRYPT = window.MARKRYPT || {};
+    
+    // Log page initialization
+    console.log('[Clothing, Shoes, Jewelry & Watches] Initializing page...');
+
+    // Error handler for product loading
+    window.handleProductLoadError = function() {
+      console.error('[Clothing, Shoes, Jewelry & Watches] Failed to load products');
+      const mainContent = document.querySelector('.category-content');
+      if (mainContent) {
+        mainContent.innerHTML = `
+          <div class="error-message">
+            <h2>Unable to load products</h2>
+            <p>Please try refreshing the page. If the problem persists, contact support.</p>
+          </div>
+        `;
       }
-      if (currentNormalizedPath === '' || currentNormalizedPath === '/index') currentNormalizedPath = '/';
-      if (!currentNormalizedPath.startsWith('/')) currentNormalizedPath = '/' + currentNormalizedPath;
+    };
 
-      const setActiveLink = (linkElement, hrefAttribute) => {
-        if (!hrefAttribute || hrefAttribute === '#' || hrefAttribute.startsWith('mailto:') || hrefAttribute.startsWith('tel:')) {
-          return;
-        }
-        try {
-          const linkUrl = new URL(hrefAttribute, window.location.href);
-          let linkNormalizedPath = linkUrl.pathname.replace(/\/?index\.html$/, '/').replace(/\.html$/, '');
-          if (linkNormalizedPath !== '/' && linkNormalizedPath.endsWith('/')) {
-            linkNormalizedPath = linkNormalizedPath.slice(0, -1);
-          }
-          if (linkNormalizedPath === '' || linkNormalizedPath === '/index') linkNormalizedPath = '/';
-          if (!linkNormalizedPath.startsWith('/')) linkNormalizedPath = '/' + linkNormalizedPath;
-
-          if ((hrefAttribute === '../' || hrefAttribute === '../index' || hrefAttribute === '../index.html') && linkElement.closest('.logo')) {
-            linkNormalizedPath = '/';
-          }
-          
-          if (linkNormalizedPath === currentNormalizedPath) {
-            linkElement.classList.add('active');
-          } else {
-            linkElement.classList.remove('active');
-          }
-        } catch (e) {
-          console.error('Error processing link href:', hrefAttribute, e);
-        }
-      };
-
-      const logoLink = document.querySelector('.header .logo a');
-      if (logoLink) {
-        setActiveLink(logoLink, logoLink.getAttribute('href'));
+    // Product initialization check
+    window.checkProductsLoaded = function() {
+      if (!window.MARKRYPT || !window.MARKRYPT.clothingShoesJewelryAndWatchesProducts) {
+        console.error('[Clothing, Shoes, Jewelry & Watches] Products not initialized');
+        window.handleProductLoadError();
+        return false;
       }
+      return true;
+    };
+  </script>
 
-      document.querySelectorAll('.menu-dropdown a').forEach(link => {
-        setActiveLink(link, link.getAttribute('href'));
-      });
-      
-      document.querySelectorAll('.navigation .nav-item[href]').forEach(link => {
-         setActiveLink(link, link.getAttribute('href'));
-      });
+  <script src="../assets/js/common.js"></script>
+  
+  <!-- Product Data -->
+  <script src="../assets/js/clothing-shoes-jewelry-and-watches-products.js" onerror="handleProductLoadError()"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Verify products are loaded
+      if (checkProductsLoaded()) {
+        console.log('[Clothing, Shoes, Jewelry & Watches] Page ready');
+        // Set the products data for the filter system
+        window.productsData = window.MARKRYPT.clothingShoesJewelryAndWatchesProducts;
+      }
     });
-  </script>  <script src="../assets/js/common.js"></script>
-  <!-- Load clothing-shoes-jewelry-and-watches-products.js which defines clothingShoesJewelryAndWatchesProducts -->
-  <script src="../assets/js/clothing-shoes-jewelry-and-watches-products.js"></script>
-  <script>
-    // For the category page, explicitly set productsData to clothingShoesJewelryAndWatchesProducts
-    window.productsData = window.clothingShoesJewelryAndWatchesProducts;
   </script>
   <script src="../assets/js/category-filter.js"></script>
   <script src="../assets/js/search.js"></script>

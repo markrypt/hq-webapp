@@ -1,3 +1,6 @@
+// Initialize window.MARKRYPT if not exists
+window.MARKRYPT = window.MARKRYPT || {};
+
 // Electronics category products data
 const electronicsProducts = [
   {
@@ -66,21 +69,19 @@ const electronicsProducts = [
   }
 ];
 
-// Add the electronics products to the main products array
-electronicsProducts.forEach(product => {
-  // Check if the product already exists in the array
-  if (!productsData.some(p => p.id === product.id)) {
-    productsData.push(product);
-  }
-});
+// Assign products to global scope
+window.MARKRYPT.electronicsProducts = electronicsProducts;
 
-// Make sure Apple AirPods Max has the electronics tag
-productsData.forEach(product => {
-  if (product.id === "apple-airpods-max" && !product.tags.includes("electronics")) {
-    product.tags.push("electronics");
-  }
-  
-  if (product.id === "jbl-go-4" && !product.tags.includes("electronics")) {
-    product.tags.push("electronics");
-  }
-});
+// Log product loading status
+console.log('[Electronics] Products loaded:', electronicsProducts.length);
+
+// Add Electronics products to the main products data array
+if (typeof window.productsData !== 'undefined') {
+  electronicsProducts.forEach(product => {
+    // Add the category tag if not already present
+    if (product.tags && !product.tags.includes('electronics')) {
+      product.tags.push('electronics');
+    }
+    window.productsData.push(product);
+  });
+}

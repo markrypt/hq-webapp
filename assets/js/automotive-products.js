@@ -1,5 +1,5 @@
 // Product data for Automotive category
-const productsData = [
+const automotiveProducts = [
   {
     id: "automotive-product-1",
     title: "Car Engine Oil Filter",
@@ -36,8 +36,10 @@ const productsData = [
       "Extra large size",
       "Machine washable",
       "Scratch-free cleaning"
-    ],
-    colors: ["blue"],
+    ],    colors: ["blue"],
     brand: "CleanDrive"
   }
 ];
+
+// Assign to window object so it can be accessed globally
+window.automotiveProducts = automotiveProducts;

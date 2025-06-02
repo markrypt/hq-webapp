@@ -1,5 +1,5 @@
 // Product data for Household Essentials category
-const householdessentialsProducts = [
+const householdEssentialsProducts = [
   {
     id: "household-essentials-product-1",
     title: "Example Household Essentials Product 1",
@@ -40,9 +40,12 @@ const householdessentialsProducts = [
   }
 ];
 
+// Assign to window object so it can be accessed globally
+window.householdEssentialsProducts = householdEssentialsProducts;
+
 // Add Household Essentials products to the main products data array
 if (typeof productsData !== 'undefined') {
-  householdessentialsProducts.forEach(product => {
+  householdEssentialsProducts.forEach(product => {
     // Add the category tag to ensure it shows up on the category page
     if (product.tags && !product.tags.includes('household-essentials')) {
       product.tags.push('household-essentials');

@@ -26,12 +26,13 @@ class ProductFilterSystem {
     }
       /**
      * Initialize the filter system
-     */
-    initialize() {
+     */    initialize() {
         console.log('Initializing Product Filter System');
         
         // Load products data
         if (typeof productsData !== 'undefined' && productsData.length > 0) {
+            console.log(`Found ${productsData.length} products in productsData`);
+            
             // Get current page category from URL path
             const currentCategory = this.getCurrentPageCategory();
             console.log('Current page category:', currentCategory);

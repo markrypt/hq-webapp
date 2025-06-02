@@ -40,6 +40,9 @@ const handmadeProducts = [
   }
 ];
 
+// Explicitly assign handmadeProducts to window object so it's globally accessible
+window.handmadeProducts = handmadeProducts;
+
 // Add Handmade products to the main products data array
 if (typeof productsData !== 'undefined') {
   handmadeProducts.forEach(product => {

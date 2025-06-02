@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Markrypt - Automotive Product Reviews, Car Accessory Guides & Auto Tool Comparisons</title>
-  <meta name="description" content="Detailed automotive product reviews and accessory buying guides at Markrypt. Find expert comparisons of car parts, tools, and maintenance products for your vehicle.">
-  <meta name="keywords" content="automotive product reviews, car accessory guides, auto tool comparisons, vehicle maintenance products, car part recommendations, truck accessories, automotive gadgets, Markrypt">
+  <title>Automotive Parts & Accessories - Markrypt</title>
+  <meta name="description" content="Find the best automotive parts and accessories on Markrypt. Expert reviews and recommendations for car maintenance, tools, and upgrades.">
+  <meta name="keywords" content="automotive parts, car accessories, auto tools, car maintenance, vehicle upgrades, Markrypt">
   <link rel="canonical" href="https://www.markrypt.com/category/automotive">
   <meta property="og:title" content="Markrypt - Automotive Reviews, Comparisons & Top Recommendations">
   <meta property="og:description" content="Discover detailed Automotive reviews, product comparisons, and top recommendations at Markrypt. Find the best products with expert advice.">
@@ -137,18 +137,18 @@
 
     .scrollable-content-area {
       position: absolute;
-      top: 64px; /* Height of header */
-      bottom: 60px; /* Height of navbar */
+      top: 64px;
+      bottom: 60px;
       left: 0;
       right: 0;
       overflow-y: auto;
       background: var(--primary-bg);
-      padding: 1.5rem 0; /* Removed horizontal padding */
+      padding: 1.5rem 0;
     }
 
     .product-main-content {
-        width: 100%; /* Use full available width within parent's padding */
-        margin: 0 auto;
+      width: 100%;
+      padding: 0 1.5rem;
     }
 
     .navigation {
@@ -240,10 +240,10 @@
   <div class="app-container">
     <div id="header-placeholder"></div>
     <div class="scrollable-content-area">
-      <main class="product-main-content">
+      <div class="product-main-content">
         <div class="category-header">
           <h1>Automotive</h1>
-          <p>Explore products in Automotive. Filter by category, subcategory, seller, or color to find exactly what you're looking for.</p>
+          <p>Find the best automotive parts, accessories, and tools. Browse by vehicle make, part type, or maintenance category to keep your vehicle running at its best.</p>
         </div>
         <div class="category-layout">
           <aside class="category-sidebar">
@@ -253,67 +253,17 @@
             <!-- Product grid will be inserted here -->
           </div>
         </div>
-      </main>
+      </div>
     </div>
     <div id="navigation-placeholder"></div>
   </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      let pagePath = window.location.pathname;
-      let currentNormalizedPath = pagePath.replace(/\/?index\.html$/, '/').replace(/\.html$/, '');
-      if (currentNormalizedPath !== '/' && currentNormalizedPath.endsWith('/')) {
-        currentNormalizedPath = currentNormalizedPath.slice(0, -1);
-      }
-      if (currentNormalizedPath === '' || currentNormalizedPath === '/index') currentNormalizedPath = '/';
-      if (!currentNormalizedPath.startsWith('/')) currentNormalizedPath = '/' + currentNormalizedPath;
-
-      const setActiveLink = (linkElement, hrefAttribute) => {
-        if (!hrefAttribute || hrefAttribute === '#' || hrefAttribute.startsWith('mailto:') || hrefAttribute.startsWith('tel:')) {
-          return;
-        }
-        try {
-          const linkUrl = new URL(hrefAttribute, window.location.href);
-          let linkNormalizedPath = linkUrl.pathname.replace(/\/?index\.html$/, '/').replace(/\.html$/, '');
-          if (linkNormalizedPath !== '/' && linkNormalizedPath.endsWith('/')) {
-            linkNormalizedPath = linkNormalizedPath.slice(0, -1);
-          }
-          if (linkNormalizedPath === '' || linkNormalizedPath === '/index') linkNormalizedPath = '/';
-          if (!linkNormalizedPath.startsWith('/')) linkNormalizedPath = '/' + linkNormalizedPath;
-
-          if ((hrefAttribute === '../' || hrefAttribute === '../index' || hrefAttribute === '../index.html') && linkElement.closest('.logo')) {
-            linkNormalizedPath = '/';
-          }
-          
-          if (linkNormalizedPath === currentNormalizedPath) {
-            linkElement.classList.add('active');
-          } else {
-            linkElement.classList.remove('active');
-          }
-        } catch (e) {
-          console.error('Error processing link href:', hrefAttribute, e);
-        }
-      };
-
-      const logoLink = document.querySelector('.header .logo a');
-      if (logoLink) {
-        setActiveLink(logoLink, logoLink.getAttribute('href'));
-      }
-
-      document.querySelectorAll('.menu-dropdown a').forEach(link => {
-        setActiveLink(link, link.getAttribute('href'));
-      });
-      
-      document.querySelectorAll('.navigation .nav-item[href]').forEach(link => {
-         setActiveLink(link, link.getAttribute('href'));
-      });
-    });
-  </script>  <script src="../assets/js/common.js"></script>
-  <!-- Load automotive-products.js which defines productsData -->
+  <script src="../assets/js/common.js"></script>
+  <!-- Load automotive-products.js which defines automotiveProducts -->
   <script src="../assets/js/automotive-products.js"></script>
   <script>
-    // For the category page, explicitly set productsData to match the automotive products
-    window.productsData = productsData;
+    // For the category page, explicitly set productsData to automotiveProducts
+    window.productsData = window.automotiveProducts;
   </script>
   <script src="../assets/js/category-filter.js"></script>
   <script src="../assets/js/search.js"></script>
