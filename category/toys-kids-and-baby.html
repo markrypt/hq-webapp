@@ -305,18 +305,17 @@
       document.querySelectorAll('.navigation .nav-item[href]').forEach(link => {
          setActiveLink(link, link.getAttribute('href'));
       });
-    });
-  </script>  <script src="../assets/js/common.js"></script>
-  <!-- Load toys-kids-and-baby-products.js which defines toysKidsAndBabyProducts -->  <script src="../assets/js/common.js"></script>
+    });  </script>  <script src="../assets/js/common.js"></script>
+  <script src="../assets/js/global-products-loader.js"></script>
   <!-- Load toys-kids-and-baby-products.js which defines toysKidsAndBabyProducts -->
   <script src="../assets/js/toys-kids-and-baby-products.js"></script>
   <script>
     // For the category page, explicitly set productsData to toysKidsAndBabyProducts
     window.productsData = window.toysKidsAndBabyProducts;
     console.log('Toys, Kids & Baby products loaded:', window.productsData ? window.productsData.length + ' products found' : 'No products found');
-  </script>
-  <script src="../assets/js/category-filter.js"></script>
-  <script src="../assets/js/search.js"></script>
+  </script>  <script src="../assets/js/category-filter.js"></script>
+  <script src="../assets/js/search-manager.js"></script>
+  <script src="../assets/js/search-init.js"></script>
   <script src="../assets/js/components-loader.js"></script>
   <script>
     // Fallback: Manually render products if the filter system doesn't work

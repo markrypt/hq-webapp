@@ -424,21 +424,25 @@
     </main>
     <!-- Bottom Navigation -->
     <div id="navigation-placeholder"></div>
-  </div>
-  <!-- Load products data first -->
-  <script src="assets/js/products-data.js"></script>
+  </div>  <!-- Consolidated optimized core script -->  <script src="assets/js/optimized-core.js"></script>
+  <script src="assets/js/global-products-loader.js"></script>
+  <script src="assets/js/products-manager.js"></script>
+  <script src="assets/js/search-manager.js"></script>
+  <script src="assets/js/search-init.js"></script>
   <script>
-    // Initialize products data
     document.addEventListener('DOMContentLoaded', () => {
-      if (typeof productsData !== 'undefined') {
-        window.productsData = productsData;
-        console.log('Products data initialized:', window.productsData.length + ' products found');
+      // Initialize search functionality
+      if (window.searchManager) {
+        console.log('Search manager already initialized');
       } else {
-        console.error('Products data not loaded properly');
+        console.log('Initializing search manager');
+        window.searchManager = new SearchManager();
+        window.searchManager.init().catch(err => {
+          console.error('Error initializing search:', err);
+        });
       }
     });
   </script>
-  <script src="assets/js/search.js"></script>
   <script src="assets/js/components-loader.js"></script>
 </body>
 </html>

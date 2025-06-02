@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Search Final Test - Markrypt</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f5f5f5;
+    }
+    .test-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .test-section {
+      margin: 20px 0;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .test-result {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 3px;
+    }
+    .success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    .info {
+      background: #d1ecf1;
+      color: #0c5460;
+      border: 1px solid #bee5eb;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    #results {
+      max-height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <h1>🔍 Global Search Final Test</h1>
+    <p>This page tests the global search functionality across all product categories.</p>
+    
+    <div class="test-section">
+      <h3>📊 Global Products Loader Status</h3>
+      <div id="loader-status"></div>
+    </div>
+    
+    <div class="test-section">
+      <h3>🔍 Search Manager Status</h3>
+      <div id="search-status"></div>
+    </div>
+    
+    <div class="test-section">
+      <h3>📦 Product Count Summary</h3>
+      <div id="product-counts"></div>
+    </div>
+    
+    <div class="test-section">
+      <h3>🧪 Search Tests</h3>
+      <button onclick="testSearch('laptop')">Search "laptop"</button>
+      <button onclick="testSearch('phone')">Search "phone"</button>
+      <button onclick="testSearch('book')">Search "book"</button>
+      <button onclick="testSearch('nike')">Search "nike"</button>
+      <button onclick="testSearch('toy')">Search "toy"</button>
+      <div id="results"></div>
+    </div>
+    
+    <div class="test-section">
+      <h3>🔧 Debug Information</h3>
+      <div id="debug-info"></div>
+    </div>
+  </div>
+
+  <script src="assets/js/global-products-loader.js"></script>
+  <script src="assets/js/search-manager.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      console.log('🧪 Starting global search final test...');
+      
+      // Test Global Products Loader
+      const loaderStatus = document.getElementById('loader-status');
+      if (window.globalProductsLoader) {
+        loaderStatus.innerHTML = '<div class="success">✅ GlobalProductsLoader is available</div>';
+        
+        try {
+          const products = await window.globalProductsLoader.getProducts();
+          loaderStatus.innerHTML += `<div class="success">✅ Loaded ${products.length} total products</div>`;
+        } catch (error) {
+          loaderStatus.innerHTML += `<div class="error">❌ Error loading products: ${error.message}</div>`;
+        }
+      } else {
+        loaderStatus.innerHTML = '<div class="error">❌ GlobalProductsLoader not available</div>';
+      }
+      
+      // Test Search Manager
+      const searchStatus = document.getElementById('search-status');
+      if (window.searchManager) {
+        searchStatus.innerHTML = '<div class="success">✅ SearchManager is available</div>';
+        
+        try {
+          await window.searchManager.init();
+          const productCount = window.searchManager.products ? window.searchManager.products.length : 0;
+          searchStatus.innerHTML += `<div class="success">✅ SearchManager initialized with ${productCount} products</div>`;
+        } catch (error) {
+          searchStatus.innerHTML += `<div class="error">❌ Error initializing SearchManager: ${error.message}</div>`;
+        }
+      } else {
+        searchStatus.innerHTML = '<div class="error">❌ SearchManager not available</div>';
+      }
+      
+      // Product count summary
+      const productCounts = document.getElementById('product-counts');
+      if (window.globalProductsLoader) {
+        try {
+          const products = await window.globalProductsLoader.getProducts();
+          const categories = {};
+          products.forEach(product => {
+            const category = product.category || 'Unknown';
+            categories[category] = (categories[category] || 0) + 1;
+          });
+          
+          let countsHtml = '<div class="info">📊 Products by Category:</div>';
+          Object.entries(categories).forEach(([category, count]) => {
+            countsHtml += `<div>${category}: ${count} products</div>`;
+          });
+          productCounts.innerHTML = countsHtml;
+        } catch (error) {
+          productCounts.innerHTML = `<div class="error">❌ Error getting product counts: ${error.message}</div>`;
+        }
+      }
+      
+      // Debug information
+      const debugInfo = document.getElementById('debug-info');
+      debugInfo.innerHTML = `
+        <div class="info">🔧 Debug Information:</div>
+        <div>Current URL: ${window.location.href}</div>
+        <div>User Agent: ${navigator.userAgent}</div>
+        <div>Global Products Loader: ${window.globalProductsLoader ? 'Available' : 'Not Available'}</div>
+        <div>Search Manager: ${window.searchManager ? 'Available' : 'Not Available'}</div>
+        <div>Console logs available in browser developer tools</div>
+      `;
+    });
+    
+    async function testSearch(query) {
+      const results = document.getElementById('results');
+      results.innerHTML = `<div class="info">🔍 Searching for "${query}"...</div>`;
+      
+      try {
+        if (!window.searchManager) {
+          results.innerHTML += '<div class="error">❌ SearchManager not available</div>';
+          return;
+        }
+        
+        const searchResults = window.searchManager.search(query);
+        
+        if (searchResults && searchResults.length > 0) {
+          results.innerHTML = `<div class="success">✅ Found ${searchResults.length} results for "${query}":</div>`;
+          searchResults.slice(0, 5).forEach(product => {
+            results.innerHTML += `
+              <div style="border-bottom: 1px solid #eee; padding: 5px 0;">
+                <strong>${product.name}</strong><br>
+                <small>Category: ${product.category || 'Unknown'} | Price: ${product.price || 'N/A'}</small>
+              </div>
+            `;
+          });
+          if (searchResults.length > 5) {
+            results.innerHTML += `<div class="info">... and ${searchResults.length - 5} more results</div>`;
+          }
+        } else {
+          results.innerHTML = `<div class="error">❌ No results found for "${query}"</div>`;
+        }
+      } catch (error) {
+        results.innerHTML += `<div class="error">❌ Search error: ${error.message}</div>`;
+      }
+    }
+  </script>
+</body>
+</html>

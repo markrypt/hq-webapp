@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Search Test - Markrypt</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    .test-container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin: 20px 0;
+    }
+    .test-section {
+      margin: 20px 0;
+      padding: 20px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+    }
+    .test-section.success {
+      border-color: #4CAF50;
+      background-color: #f8fff8;
+    }
+    .test-section.error {
+      border-color: #f44336;
+      background-color: #fff8f8;
+    }
+    .test-section.warning {
+      border-color: #ff9800;
+      background-color: #fffaf0;
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    h2 {
+      color: #1e90ff;
+      margin-bottom: 15px;
+    }
+    .status {
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 4px;
+      display: inline-block;
+      margin: 5px 0;
+    }
+    .status.pass {
+      background-color: #4CAF50;
+      color: white;
+    }
+    .status.fail {
+      background-color: #f44336;
+      color: white;
+    }
+    .status.warn {
+      background-color: #ff9800;
+      color: white;
+    }
+    .test-button {
+      background-color: #1e90ff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 10px 5px;
+    }
+    .test-button:hover {
+      background-color: #0066cc;
+    }
+    .console-output {
+      background-color: #f0f0f0;
+      padding: 15px;
+      border-radius: 5px;
+      font-family: monospace;
+      max-height: 200px;
+      overflow-y: auto;
+      margin: 10px 0;
+      white-space: pre-wrap;
+    }
+    .page-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .page-link {
+      display: block;
+      padding: 10px 15px;
+      background-color: #1e90ff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      text-align: center;
+      transition: background-color 0.3s;
+    }
+    .page-link:hover {
+      background-color: #0066cc;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+    .stat-card {
+      background-color: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid #dee2e6;
+    }
+    .stat-number {
+      font-size: 2em;
+      font-weight: bold;
+      color: #1e90ff;
+    }
+    .stat-label {
+      color: #666;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <h1>🔍 Global Search Test Suite</h1>
+    
+    <div class="test-section" id="loadingTest">
+      <h2>Loading Status</h2>
+      <div id="loadingStatus">Checking script loading...</div>
+    </div>
+
+    <div class="test-section" id="globalLoaderTest">
+      <h2>Global Products Loader</h2>
+      <div id="globalLoaderStatus">Testing global products loader...</div>
+      <button class="test-button" onclick="testGlobalLoader()">Test Global Loader</button>
+    </div>
+
+    <div class="test-section" id="searchManagerTest">
+      <h2>Search Manager</h2>
+      <div id="searchManagerStatus">Testing search manager...</div>
+      <button class="test-button" onclick="testSearchManager()">Test Search Manager</button>
+    </div>
+
+    <div class="test-section" id="productsTest">
+      <h2>Product Data</h2>
+      <div id="productsStats" class="stats">
+        <div class="stat-card">
+          <div class="stat-number" id="totalProducts">-</div>
+          <div class="stat-label">Total Products</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="totalCategories">-</div>
+          <div class="stat-label">Categories</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="loadedScripts">-</div>
+          <div class="stat-label">Loaded Scripts</div>
+        </div>
+      </div>
+      <button class="test-button" onclick="analyzeProducts()">Analyze Products</button>
+    </div>
+
+    <div class="test-section" id="searchTest">
+      <h2>Search Functionality</h2>
+      <div>
+        <input type="text" id="searchInput" placeholder="Enter search term (e.g., 'nike', 'laptop', 'organic')" style="width: 300px; padding: 8px; margin: 10px 0;">
+        <button class="test-button" onclick="testSearch()">Test Search</button>
+      </div>
+      <div id="searchResults" class="console-output" style="display:none;"></div>
+    </div>
+
+    <div class="test-section" id="modalTest">
+      <h2>Search Modal</h2>
+      <div id="modalStatus">Ready to test search modal...</div>
+      <button class="test-button" onclick="testSearchModal()">Open Search Modal</button>
+    </div>
+
+    <div class="test-section" id="pageTests">
+      <h2>Test Other Pages</h2>
+      <p>Test search functionality on different pages:</p>
+      <div class="page-links">
+        <a href="/index.html" class="page-link">Home Page</a>
+        <a href="/products.html" class="page-link">Products</a>
+        <a href="/about.html" class="page-link">About</a>
+        <a href="/category/electronics.html" class="page-link">Electronics Category</a>
+        <a href="/category/clothing-shoes-jewelry-and-watches.html" class="page-link">Fashion Category</a>
+        <a href="/product.html?id=sony-wh1000xm5" class="page-link">Product Detail</a>
+      </div>
+    </div>
+
+    <div class="test-section" id="consoleOutput">
+      <h2>Console Output</h2>
+      <div id="consoleLog" class="console-output"></div>
+      <button class="test-button" onclick="clearConsole()">Clear Console</button>
+    </div>
+  </div>
+
+  <!-- Load the search system -->
+  <script src="assets/js/optimized-core.js"></script>
+  <script src="assets/js/global-products-loader.js"></script>
+  <script src="assets/js/products-manager.js"></script>
+  <script src="assets/js/search-manager.js"></script>
+  <script src="assets/js/search-init.js"></script>
+
+  <script>
+    // Test suite implementation
+    let consoleLog = [];
+    
+    // Override console.log to capture output
+    const originalLog = console.log;
+    console.log = function(...args) {
+      const message = args.map(arg => 
+        typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
+      ).join(' ');
+      consoleLog.push(`[${new Date().toLocaleTimeString()}] ${message}`);
+      updateConsoleDisplay();
+      originalLog.apply(console, args);
+    };
+
+    function updateConsoleDisplay() {
+      const consoleDiv = document.getElementById('consoleLog');
+      consoleDiv.textContent = consoleLog.slice(-20).join('\n');
+      consoleDiv.scrollTop = consoleDiv.scrollHeight;
+    }
+
+    function clearConsole() {
+      consoleLog = [];
+      updateConsoleDisplay();
+    }
+
+    function setStatus(elementId, status, message) {
+      const element = document.getElementById(elementId);
+      const section = element.closest('.test-section');
+      
+      // Remove existing status classes
+      section.classList.remove('success', 'error', 'warning');
+      
+      let statusClass = '';
+      let statusIcon = '';
+      
+      switch(status) {
+        case 'pass':
+          statusClass = 'success';
+          statusIcon = '✅';
+          break;
+        case 'fail':
+          statusClass = 'error';
+          statusIcon = '❌';
+          break;
+        case 'warn':
+          statusClass = 'warning';
+          statusIcon = '⚠️';
+          break;
+        default:
+          statusIcon = 'ℹ️';
+      }
+      
+      section.classList.add(statusClass);
+      element.innerHTML = `<span class="status ${status}">${statusIcon} ${message}</span>`;
+    }
+
+    // Run initial tests when page loads
+    window.addEventListener('load', () => {
+      setTimeout(runInitialTests, 1000);
+    });
+
+    function runInitialTests() {
+      console.log('🚀 Starting Global Search Test Suite...');
+      
+      // Test 1: Check if scripts are loaded
+      testScriptLoading();
+      
+      // Test 2: Check global products loader
+      setTimeout(testGlobalLoader, 500);
+      
+      // Test 3: Check search manager
+      setTimeout(testSearchManager, 1000);
+      
+      // Test 4: Analyze products
+      setTimeout(analyzeProducts, 1500);
+    }
+
+    function testScriptLoading() {
+      console.log('📋 Testing script loading...');
+      
+      const requiredClasses = [
+        'GlobalProductsLoader',
+        'ProductsManager', 
+        'SearchManager'
+      ];
+      
+      const loadedClasses = requiredClasses.filter(className => window[className]);
+      const missingClasses = requiredClasses.filter(className => !window[className]);
+      
+      if (missingClasses.length === 0) {
+        setStatus('loadingStatus', 'pass', `All required scripts loaded (${loadedClasses.length}/${requiredClasses.length})`);
+      } else {
+        setStatus('loadingStatus', 'fail', `Missing scripts: ${missingClasses.join(', ')}`);
+      }
+      
+      console.log(`✓ Loaded classes: ${loadedClasses.join(', ')}`);
+      if (missingClasses.length > 0) {
+        console.log(`❌ Missing classes: ${missingClasses.join(', ')}`);
+      }
+    }
+
+    async function testGlobalLoader() {
+      console.log('🌐 Testing GlobalProductsLoader...');
+      
+      try {
+        if (!window.globalProductsLoader) {
+          setStatus('globalLoaderStatus', 'fail', 'GlobalProductsLoader instance not found');
+          return;
+        }
+        
+        const products = await window.globalProductsLoader.getProducts();
+        
+        if (products && products.length > 0) {
+          setStatus('globalLoaderStatus', 'pass', `Loaded ${products.length} products from all categories`);
+          console.log(`✅ GlobalProductsLoader loaded ${products.length} products`);
+        } else {
+          setStatus('globalLoaderStatus', 'warn', 'GlobalProductsLoader found but no products loaded');
+          console.log('⚠️ GlobalProductsLoader found but no products loaded');
+        }
+        
+        // Test MARKRYPT namespace
+        if (window.MARKRYPT) {
+          const categoryCount = Object.keys(window.MARKRYPT).filter(key => 
+            key.endsWith('Products') && Array.isArray(window.MARKRYPT[key])
+          ).length;
+          console.log(`📦 MARKRYPT namespace has ${categoryCount} product categories`);
+        }
+        
+      } catch (error) {
+        setStatus('globalLoaderStatus', 'fail', `Error: ${error.message}`);
+        console.error('❌ GlobalProductsLoader test failed:', error);
+      }
+    }
+
+    async function testSearchManager() {
+      console.log('🔍 Testing SearchManager...');
+      
+      try {
+        if (!window.searchManager) {
+          if (window.SearchManager) {
+            console.log('🔧 Creating SearchManager instance...');
+            window.searchManager = new SearchManager();
+            await window.searchManager.init();
+          } else {
+            setStatus('searchManagerStatus', 'fail', 'SearchManager class not found');
+            return;
+          }
+        }
+        
+        const productCount = window.searchManager.productsData ? window.searchManager.productsData.length : 0;
+        
+        if (productCount > 0) {
+          setStatus('searchManagerStatus', 'pass', `SearchManager initialized with ${productCount} products`);
+          console.log(`✅ SearchManager has ${productCount} products available for search`);
+        } else {
+          setStatus('searchManagerStatus', 'warn', 'SearchManager initialized but no products found');
+          console.log('⚠️ SearchManager initialized but no products found');
+        }
+        
+      } catch (error) {
+        setStatus('searchManagerStatus', 'fail', `Error: ${error.message}`);
+        console.error('❌ SearchManager test failed:', error);
+      }
+    }
+
+    function analyzeProducts() {
+      console.log('📊 Analyzing product data...');
+      
+      let totalProducts = 0;
+      let categories = new Set();
+      let loadedScripts = 0;
+      
+      // Check SearchManager products
+      if (window.searchManager && window.searchManager.productsData) {
+        totalProducts = window.searchManager.productsData.length;
+        window.searchManager.productsData.forEach(product => {
+          if (product.category) categories.add(product.category);
+        });
+      }
+      
+      // Check MARKRYPT namespace
+      if (window.MARKRYPT) {
+        Object.keys(window.MARKRYPT).forEach(key => {
+          if (key.endsWith('Products') && Array.isArray(window.MARKRYPT[key])) {
+            loadedScripts++;
+            window.MARKRYPT[key].forEach(product => {
+              if (product.category) categories.add(product.category);
+            });
+          }
+        });
+      }
+      
+      // Update stats
+      document.getElementById('totalProducts').textContent = totalProducts;
+      document.getElementById('totalCategories').textContent = categories.size;
+      document.getElementById('loadedScripts').textContent = loadedScripts;
+      
+      console.log(`📈 Analysis complete: ${totalProducts} products, ${categories.size} categories, ${loadedScripts} loaded scripts`);
+      console.log(`📂 Categories found: ${Array.from(categories).join(', ')}`);
+    }
+
+    function testSearch() {
+      const query = document.getElementById('searchInput').value.trim();
+      if (!query) {
+        alert('Please enter a search term');
+        return;
+      }
+      
+      console.log(`🔎 Testing search for: "${query}"`);
+      
+      if (!window.searchManager) {
+        setStatus('searchResults', 'fail', 'SearchManager not available');
+        return;
+      }
+      
+      try {
+        const results = window.searchManager.searchProducts(query);
+        const resultsDiv = document.getElementById('searchResults');
+        resultsDiv.style.display = 'block';
+        
+        if (results && results.length > 0) {
+          let resultText = `Found ${results.length} results for "${query}":\n\n`;
+          results.slice(0, 5).forEach((product, index) => {
+            resultText += `${index + 1}. ${product.title}\n`;
+            resultText += `   Category: ${product.category}\n`;
+            resultText += `   Rating: ${product.rating} (${product.reviewCount} reviews)\n\n`;
+          });
+          
+          if (results.length > 5) {
+            resultText += `... and ${results.length - 5} more results`;
+          }
+          
+          resultsDiv.textContent = resultText;
+          console.log(`✅ Search successful: ${results.length} results found`);
+        } else {
+          resultsDiv.textContent = `No results found for "${query}"`;
+          console.log(`❌ Search returned no results for "${query}"`);
+        }
+      } catch (error) {
+        resultsDiv.textContent = `Search error: ${error.message}`;
+        console.error('❌ Search test failed:', error);
+      }
+    }
+
+    function testSearchModal() {
+      console.log('🔍 Testing search modal...');
+      
+      if (!window.searchManager || typeof window.searchManager.openSearchModal !== 'function') {
+        setStatus('modalStatus', 'fail', 'Search modal function not available');
+        console.log('❌ Search modal function not available');
+        return;
+      }
+      
+      try {
+        window.searchManager.openSearchModal();
+        setStatus('modalStatus', 'pass', 'Search modal opened successfully');
+        console.log('✅ Search modal opened successfully');
+      } catch (error) {
+        setStatus('modalStatus', 'fail', `Modal error: ${error.message}`);
+        console.error('❌ Search modal test failed:', error);
+      }
+    }
+  </script>
+</body>
+</html>

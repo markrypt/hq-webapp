@@ -1930,16 +1930,22 @@
     </section>
   </main>
     <!-- Navigation Placeholder - Will be populated by component-loader.js -->
-  <div id="navigation-placeholder"></div>
-  <!-- Load core dependencies first -->
-  <script src="assets/js/optimized-core.js"></script>
+  <div id="navigation-placeholder"></div>  <!-- Load core dependencies first -->  <script src="assets/js/optimized-core.js"></script>
+  <script src="assets/js/global-products-loader.js"></script>
   <script src="assets/js/products-manager.js"></script>
-  <script src="assets/js/search.js"></script>
+  <script src="assets/js/search-manager.js"></script>
+  <script src="assets/js/search-init.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // Initialize search functionality
-      if (typeof initializeSearchManager === 'function') {
-        initializeSearchManager();
+      if (window.searchManager) {
+        console.log('Search manager already initialized');
+      } else {
+        console.log('Initializing search manager');
+        window.searchManager = new SearchManager();
+        window.searchManager.init().catch(err => {
+          console.error('Error initializing search:', err);
+        });
       }
     });
   </script>

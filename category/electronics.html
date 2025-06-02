@@ -281,8 +281,8 @@
       return true;
     };
   </script>
-
   <script src="../assets/js/common.js"></script>
+  <script src="../assets/js/global-products-loader.js"></script>
   
   <!-- Product Data -->
   <script src="../assets/js/electronics-products.js" onerror="handleProductLoadError()"></script>
@@ -296,24 +296,9 @@
         window.productsData = window.MARKRYPT.electronicsProducts;
       }
     });
-  </script>
-  <script src="../assets/js/category-filter.js"></script>
-  <script>
-    // Initialize products data for search functionality
-    window.productsData = window.electronicsProducts || [];
-    
-    // Load search functionality after data is ready
-    document.addEventListener('DOMContentLoaded', () => {
-      // Ensure electronicsProducts are loaded
-      if (window.electronicsProducts && window.electronicsProducts.length > 0) {
-        window.productsData = window.electronicsProducts;
-        console.log('Products data initialized:', window.productsData.length + ' products');
-      } else {
-        console.warn('Electronics products not loaded yet');
-      }
-    });
-  </script>
-  <script src="../assets/js/search.js"></script>
+  </script>  <script src="../assets/js/category-filter.js"></script>
+  <script src="../assets/js/search-manager.js"></script>
+  <script src="../assets/js/search-init.js"></script>
   <script src="../assets/js/components-loader.js"></script>
   <script>
     // Fallback: Manually render products if the filter system doesn't work

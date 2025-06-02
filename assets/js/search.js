@@ -31,21 +31,28 @@ class SearchManager {
     
     this.loadCategoryProducts();
   }
-
   async loadCategoryProducts() {
     try {
       if (!window.getBasePath) {
         console.error('Required getBasePath function not found');
-        throw new Error('getBasePath not available');
+        return;
       }
       
       const basePath = window.getBasePath();
-      // Clear any existing data
+      const existingProducts = this.productsData.slice(); // Keep existing products
       this.productsData = [];
       
       // Load all category product files
-      for (const file of this.categoryFiles) {
-        await new Promise((resolve) => {
+      const loadPromises = this.categoryFiles.map(file => {
+        return new Promise((resolve) => {
+          // Check if products from this file are already in window
+          const varName = file.replace('.js', '').replace(/-/g, '');
+          if (window.MARKRYPT && window.MARKRYPT[varName]) {
+            this.productsData = this.productsData.concat(window.MARKRYPT[varName]);
+            resolve();
+            return;
+          }
+          
           const script = document.createElement('script');
           script.src = basePath + 'assets/js/' + file;
           script.onload = () => {
@@ -85,7 +92,15 @@ class SearchManager {
   setupSearchUI() {
     try {
       // Create search modal if it doesn't exist
-      if (!document.getElementById('searchModal')) {
+    init() {
+    if (window.productsData) {
+      // Add current page's products first
+      this.productsData = this.productsData.concat(window.productsData);
+    }
+    return this.loadCategoryProducts();
+  }
+
+  if (!document.getElementById('searchModal')) {
         const searchModal = document.createElement('div');
         searchModal.id = 'searchModal';
         searchModal.className = 'search-modal';

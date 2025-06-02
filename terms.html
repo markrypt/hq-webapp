@@ -468,11 +468,25 @@
         if (menu) menu.classList.remove('active');
         document.querySelector('.menu-icon').setAttribute('aria-expanded', 'false');
       }, 150);    }
-  </script>
-<script src="assets/js/products-data.js"></script>
-<script src="assets/js/search.js"></script>
-<!-- Consolidated optimized core script -->
-<script src="assets/js/optimized-core.js"></script>
+  </script>  <script src="assets/js/optimized-core.js"></script>
+  <script src="assets/js/global-products-loader.js"></script>
+  <script src="assets/js/products-manager.js"></script>
+  <script src="assets/js/search-manager.js"></script>
+  <script src="assets/js/search-init.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Initialize search functionality
+    if (window.searchManager) {
+      console.log('Search manager already initialized');
+    } else {
+      console.log('Initializing search manager');
+      window.searchManager = new SearchManager();
+      window.searchManager.init().catch(err => {
+        console.error('Error initializing search:', err);
+      });
+    }
+  });
+</script>
 <script src="assets/js/components-loader.js"></script>
 </body>
 </html>

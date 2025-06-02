@@ -571,10 +571,11 @@
     // Verify we have the Amazon Fresh products
     const bananas = window.productsData.find(p => p.id === 'organic-bananas');
     console.log(`Organic bananas found in combined list: ${bananas ? 'YES' : 'NO'}`);
-  </script>
-  
-  <!-- Load product detail script -->
+  </script>    <!-- Load product detail script -->
   <script src="assets/js/product-detail.js"></script>
+  <script src="assets/js/global-products-loader.js"></script>
+  <script src="assets/js/search-manager.js"></script>
+  <script src="assets/js/search-init.js"></script>
   <script>
     // This script block is for product.html specific logging or minor initializations.
     console.log('[ProductHTML] All page-specific scripts loaded.');
@@ -583,7 +584,13 @@
     } else {
       console.error('[ProductHTML] CRITICAL: productsData is NOT available or empty after script loading!');
     }
-    // The product-detail.js script handles its own initialization.
+    // Initialize search manager
+    if (!window.searchManager) {
+      window.searchManager = new SearchManager();
+      window.searchManager.init().catch(err => {
+        console.error('Error initializing search:', err);
+      });
+    }
   </script>
 <script src="assets/js/components-loader.js"></script>
 </body>

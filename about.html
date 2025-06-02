@@ -420,9 +420,21 @@
     }
   </script>  <script src="assets/js/products-data.js"></script>
   <script src="assets/js/products-manager.js"></script>
-  <script src="assets/js/search.js"></script>
-  <!-- Consolidated optimized core script -->
   <script src="assets/js/optimized-core.js"></script>
+  <script src="assets/js/global-products-loader.js"></script>
+  <script src="assets/js/search-manager.js"></script>
+  <script src="assets/js/search-init.js"></script>
+  <script>
+    // Initialize search manager
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!window.searchManager) {
+        window.searchManager = new SearchManager();
+        window.searchManager.init().catch(err => {
+          console.error('Error initializing search:', err);
+        });
+      }
+    });
+  </script>
   <script src="assets/js/components-loader.js"></script>
 </body>
 </html>

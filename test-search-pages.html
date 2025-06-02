@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Test - Multiple Pages</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .result { margin: 10px 0; padding: 10px; background: #f0f0f0; border-radius: 3px; }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        .warning { background-color: #fff3cd; color: #856404; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+        iframe { width: 100%; height: 400px; border: 1px solid #ccc; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Search Functionality Test Suite</h1>
+    <p>Testing search functionality across different pages to ensure global search works everywhere.</p>
+
+    <div class="test-section">
+        <h2>Page Tests</h2>
+        <button onclick="testPage('index.html')">Test Index Page</button>
+        <button onclick="testPage('products.html')">Test Products Page</button>
+        <button onclick="testPage('about.html')">Test About Page</button>
+        <button onclick="testPage('category/electronics.html')">Test Category Page</button>
+        <div id="page-results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Current Page Test</h2>
+        <button onclick="testCurrentPage()">Test Search on This Page</button>
+        <div id="current-results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Live Page Preview</h2>
+        <select id="page-selector" onchange="loadPagePreview()">
+            <option value="">Select a page to preview</option>
+            <option value="index.html">Index Page</option>
+            <option value="products.html">Products Page</option>
+            <option value="about.html">About Page</option>
+            <option value="trending.html">Trending Page</option>
+            <option value="explore.html">Explore Page</option>
+        </select>
+        <iframe id="page-preview" style="display:none;"></iframe>
+    </div>
+
+    <script src="assets/js/global-products-loader.js"></script>
+    <script src="assets/js/search-manager.js"></script>
+    <script>
+        async function testCurrentPage() {
+            const results = document.getElementById('current-results');
+            results.innerHTML = '<div class="result">🔄 Testing current page...</div>';
+
+            try {
+                // Test global products loader
+                if (!window.globalProductsLoader) {
+                    throw new Error('Global products loader not found');
+                }
+
+                const products = await window.globalProductsLoader.getProducts();
+                results.innerHTML += `<div class="result success">✅ Loaded ${products.length} products globally</div>`;
+
+                // Test search manager
+                if (!window.SearchManager) {
+                    throw new Error('SearchManager not found');
+                }
+
+                const searchManager = new SearchManager();
+                await searchManager.init();
+                
+                const searchResults = searchManager.search('laptop');
+                results.innerHTML += `<div class="result success">✅ Search test: Found ${searchResults.length} results for "laptop"</div>`;
+
+                // Test various search terms
+                const testTerms = ['phone', 'book', 'toy', 'beauty'];
+                for (const term of testTerms) {
+                    const termResults = searchManager.search(term);
+                    results.innerHTML += `<div class="result">📊 "${term}": ${termResults.length} results</div>`;
+                }
+
+            } catch (error) {
+                results.innerHTML += `<div class="result error">❌ Error: ${error.message}</div>`;
+                console.error('Test error:', error);
+            }
+        }
+
+        function testPage(pagePath) {
+            const results = document.getElementById('page-results');
+            results.innerHTML += `<div class="result">🔄 Testing ${pagePath}...</div>`;
+
+            // Create a test iframe
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = pagePath;
+            
+            iframe.onload = () => {
+                try {
+                    const iframeWindow = iframe.contentWindow;
+                    const hasGlobalLoader = !!iframeWindow.globalProductsLoader;
+                    const hasSearchManager = !!iframeWindow.SearchManager;
+                    
+                    if (hasGlobalLoader && hasSearchManager) {
+                        results.innerHTML += `<div class="result success">✅ ${pagePath}: Search components loaded</div>`;
+                    } else {
+                        results.innerHTML += `<div class="result warning">⚠️ ${pagePath}: Missing components (Loader: ${hasGlobalLoader}, Manager: ${hasSearchManager})</div>`;
+                    }
+                } catch (error) {
+                    results.innerHTML += `<div class="result error">❌ ${pagePath}: ${error.message}</div>`;
+                }
+                
+                document.body.removeChild(iframe);
+            };
+
+            iframe.onerror = () => {
+                results.innerHTML += `<div class="result error">❌ ${pagePath}: Failed to load</div>`;
+                if (document.body.contains(iframe)) {
+                    document.body.removeChild(iframe);
+                }
+            };
+
+            document.body.appendChild(iframe);
+        }
+
+        function loadPagePreview() {
+            const selector = document.getElementById('page-selector');
+            const preview = document.getElementById('page-preview');
+            
+            if (selector.value) {
+                preview.src = selector.value;
+                preview.style.display = 'block';
+            } else {
+                preview.style.display = 'none';
+            }
+        }
+
+        // Auto-test current page when loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(testCurrentPage, 1000);
+        });
+    </script>
+</body>
+</html>

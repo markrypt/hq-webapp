@@ -13,34 +13,73 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  // Relative path from this script (in assets/js/) to the components directory (assets/components/)
+  // Relative path from this script (in assets/js/) to other assets
   const headerComponentRelPath = '../components/header.html';
   const navigationComponentRelPath = '../components/navigation.html';
+  const searchManagerScriptPath = 'search-manager.js';
+  const searchInitScriptPath = 'search-init.js';
 
   try {
     // Base URL is the loader script's own URL
     const loaderUrl = new URL(LOADER_SCRIPT_SRC); 
     
     const headerPath = new URL(headerComponentRelPath, loaderUrl).href;
-    const navPath = new URL(navigationComponentRelPath, loaderUrl).href;    loadComponent('header-placeholder', headerPath, () => {
-      // After header loads, set up dropdown functionality
-      setupDropdownMenu();
-      
-      // Initialize global search if not already initialized
-      if (!window.searchManager) {
-        console.log('Initializing global search...');
-        try {
-          window.searchManager = new SearchManager();
-          window.searchManager.init().then(() => {
-            console.log('Search initialization complete');
-          }).catch(err => {
-            console.error('Error initializing search:', err);
-          });
-        } catch (err) {
-          console.error('Failed to create SearchManager:', err);
-        }
-      }
-    });
+    const navPath = new URL(navigationComponentRelPath, loaderUrl).href;
+    const searchManagerPath = new URL(searchManagerScriptPath, loaderUrl).href;
+    const searchInitPath = new URL(searchInitScriptPath, loaderUrl).href;    // Helper function to determine base path
+    window.getBasePath = function() {
+      const currentPath = window.location.pathname;
+      return currentPath.includes('/category/') ? '../' : '/';
+    };
+    
+    // Load search scripts first, then load components
+    console.log("🔄 Loading global search functionality...");
+    
+    // Load global products loader first, then other search scripts
+    const globalProductsLoaderPath = new URL('global-products-loader.js', loaderUrl).href;
+    const productsManagerPath = new URL('products-manager.js', loaderUrl).href;
+    const hasProductsManager = !!window.ProductsManager || !!document.querySelector('script[src*="products-manager.js"]');
+    
+    // Chain of promises to load scripts in the correct order
+    loadScript(globalProductsLoaderPath)
+      .then(() => hasProductsManager ? Promise.resolve() : loadScript(productsManagerPath))
+      .then(() => loadScript(searchManagerPath))
+      .then(() => loadScript(searchInitPath))
+      .then(() => {
+        console.log("✅ All search scripts loaded successfully");
+        
+        loadComponent('header-placeholder', headerPath, () => {
+          // After header loads, set up dropdown functionality
+          setupDropdownMenu();
+          
+          // Initialize global search if not already initialized
+          if (!window.searchManager && typeof SearchManager === 'function') {
+            console.log('🔧 Initializing global search with comprehensive product data...');
+            try {
+              // Initialize search with global products loader
+              window.searchManager = new SearchManager();
+                // Initialize search manager with all products
+              const initializeWithAllProducts = () => {
+                window.searchManager.init().then(() => {
+                  console.log('✅ Global search initialization complete with comprehensive product data');
+                }).catch(err => {
+                  console.error('❌ Error initializing search:', err);
+                });
+              };
+
+              // Initialize immediately
+              initializeWithAllProducts();
+            } catch (err) {
+              console.error('❌ Failed to create SearchManager:', err);
+            }
+          }
+        });
+      })
+      .catch(err => {
+        console.error("❌ Failed to load search scripts:", err);
+        // Continue loading components even if search scripts fail
+        loadComponent('header-placeholder', headerPath, setupDropdownMenu);
+      });
     loadComponent('navigation-placeholder', navPath, () => {
       // After navigation loads, set active navigation item
       highlightActiveNavItem();
@@ -49,6 +88,36 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error("Error resolving component paths in components-loader.js. Loader Script SRC:", LOADER_SCRIPT_SRC, "Error:", e);
   }
 });
+
+/**
+ * Dynamically loads a JavaScript file
+ * @param {string} src - The URL of the script to load
+ * @param {Function} [callback] - Optional callback to run after script is loaded
+ * @returns {Promise} A promise that resolves when the script is loaded
+ */
+function loadScript(src, callback) {
+  return new Promise((resolve, reject) => {
+    if (document.querySelector(`script[src="${src}"]`)) {
+      console.log(`Script already loaded: ${src}`);
+      if (callback) callback();
+      resolve();
+      return;
+    }
+    
+    const script = document.createElement('script');
+    script.src = src;
+    script.onload = () => {
+      console.log(`Script loaded: ${src}`);
+      if (callback) callback();
+      resolve();
+    };
+    script.onerror = (err) => {
+      console.error(`Failed to load script: ${src}`, err);
+      reject(err);
+    };
+    document.body.appendChild(script);
+  });
+}
 
 /**
  * Load a component from HTML file and inject it into the specified element
