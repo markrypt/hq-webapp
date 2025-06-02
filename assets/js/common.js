@@ -21,9 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Call the function to set active nav item
   setActiveNavItem();
-  
-  // Initialize global search if search icons exist and the search manager isn't initialized yet
-  initializeGlobalSearch();
 });
 
 // Dropdown menu logic
@@ -44,54 +41,7 @@ function closeMenuDropdown() {
   }, 150); 
 }
 
-// Global search initialization
-function initializeGlobalSearch(openModalAfterInit = false) {
-  const searchIcons = document.querySelectorAll('.search-icon');
-  // No longer return if searchIcons.length is 0, as this function might be called directly to ensure scripts are loaded.
-
-  const basePath = determineBasePath();
-
-  const loadSearchScriptsAndInitialize = () => {
-    loadScript(basePath + 'assets/js/products-data.js', () => {
-      loadScript(basePath + 'assets/js/search.js', () => {
-        if (window.searchManager && typeof window.searchManager.openSearchModal === 'function' && openModalAfterInit) {
-          window.searchManager.openSearchModal();
-        } else if (openModalAfterInit) {
-          console.error('Search manager still not available after loading scripts.');
-        }
-      });
-    });
-  };
-
-  if (typeof window.productsData === 'undefined' || typeof window.searchManager === 'undefined') {
-    loadSearchScriptsAndInitialize();
-  } else if (openModalAfterInit && window.searchManager && typeof window.searchManager.openSearchModal === 'function') {
-    // Scripts already loaded, just open modal
-    window.searchManager.openSearchModal();
-  }
-
-  // Ensure click events are attached to icons if they weren't already
-  // This part handles cases where common.js loads and executes initializeGlobalSearch
-  // before the header (with the search icon) is dynamically loaded into the DOM.
-  // Or if the icon is clicked before searchManager is ready.
-  searchIcons.forEach(icon => {
-    // Remove existing listener to avoid duplicates if this function is called multiple times
-    const newIcon = icon.cloneNode(true);
-    icon.parentNode.replaceChild(newIcon, icon);
-    
-    newIcon.addEventListener('click', () => {
-      if (window.searchManager && typeof window.searchManager.openSearchModal === 'function') {
-        window.searchManager.openSearchModal();
-      } else {
-        // If searchManager isn't initialized yet, try to load scripts and then open
-        console.log('Search manager not ready, attempting to initialize and open...');
-        initializeGlobalSearch(true);
-      }
-    });
-  });
-}
-
-// Helper function to determine the base path
+// Helper function to determine base path for script loading
 function determineBasePath() {
   const path = window.location.pathname;
   // Check if we're in a subdirectory

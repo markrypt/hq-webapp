@@ -391,11 +391,17 @@
     });
   </script>
   <script src="../assets/js/common.js"></script>
+  <script src="../assets/js/optimized-core.js"></script>
   <script src="../assets/js/beauty-and-health-products.js"></script>
   <script>
-    // Set productsData to beauty and health products
-    window.productsData = window.beautyAndHealthProducts;
-    console.log('Beauty and health products loaded:', window.productsData ? window.productsData.length + ' products found' : 'No products found');
+    // For the category page, explicitly set productsData to beautyAndHealthProducts
+    // but preserve any existing data for global search
+    if (window.productsData) {
+      window.productsData.push(...window.beautyAndHealthProducts);
+    } else {
+      window.productsData = window.beautyAndHealthProducts;
+    }
+    console.log('Beauty and health products loaded:', window.beautyAndHealthProducts ? window.beautyAndHealthProducts.length + ' products found' : 'No products found');
   </script>
   <script src="../assets/js/category-filter.js"></script>
   <script src="../assets/js/search.js"></script>

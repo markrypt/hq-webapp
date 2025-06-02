@@ -355,19 +355,4 @@ function getBasePath() {
   return '../';
 }
 
-// Ensure necessary scripts are loaded for search functionality
-document.addEventListener('DOMContentLoaded', function() {
-  // First, ensure products-data.js is loaded (needed for search)
-  if (typeof window.productsData === 'undefined' && !document.querySelector('script[src$="products-data.js"]')) {
-    const productsDataScript = document.createElement('script');
-    productsDataScript.src = getBasePath() + 'assets/js/products-data.js';
-    document.body.appendChild(productsDataScript);
-  }
-  
-  // Then ensure search.js is loaded
-  if (typeof window.searchManager === 'undefined' && !document.querySelector('script[src$="search.js"]')) {
-    const searchScript = document.createElement('script');
-    searchScript.src = getBasePath() + 'assets/js/search.js';
-    document.body.appendChild(searchScript);
-  }
-});
+// Add any other core functionality below...

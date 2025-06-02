@@ -10,18 +10,18 @@
     <a href="/" class="nav-item" aria-label="Home">
       <i class="fas fa-home nav-icon"></i>
       <span>Home</span>
-    </a>
-    <a href="/products" class="nav-item" aria-label="Products">
+    </a>    <a href="/products" class="nav-item" aria-label="Products">
       <i class="fas fa-box nav-icon"></i>
       <span>Products</span>
     </a>
-    <a href="/search-verify" class="nav-item" aria-label="Search">
-      <i class="fas fa-search nav-icon"></i>
-      <span>Search</span>
+    <a href="/about" class="nav-item" aria-label="About">
+      <i class="fas fa-info-circle nav-icon"></i>
+      <span>About</span>
     </a>
 </nav>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+  // Set active navigation item based on current page
   function normalizePath(pathStr) {
     let normalized = pathStr;
     // Replace /index.html with / or index.html at root with empty string (then handled)

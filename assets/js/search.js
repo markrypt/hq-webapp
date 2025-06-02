@@ -1,17 +1,85 @@
 /**
  * Global search functionality for Markrypt
  */
-
 class SearchManager {
-  constructor(productsData) {
-    if (!productsData || !Array.isArray(productsData)) {
-      console.error('Invalid products data provided to SearchManager');
-      productsData = [];
-    }
-    this.productsData = productsData;
+  constructor() {
+    this.productsData = [];
+    this.categoryFiles = [
+      'amazon-fresh-products.js',
+      'automotive-products.js',
+      'beauty-and-health-products.js',
+      'books-products.js',
+      'clothing-shoes-jewelry-and-watches-products.js',
+      'computers-products.js',
+      'electronics-products.js',
+      'food-and-grocery-products.js',
+      'handmade-products.js',
+      'home-garden-and-tools-products.js',
+      'household-essentials-products.js',
+      'industrial-and-scientific-products.js',
+      'movies-music-and-games-products.js',
+      'pet-supplies-products.js',
+      'smart-home-products.js',
+      'sports-and-outdoors-products.js',
+      'toys-kids-and-baby-products.js',
+      'whole-foods-market-products.js'
+    ];
+    this.isLoading = true;
+    
     this.setupSearchUI();
     this.setupEventListeners();
-    console.log('SearchManager initialized with', this.productsData.length, 'products');
+    
+    this.loadCategoryProducts();
+  }
+
+  async loadCategoryProducts() {
+    try {
+      if (!window.getBasePath) {
+        console.error('Required getBasePath function not found');
+        throw new Error('getBasePath not available');
+      }
+      
+      const basePath = window.getBasePath();
+      // Clear any existing data
+      this.productsData = [];
+      
+      // Load all category product files
+      for (const file of this.categoryFiles) {
+        await new Promise((resolve) => {
+          const script = document.createElement('script');
+          script.src = basePath + 'assets/js/' + file;
+          script.onload = () => {
+            // Get the variable name from the file (e.g., electronicsProducts from electronics-products.js)
+            const varName = file.replace('-products.js', '')
+                              .split('-')
+                              .map((word, index) => 
+                                index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)
+                              )
+                              .join('') + 'Products';
+            
+            if (window[varName]) {
+              const products = window[varName];
+              this.productsData.push(...products);
+              console.log(`Loaded ${products.length} products from ${file}`);
+            }
+            resolve();
+          };
+          script.onerror = () => {
+            console.error(`Failed to load ${file}`);
+            resolve(); // Resolve anyway to continue loading other files
+          };
+          document.body.appendChild(script);
+        });
+      }
+
+      console.log('Loaded total of', this.productsData.length, 'products from all categories');
+      this.isLoading = false;
+      this.clearSearchResults(); // Update UI to show search is ready
+    } catch (error) {
+      console.error('Error loading category products:', error);
+      this.isLoading = false;
+      throw error;
+    }
   }
 
   setupSearchUI() {
@@ -27,7 +95,7 @@ class SearchManager {
             <div class="search-header">
               <div class="search-input-wrapper">
                 <i class="fas fa-search search-icon-input"></i>
-                <input type="text" id="globalSearchInput" placeholder="Search products, categories...">
+                <input type="text" id="globalSearchInput" placeholder="Search across all categories...">
                 <i class="fas fa-times search-close" id="closeSearchModal"></i>
               </div>
             </div>
@@ -41,7 +109,7 @@ class SearchManager {
         `;
         
         document.body.appendChild(searchModal);
-
+        
         // Add styles if not already in the CSS
         if (!document.getElementById('searchStyles')) {
           const style = document.createElement('style');
@@ -108,7 +176,7 @@ class SearchManager {
             
             #globalSearchInput:focus {
               border-color: var(--accent-color);
-              box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.2);
+              box-shadow: 0 0 0 3px rgba(30,144,255,0.2);
             }
             
             .search-close {
@@ -126,10 +194,14 @@ class SearchManager {
               max-height: calc(80vh - 77px);
             }
             
-            .search-empty-state {
+            .search-empty-state, .search-loading-state {
               padding: 40px;
               text-align: center;
               color: var(--text-secondary);
+            }
+            
+            .search-loading-state {
+              color: var(--accent-color);
             }
             
             .search-empty-icon {
@@ -219,18 +291,6 @@ class SearchManager {
               background: linear-gradient(45deg, #ff6b6b, #ff8787);
             }
             
-            .search-result-badge.premium {
-              background: linear-gradient(45deg, #845ef7, #b197fc);
-            }
-            
-            .search-result-badge.bestseller {
-              background: linear-gradient(45deg, #f59f00, #ffd43b);
-            }
-            
-            .search-result-badge.value {
-              background: linear-gradient(45deg, #20c997, #63e6be);
-            }
-            
             @media (max-width: 768px) {
               .search-container {
                 margin: 0;
@@ -256,7 +316,6 @@ class SearchManager {
 
   setupEventListeners() {
     try {
-      // Global event delegation for search icon clicks
       document.addEventListener('click', (e) => {
         const searchIcon = e.target.closest('.search-icon');
         if (searchIcon) {
@@ -265,17 +324,14 @@ class SearchManager {
         }
       });
 
-      // Close search modal
       const closeBtn = document.getElementById('closeSearchModal');
       if (closeBtn) {
         closeBtn.addEventListener('click', () => this.closeSearchModal());
       }
 
-      // Handle search input
       const searchInput = document.getElementById('globalSearchInput');
       if (searchInput) {
         searchInput.addEventListener('input', (e) => this.handleSearch(e.target.value));
-        // Focus input when modal opens
         const searchModal = document.getElementById('searchModal');
         searchModal.addEventListener('transitionend', () => {
           if (searchModal.classList.contains('active')) {
@@ -284,7 +340,6 @@ class SearchManager {
         });
       }
 
-      // Close on modal background click
       const searchModal = document.getElementById('searchModal');
       if (searchModal) {
         searchModal.addEventListener('click', (e) => {
@@ -294,7 +349,6 @@ class SearchManager {
         });
       }
 
-      // Close on Escape key
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && document.getElementById('searchModal').classList.contains('active')) {
           this.closeSearchModal();
@@ -310,7 +364,6 @@ class SearchManager {
     searchModal.classList.add('active');
     document.body.style.overflow = 'hidden';
     
-    // Focus on the search input after modal is visible
     setTimeout(() => {
       document.getElementById('globalSearchInput').focus();
     }, 100);
@@ -321,19 +374,27 @@ class SearchManager {
     searchModal.classList.remove('active');
     document.body.style.overflow = '';
     
-    // Clear search input and results
     document.getElementById('globalSearchInput').value = '';
     this.clearSearchResults();
   }
 
   clearSearchResults() {
     const searchResults = document.getElementById('searchResults');
-    searchResults.innerHTML = `
-      <div class="search-empty-state">
-        <i class="fas fa-search search-empty-icon"></i>
-        <p>Type to search products</p>
-      </div>
-    `;
+    if (this.isLoading) {
+      searchResults.innerHTML = `
+        <div class="search-loading-state">
+          <i class="fas fa-spinner fa-spin search-empty-icon"></i>
+          <p>Loading products...</p>
+        </div>
+      `;
+    } else {
+      searchResults.innerHTML = `
+        <div class="search-empty-state">
+          <i class="fas fa-search search-empty-icon"></i>
+          <p>Type to search products across all categories</p>
+        </div>
+      `;
+    }
   }
 
   // Generate star rating HTML
@@ -364,6 +425,16 @@ class SearchManager {
   handleSearch(query) {
     const searchResults = document.getElementById('searchResults');
     
+    if (this.isLoading) {
+      searchResults.innerHTML = `
+        <div class="search-loading-state">
+          <i class="fas fa-spinner fa-spin search-empty-icon"></i>
+          <p>Loading products...</p>
+        </div>
+      `;
+      return;
+    }
+    
     if (!query.trim()) {
       this.clearSearchResults();
       return;
@@ -381,11 +452,11 @@ class SearchManager {
       `;
       return;
     }
-      // Display results
+
     searchResults.innerHTML = '';
     results.forEach(product => {
       const resultItem = document.createElement('a');
-      resultItem.href = `/product.html?id=${product.id}`; // Ensure product link is root-relative
+      resultItem.href = `/product.html?id=${product.id}`;
       resultItem.className = 'search-result-item';
       
       let badgeHTML = '';
@@ -394,7 +465,7 @@ class SearchManager {
       }
       
       resultItem.innerHTML = `
-        <div class="search-result-image" style="background-image: url('/${product.image}')"></div>
+        <div class="search-result-image" style="background-image: url('${product.image}')"></div>
         <div class="search-result-content">
           <div class="search-result-title">
             ${product.title} ${badgeHTML}
@@ -442,35 +513,22 @@ class SearchManager {
   }
 }
 
-// Initialize search manager with retry logic
-function initializeSearchManager(retry = 0, maxRetries = 5) {
-  if (typeof window.productsData !== 'undefined') {
-    try {
-      if (!window.searchManager) {
-        window.searchManager = new SearchManager(window.productsData);
-        console.log('Search Manager initialized successfully');
-      }
-    } catch (error) {
-      console.error('Error initializing SearchManager:', error);
-      // Retry if error is due to invalid data
-      if (retry < maxRetries) {
-        console.log(`Retrying search manager initialization... (${retry + 1}/${maxRetries})`);
-        setTimeout(() => initializeSearchManager(retry + 1, maxRetries), 500);
-      }
+// Initialize search manager only once when DOM is ready
+function initSearchManager() {
+  if (!window.searchManager) {
+    if (typeof getBasePath === 'undefined') {
+      console.error('Required function getBasePath is not available');
+      return;
     }
-  } else if (retry < maxRetries) {
-    console.log(`Products data not available yet, retrying... (${retry + 1}/${maxRetries})`);
-    setTimeout(() => initializeSearchManager(retry + 1, maxRetries), 500);
-  } else {
-    console.error('Products data not available for search functionality after retries');
+    window.searchManager = new SearchManager();
   }
 }
 
-// Initialize on DOM content loaded and window load to ensure it works in all scenarios
+// Wait for DOM and required functions
 document.addEventListener('DOMContentLoaded', () => {
-  initializeSearchManager();
-});
-
-window.addEventListener('load', () => {
-  initializeSearchManager();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSearchManager);
+  } else {
+    initSearchManager();
+  }
 });

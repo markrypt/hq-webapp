@@ -272,14 +272,20 @@
       </div>
     </main>
     <div id="navigation-placeholder"></div>
-  </div>  <script src="assets/js/products-data.js" defer></script>
-  <script src="assets/js/products-manager.js" defer></script>
-  <script src="assets/js/search.js" defer></script>
-  
-  <!-- Consolidated optimized core script -->
-  <script src="assets/js/optimized-core.js"></script>
-  
-  <!-- Component loader must be loaded after optimized-core.js -->
+  </div>  <!-- Load products data first -->
+  <script src="assets/js/products-data.js"></script>
+  <script>
+    // Initialize products data
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof productsData !== 'undefined') {
+        window.productsData = productsData;
+        console.log('Products data initialized:', window.productsData.length + ' products found');
+      } else {
+        console.error('Products data not loaded properly');
+      }
+    });
+  </script>
+  <script src="assets/js/search.js"></script>
   <script src="assets/js/components-loader.js"></script>
 </body>
 </html>
