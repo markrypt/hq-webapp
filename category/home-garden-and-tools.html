@@ -318,6 +318,15 @@
   <script src="../assets/js/category-filter.js"></script>
   <script src="../assets/js/search.js"></script>
   <script src="../assets/js/components-loader.js"></script>
-</body>
+    <!-- Add JavaScript to fix menu dropdown links -->
+    <script>
+      document.querySelectorAll('.menu-dropdown a').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && !href.startsWith('/') && !href.startsWith('http') && !href.startsWith('#')) {
+          link.href = '/' + href;
+        }
+      });
+    </script>
+  </body>
 </html>
 

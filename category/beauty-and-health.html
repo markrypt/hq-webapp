@@ -316,8 +316,7 @@
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-  </style>
-</head>
+  </head>
 <body>  <div class="app-container">
     <div id="header-placeholder"></div>
     <div class="scrollable-content-area">
@@ -489,6 +488,15 @@
       }
     });
   </script>
-</body>
+    <!-- Add JavaScript to fix menu dropdown links -->
+    <script>
+      document.querySelectorAll('.menu-dropdown a').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && !href.startsWith('/') && !href.startsWith('http') && !href.startsWith('#')) {
+          link.href = '/' + href;
+        }
+      });
+    </script>
+  </body>
 </html>
 
