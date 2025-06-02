@@ -35,10 +35,11 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
   z-index: 100;
   background: var(--primary-bg);
   border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .logo {
@@ -69,14 +70,27 @@ body {
 
 .header-controls {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   position: relative;
+  align-items: center;
+  padding: 0 0.5rem;
 }
 
 .search-icon, .menu-icon {
   font-size: 1.2rem;
   cursor: pointer;
   color: var(--accent-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.search-icon:hover, .menu-icon:hover {
+  background-color: var(--bg-transparent);
 }
 
 /* Menu Dropdown */

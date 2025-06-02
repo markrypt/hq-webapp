@@ -1,15 +1,17 @@
-﻿<header class="header">  <div class="logo">
+﻿<header class="header">
+  <div class="logo">
     <a href="/">
       <img src="/assets/logo/logo.png" alt="Markrypt Logo" class="logo-image">
       <span class="company-name"><span class="mark">Mark</span><span class="krypt">rypt</span></span>
     </a>
   </div>
-  <div class="header-controls">    <div class="search-icon" aria-label="Search" onclick="if (window.searchManager && typeof window.searchManager.openSearchModal === 'function') { window.searchManager.openSearchModal(); } else { if (typeof initializeGlobalSearch === 'function') { initializeGlobalSearch(true); } else { console.error('Search initialization not available'); }}">
-      <i class="fas fa-search"></i>
-    </div>
+  <div class="header-controls">
+    <div class="search-icon" aria-label="Search" onclick="initializeSearch()">
+      <i class="fas fa-search"></i>    </div>
     <div class="menu-icon" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-label="Menu" onclick="toggleMenuDropdown()" onblur="closeMenuDropdown()">
       <i class="fas fa-bars"></i>
-      <div class="menu-dropdown" id="menuDropdown">        <div class="dropdown-title">Legal & Info</div>
+      <div class="menu-dropdown" id="menuDropdown">
+        <div class="dropdown-title">Legal & Info</div>
         <a href="/privacy">Privacy Policy</a>
         <a href="/terms">Terms of Use</a>
         <a href="/cookies">Cookie Policy</a>
@@ -19,4 +21,21 @@
     </div>
   </div>
 </header>
+<script>
+  function initializeSearch() {
+    if (window.searchManager && typeof window.searchManager.openSearchModal === 'function') {
+      window.searchManager.openSearchModal();
+    } else {
+      // Create new instance of SearchManager if it doesn't exist
+      if (!window.searchManager) {
+        window.searchManager = new SearchManager();
+        window.searchManager.init().then(() => {
+          window.searchManager.openSearchModal();
+        }).catch(err => {
+          console.error('Error initializing search:', err);
+        });
+      }
+    }
+  }
+</script>
 
