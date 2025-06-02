@@ -267,12 +267,20 @@
       if (currentNormalizedPath === '' || currentNormalizedPath === '/index') currentNormalizedPath = '/';
       if (!currentNormalizedPath.startsWith('/')) currentNormalizedPath = '/' + currentNormalizedPath;
 
+      // Fix menu dropdown links to use absolute paths
+      document.querySelectorAll('.menu-dropdown a').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && !href.startsWith('/') && !href.startsWith('http') && !href.startsWith('#')) {
+          link.href = '/' + href;
+        }
+      });
+
       const setActiveLink = (linkElement, hrefAttribute) => {
         if (!hrefAttribute || hrefAttribute === '#' || hrefAttribute.startsWith('mailto:') || hrefAttribute.startsWith('tel:')) {
           return;
         }
         try {
-          const linkUrl = new URL(hrefAttribute, window.location.href);
+          const linkUrl = new URL(hrefAttribute, window.location.origin);
           let linkNormalizedPath = linkUrl.pathname.replace(/\/?index\.html$/, '/').replace(/\.html$/, '');
           if (linkNormalizedPath !== '/' && linkNormalizedPath.endsWith('/')) {
             linkNormalizedPath = linkNormalizedPath.slice(0, -1);

@@ -436,6 +436,57 @@
       }
     });
   </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let pagePath = window.location.pathname;
+      let currentNormalizedPath = pagePath.replace(/\/?index\.html$/, '/').replace(/\.html$/, '');
+      if (currentNormalizedPath !== '/' && currentNormalizedPath.endsWith('/')) {
+        currentNormalizedPath = currentNormalizedPath.slice(0, -1);
+      }
+      if (currentNormalizedPath === '' || currentNormalizedPath === '/index') currentNormalizedPath = '/';
+      if (!currentNormalizedPath.startsWith('/')) currentNormalizedPath = '/' + currentNormalizedPath;
+
+      // Fix menu dropdown links to use absolute paths
+      document.querySelectorAll('.menu-dropdown a').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && !href.startsWith('/') && !href.startsWith('http') && !href.startsWith('#')) {
+          link.href = '/' + href;
+        }
+      });
+
+      const setActiveLink = (linkElement, hrefAttribute) => {
+        if (!hrefAttribute || hrefAttribute === '#' || hrefAttribute.startsWith('mailto:') || hrefAttribute.startsWith('tel:')) {
+          return;
+        }
+        try {
+          const linkUrl = new URL(hrefAttribute, window.location.origin);
+          let linkNormalizedPath = linkUrl.pathname.replace(/\/?index\.html$/, '/').replace(/\.html$/, '');
+          if (linkNormalizedPath !== '/' && linkNormalizedPath.endsWith('/')) {
+            linkNormalizedPath = linkNormalizedPath.slice(0, -1);
+          }
+          if (linkNormalizedPath === '' || linkNormalizedPath === '/index') linkNormalizedPath = '/';
+          if (!linkNormalizedPath.startsWith('/')) linkNormalizedPath = '/' + linkNormalizedPath;
+
+          if ((hrefAttribute === '../' || hrefAttribute === '../index' || hrefAttribute === '../index.html') && linkElement.closest('.logo')) {
+            linkNormalizedPath = '/';
+          }
+          
+          if (linkNormalizedPath === currentNormalizedPath) {
+            linkElement.classList.add('active');
+          } else {
+            linkElement.classList.remove('active');
+          }
+        } catch (e) {
+          console.error('Error processing link href:', hrefAttribute, e);
+        }
+      };
+
+      document.querySelectorAll('.header a, .menu-dropdown a').forEach(link => {
+        const href = link.getAttribute('href');
+        setActiveLink(link, href);
+      });
+    });
+  </script>
 </body>
 </html>
 
