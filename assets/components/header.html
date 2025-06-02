@@ -5,8 +5,7 @@
       <span class="company-name"><span class="mark">Mark</span><span class="krypt">rypt</span></span>
     </a>
   </div>
-  <div class="header-controls">
-    <div class="search-icon" aria-label="Search" onclick="if (window.searchManager && typeof window.searchManager.openSearchModal === 'function') { window.searchManager.openSearchModal(); } else { console.error('SearchManager not initialized'); }">
+  <div class="header-controls">    <div class="search-icon" aria-label="Search" onclick="if (window.searchManager && typeof window.searchManager.openSearchModal === 'function') { window.searchManager.openSearchModal(); } else { if (typeof initializeGlobalSearch === 'function') { initializeGlobalSearch(true); } else { console.error('Search initialization not available'); }}">
       <i class="fas fa-search"></i>
     </div>
     <div class="menu-icon" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-label="Menu" onclick="toggleMenuDropdown()" onblur="closeMenuDropdown()">

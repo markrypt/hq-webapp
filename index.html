@@ -1933,15 +1933,29 @@
   <!-- Navigation Placeholder - Will be populated by component-loader.js -->
   <div id="navigation-placeholder"></div>
   <script src="assets/js/products-data.js"></script>
+  <script>
+    // Initialize products data with all available products
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof productsData !== 'undefined') {
+        window.productsData = productsData;
+        console.log('Products data initialized:', window.productsData.length + ' products found');
+      } else {
+        console.error('Products data not loaded properly');
+      }
+    });
+  </script>
   <script src="assets/js/products-manager.js"></script>
   <script src="assets/js/search.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Remove hero button event listeners since we removed the hero section
+      // Initialize search functionality after products are loaded
+      if (typeof initializeSearchManager === 'function') {
+        initializeSearchManager();
+      }
     });
   </script>
   <!-- Consolidated optimized core script -->
-  <script src="assets/js/optimized-core.js"></script>  <!-- Component loader must be loaded after optimized-core.js -->
+  <script src="assets/js/optimized-core.js"></script>  
   <script src="assets/js/components-loader.js"></script>
   
   <!-- Service Worker Registration -->
