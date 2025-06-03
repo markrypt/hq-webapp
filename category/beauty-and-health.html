@@ -143,17 +143,16 @@
       padding: 1.5rem 0; /* Remove horizontal padding to match other pages */
     }    .product-main-content {
         width: 100%; /* Use full available width within parent's padding */
+        padding: 0 1.5rem; /* Add horizontal padding to match automotive.html */
         margin: 0 auto;
-    }    /* Override default grid to ensure 3-column layout for beauty & health */
+    }/* Override default grid to ensure 3-column layout for beauty & health */
     .product-grid {
       grid-template-columns: repeat(3, 1fr) !important;
       gap: 1.5rem;
       max-width: 1200px;
       margin: 1rem auto 0 auto;
       padding: 0 1.5rem;
-    }
-
-    /* Category layout styling */
+    }    /* Category layout styling */
     .category-header {
       text-align: left;
       margin-bottom: 2rem;
@@ -162,7 +161,7 @@
 
     .category-header h1 {
       font-size: 2rem;
-      font-weight: 600;
+      font-weight: 700; /* Changed from 600 to 700 for bolder appearance */
       color: var(--text-color);
       margin-bottom: 0.5rem;
     }
