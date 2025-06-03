@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Health & Beauty Products - Markrypt</title>
+  <title>Beauty & Health Products - Markrypt</title>
   <meta name="description" content="Shop a wide range of health and beauty products on Markrypt. Find vitamins, supplements, skincare, and personal wellness items.">
   <meta name="keywords" content="health products, beauty supplies, vitamins, supplements, skincare, personal wellness, Markrypt">
   <link rel="canonical" href="https://www.markrypt.com/category/beauty-and-health">
@@ -132,9 +132,7 @@
       font-weight: 700;
       padding: 0.5rem 1.2rem 0.2rem 1.2rem;
       letter-spacing: 0.03em;
-      pointer-events: none;    }
-    
-    .scrollable-content-area {
+      pointer-events: none;    }    .scrollable-content-area {
       position: absolute;
       top: 64px; /* Height of header */
       bottom: 60px; /* Height of navbar */
@@ -142,12 +140,14 @@
       right: 0;
       overflow-y: auto;
       background: var(--primary-bg);
-      padding: 1.5rem 0; /* Removed horizontal padding */
+      padding: 0;
     }
 
     .product-main-content {
-      width: 100%; /* Use full available width within parent's padding */
-      padding: 0 1.5rem;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem;
     }
 
     .navigation {
@@ -259,9 +259,9 @@
     .product-info h3 {
       font-size: 1rem;
       margin-bottom: 8px;
-      line-height: 1.4;
-      display: -webkit-box;
+      line-height: 1.4;      display: -webkit-box;
       -webkit-line-clamp: 2;
+      line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
@@ -311,12 +311,78 @@
         transform: translateX(-50%);
         border-radius: 8px 8px 0 0;
       }
-    }
-     @keyframes fadeIn {
+    }     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-  </head>
+
+    /* Category layout improvements */
+    .category-layout {
+      display: flex;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .category-sidebar {
+      flex: 0 0 280px;
+    }
+
+    .category-content {
+      flex: 1;
+      min-width: 0;
+    }    .category-header {
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+
+    .category-header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text-color);
+      margin-bottom: 0.5rem;
+    }    .category-header p {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 1024px) {
+      .category-layout {
+        flex-direction: column;
+      }
+
+      .category-sidebar {
+        flex: none;
+        width: 100%;
+      }
+      
+      .product-main-content {
+        padding: 1rem;
+      }
+      
+      .category-header h1 {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .category-header h1 {
+        font-size: 1.75rem;
+      }
+      
+      .category-header p {
+        font-size: 1rem;
+      }
+      
+      .category-layout {
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
 <body>  <div class="app-container">
     <div id="header-placeholder"></div>
     <div class="scrollable-content-area">
