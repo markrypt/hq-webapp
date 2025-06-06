@@ -3,17 +3,16 @@
 // Navigation Configuration - Update this to change navigation across all pages
 const NAVIGATION_CONFIG = {
     pages: [
-        { name: 'Home', url: 'index.html', hasDropdown: false },
-        { 
+        { name: 'Home', url: 'index.html', hasDropdown: false },        { 
             name: 'Surface', 
             url: 'surface.html', 
             hasDropdown: true,
             dropdownItems: [
-                { name: 'Surface Family', url: '#surface-family' },
-                { name: 'Surface Pro Family', url: '#surface-pro-family' },
-                { name: 'Surface Laptop Family', url: '#surface-laptop-family' },
-                { name: 'Surface Studio', url: '#surface-studio' },
-                { name: 'Surface Accessories', url: '#surface-accessories' }
+                { name: 'Surface Pro (13")', url: 'https://www.amazon.com/Microsoft-Surface-Touchscreen-Snapdragon-Platinum/dp/B0DZ5DBD83?th=1&linkCode=ll1&tag=1914061-20&linkId=599cff4e706175470ade009a76c8ea2e&language=en_US&ref_=as_li_ss_tl' },
+                { name: 'Surface Pro LTE', url: 'https://www.amazon.com/Microsoft-Surface-Touchscreen-Snapdragon-Exclusive/dp/B0CXKXNNPX?&linkCode=ll1&tag=1914061-20&linkId=439d5db5bf28e06a7dff13ae57a9a108&language=en_US&ref_=as_li_ss_tl' },
+                { name: 'Surface Pro OLED (13")', url: 'https://www.amazon.com/Microsoft-Touchscreen-Snapdragon-Connectivity-Platinum/dp/B0CXL11ZFD?th=1&linkCode=ll1&tag=1914061-20&linkId=043a184679692d6da4711eed6a3cc16c&language=en_US&ref_=as_li_ss_tl' },
+                { name: 'Surface Laptop (13.8")', url: 'https://www.amazon.com/Microsoft-Surface-Touchscreen-Snapdragon-Platinum/dp/B0DZBMVVLT?th=1&linkCode=ll1&tag=1914061-20&linkId=e7819f44b3390eb3e54d14d1d4579740&language=en_US&ref_=as_li_ss_tl' },
+                { name: 'Surface Laptop (15")', url: 'https://www.amazon.com/Microsoft-Surface-Touchscreen-Snapdragon-Platinum/dp/B0CXL1GV9Z?&linkCode=ll1&tag=1914061-20&linkId=cf3cdbd1839c9e470c46930d5949703b&language=en_US&ref_=as_li_ss_tl' }
             ]
         },
         { 
@@ -26,8 +25,14 @@ const NAVIGATION_CONFIG = {
                 { name: 'Compatibility on ARM', url: '#arm-compatibility' },
                 { name: 'Windows Features', url: '#windows-features' }
             ]
+        },        { 
+            name: 'Microsoft 365', 
+            url: 'microsoft365.html', 
+            hasDropdown: true,            dropdownItems: [                { name: 'Microsoft 365 Personal', url: 'https://www.amazon.com/Microsoft-Personal-12-month-subscription-Auto-renewal/dp/B07F3TQ6DQ?dib=eyJ2IjoiMSJ9.2odV9HvJ3U7EuRhxuAiX_lcOl39k0f_RrxRDjuGIH1nziAwSyNDwAk1yvwVzMin0Q3tAdx91XJpgczvl5wBXEiEj3MFe-2dlGvKW4JLeSyJ4ZCtnjj2q4GQe-RG3hU1jZQKCeSmLJz8ZiQWcEtTeHnSprPWCSZh9B-77cmXLjSg3u_Pt_66J-J7zLbLGUMdUR2OHEX1ftjpLqZW3Mtcbcj-gFHHINmyCQxrWkVeXXDc.pm7EtCRfWyEDn9B_26FEGUzEiOD17OgPsQ5ayGc3kXI&dib_tag=se&keywords=microsoft%2B365&qid=1749247839&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1&linkCode=ll1&tag=1914061-20&linkId=76ed3c9ab7c7dc05badd162e30ed0639&language=en_US&ref_=as_li_ss_tl' },
+                { name: 'Office Home 2024', url: 'https://www.amazon.com/Microsoft-Personal-12-month-subscription-Auto-renewal/dp/B0DGVQMGBB?dib=eyJ2IjoiMSJ9.2odV9HvJ3U7EuRhxuAiX_lcOl39k0f_RrxRDjuGIH1nziAwSyNDwAk1yvwVzMin0Q3tAdx91XJpgczvl5wBXEiEj3MFe-2dlGvKW4JLeSyJ4ZCtnjj2q4GQe-RG3hU1jZQKCeSmLJz8ZiQWcEtTeHnSprPWCSZh9B-77cmXLjSg3u_Pt_66J-J7zLbLGUMdUR2OHEX1ftjpLqZW3Mtcbcj-gFHHINmyCQxrWkVeXXDc.pm7EtCRfWyEDn9B_26FEGUzEiOD17OgPsQ5ayGc3kXI&dib_tag=se&keywords=microsoft%2B365&qid=1749247839&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1&linkCode=ll1&tag=1914061-20&linkId=196a53b9503e00e32a42cd2d64bed160&language=en_US&ref_=as_li_ss_tl' },                { name: 'Microsoft 365 Family', url: 'https://www.amazon.com/dp/B07F3SNQT5?th=1&linkCode=ll1&tag=1914061-20&linkId=06be7ec93dc67268fb43e0e72dfad4cd&language=en_US&ref_=as_li_ss_tl' },
+                { name: 'Microsoft 365 Business', url: 'https://www.amazon.com/Microsoft-Business-12-month-subscription-Download/dp/B07H5C1X31?crid=1YPNE46XYRBEV&dib=eyJ2IjoiMSJ9.bHXY403Zu5_fpPWrUPFzaPdjK3ciccS8a3iFLHrIsiVOPF7udv4PE_nkKwJGk05MAMAmzPKxsUFInd18O_RP_B9eAKQ9A5aZkZtWrqBhKIArx8xXl1I0wt3NE1lclGOUQR5FN_RrXl65tRsrCWN1eaW73Qmykg8UKJiTSouKFPZvo0GVQiHmXNuhY4AsMmSs-Cw0p4sNdoU_x2Edm6WeWB4u5lcTDfjnvLO1Yq0TpXY.Y-ZJHUaADTST8qjL81TC9x4SH1BX6iOSFeJlGdzC6D8&dib_tag=se&keywords=microsoft+365+business+standard&qid=1749248553&sprefix=microsoft+365+business%2Caps%2C181&sr=8-3&linkCode=ll1&tag=1914061-20&linkId=b9de40c7005dcf4d76e7780c288d9a1d&language=en_US&ref_=as_li_ss_tl' }
+            ]
         },
-        { name: 'Microsoft 365', url: 'microsoft365.html', hasDropdown: false },
         { 
             name: 'Deals', 
             url: 'deals.html', 

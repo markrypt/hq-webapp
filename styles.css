@@ -1418,6 +1418,32 @@ nav a.active {
     background-color: var(--white);
 }
 
+/* Utility classes for image display control */
+.image-cover {
+    background-size: cover !important;
+}
+
+.image-contain {
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
+}
+
+.image-fill {
+    background-size: 100% 100% !important;
+}
+
+.image-center {
+    background-position: center !important;
+}
+
+.image-top {
+    background-position: center top !important;
+}
+
+.image-bottom {
+    background-position: center bottom !important;
+}
+
 .big-squares-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1437,6 +1463,9 @@ nav a.active {
     transition: var(--transition);
     position: relative;
     overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .big-square-image::after {
@@ -1448,11 +1477,27 @@ nav a.active {
     color: #999;
     font-size: 1.2rem;
     font-weight: 500;
+    display: none;
 }
 
 .big-square-image:hover {
     transform: scale(1.02);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive image handling for big squares */
+@media (min-width: 1200px) {
+    .big-square-image[style*="background-image"] {
+        background-size: cover;
+        background-position: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .big-square-image[style*="background-image"] {
+        background-size: contain;
+        background-color: #f8f9fa;
+    }
 }
 
 .surface-section-title {
@@ -1486,6 +1531,9 @@ nav a.active {
     transition: var(--transition);
     position: relative;
     overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .wide-rectangle-image::after {
@@ -1497,11 +1545,50 @@ nav a.active {
     color: #999;
     font-size: 1.2rem;
     font-weight: 500;
+    display: none;
+}
+
+/* Hide "Image" text when background image is applied */
+.wide-rectangle-image[style*="background-image"]::after {
+    display: none;
 }
 
 .wide-rectangle-image:hover {
     transform: scale(1.02);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive image handling for better display across screen sizes */
+@media (min-width: 1200px) {
+    /* Large desktop: Use contain for better visibility of full image */
+    .wide-rectangle-image[style*="background-image"] {
+        background-size: contain;
+        background-color: #f8f9fa;
+    }
+}
+
+@media (max-width: 1199px) and (min-width: 992px) {
+    /* Medium desktop: Balanced approach */
+    .wide-rectangle-image[style*="background-image"] {
+        background-size: cover;
+        background-position: center top;
+    }
+}
+
+@media (max-width: 991px) and (min-width: 769px) {
+    /* Tablet: Cover with center positioning */
+    .wide-rectangle-image[style*="background-image"] {
+        background-size: cover;
+        background-position: center;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Mobile: Cover with slightly adjusted positioning */
+    .wide-rectangle-image[style*="background-image"] {
+        background-size: cover;
+        background-position: center center;
+    }
 }
 
 /* New 2x3 Laptop Grid Section */
@@ -1525,6 +1612,9 @@ nav a.active {
     transition: var(--transition);
     position: relative;
     overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .laptop-card-image::after {
@@ -1536,11 +1626,27 @@ nav a.active {
     color: #999;
     font-size: 1.2rem;
     font-weight: 500;
+    display: none;
 }
 
 .laptop-card-image:hover {
     transform: scale(1.02);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive image handling for laptop cards */
+@media (min-width: 1200px) {
+    .laptop-card-image[style*="background-image"] {
+        background-size: contain;
+        background-color: #f8f9fa;
+    }
+}
+
+@media (max-width: 768px) {
+    .laptop-card-image[style*="background-image"] {
+        background-size: cover;
+        background-position: center;
+    }
 }
 
 /* Surface Pro 2x2 Grid Section */
@@ -1556,7 +1662,7 @@ nav a.active {
     position: relative;
     width: 100%;
     height: 300px;
-    border-radius: 8px;
+    border-radius: 0;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -1578,22 +1684,212 @@ nav a.active {
     color: #666;
     font-size: 18px;
     font-weight: 500;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
 }
 
 .surface-pro-card-image::before {
     content: 'Image';
-    display: block;
+    display: none;
+}
+
+/* Hide "Image" text when background image is applied */
+.surface-pro-card-image[style*="background-image"]::before {
+    display: none;
+}
+
+/* Responsive image handling for surface pro cards */
+@media (min-width: 1200px) {
+    .surface-pro-card-image[style*="background-image"] {
+        background-size: contain;
+        background-color: #f8f9fa;
+    }
+}
+
+@media (max-width: 768px) {
+    .surface-pro-card-image[style*="background-image"] {
+        background-size: cover;
+        background-position: center;
+    }
 }
 
 /* Responsive adjustments for new grid sections */
 @media (max-width: 768px) {
-    .laptop-grid {
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(3, 1fr);
+    /* Main content section adjustments */
+    .main-content-section {
+        padding: 2rem 0 3rem;
     }
     
+    /* Big squares grid - stack vertically */
+    .big-squares-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
+    
+    /* Wide rectangles grid - stack vertically */
+    .wide-rectangles-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    /* Laptop 2x3 grid - single column */
+    .laptop-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(6, 1fr);
+        gap: 1.5rem;
+        margin-top: 3rem;
+    }
+    
+    /* Surface Pro 2x2 grid - single column */
     .surface-pro-grid {
         grid-template-columns: 1fr;
-        grid-template-rows: repeat(2, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        gap: 1.5rem;
+        margin-top: 3rem;
+    }
+    
+    /* Section title adjustments */
+    .surface-section-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        line-height: 1.3;
+    }
+    
+    .surface-section-title:not(:first-of-type) {
+        margin-top: 3rem;
+    }
+    
+    /* Card container height adjustments for mobile */
+    .laptop-card-container,
+    .surface-pro-card-container {
+        height: 250px;
+    }
+    
+    .wide-rectangle-container {
+        height: 250px;
+    }
+}
+
+/* Additional mobile optimizations for smaller screens */
+@media (max-width: 576px) {
+    /* Further reduce section spacing */
+    .main-content-section {
+        padding: 1.5rem 0 2rem;
+    }
+    
+    /* Smaller titles for very small screens */
+    .surface-section-title {
+        font-size: 1.75rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .surface-section-title:not(:first-of-type) {
+        margin-top: 2.5rem;
+    }
+    
+    /* Reduce card heights for small screens */
+    .laptop-card-container,
+    .surface-pro-card-container,
+    .wide-rectangle-container {
+        height: 200px;
+    }
+    
+    /* Reduce gaps for tighter layout */
+    .big-squares-grid,
+    .wide-rectangles-grid,    .laptop-grid,
+    .surface-pro-grid {
+        gap: 1rem;
+    }
+}
+
+/* Microsoft 365 License Option Styles */
+.license-option {
+    margin-bottom: 2.5rem;
+}
+
+.license-container {
+    display: flex;
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.license-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.license-image {
+    flex: 0 0 40%;
+    max-width: 40%;
+}
+
+.license-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.license-details {
+    flex: 0 0 60%;
+    padding: 2rem;
+}
+
+.license-audience {
+    color: var(--primary-color);
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.license-title {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    color: var(--secondary-color);
+}
+
+.license-description {
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.cta-button:hover {
+    background-color: #3b78e0;
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+/* Responsive styles for license options */
+@media (max-width: 768px) {
+    .license-container {
+        flex-direction: column;
+    }
+    
+    .license-image {
+        flex: 0 0 100%;
+        max-width: 100%;
+        height: 200px;
+    }
+    
+    .license-details {
+        flex: 0 0 100%;
+        padding: 1.5rem;
     }
 }
