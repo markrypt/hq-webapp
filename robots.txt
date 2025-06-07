@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+Sitemap: https://markrypt.com/sitemap.xml
+
+# Allow all crawlers
+User-agent: *
+Disallow:
+
+# Allow Google crawlers with higher crawl rate
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Allow Bing crawlers
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2

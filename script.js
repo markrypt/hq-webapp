@@ -1,4 +1,19 @@
-// Script.js for Marketing Grid Website
+// Script.js for Marketing Grid Website - SEO Optimized
+
+// Add JSON-LD structured data for SEO
+function addStructuredDataNavigation() {
+    const navData = {
+        "@context": "https://schema.org",
+        "@type": "SiteNavigationElement",
+        "name": NAVIGATION_CONFIG.pages.map(page => page.name),
+        "url": NAVIGATION_CONFIG.pages.map(page => `https://markrypt.com/${page.url}`)
+    };
+    
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.innerHTML = JSON.stringify(navData);
+    document.head.appendChild(script);
+}
 
 // Navigation Configuration - Update this to change navigation across all pages
 const NAVIGATION_CONFIG = {
@@ -241,6 +256,16 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Set up mobile navigation after generation
     setupMobileNavigation();
+    
+    // Add structured data for SEO
+    addStructuredDataNavigation();
+    
+    // Add alt text to images for SEO
+    document.querySelectorAll('img:not([alt])').forEach(img => {
+        const pathParts = img.src.split('/');
+        const fileName = pathParts[pathParts.length - 1].split('.')[0];
+        img.alt = fileName.replace(/-/g, ' ').replace(/_/g, ' ');
+    });
     
     // Add smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
