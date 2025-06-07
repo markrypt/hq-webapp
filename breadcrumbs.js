@@ -10,7 +10,11 @@ const BREADCRUMB_CONFIG = {
     'gaming': { path: '/gaming', title: 'Gaming', parent: '/' },
     'deals': { path: '/deals', title: 'Deals', parent: '/' },
     'sitemap': { path: '/sitemap', title: 'Sitemap', parent: '/' },
-    '404': { path: '/404', title: 'Page Not Found', parent: '/' }
+    '404': { path: '/404', title: 'Page Not Found', parent: '/' },
+    'privacy': { path: '/privacy', title: 'Privacy Policy', parent: '/' },
+    'terms': { path: '/terms', title: 'Terms of Use', parent: '/' },
+    'cookies': { path: '/cookies', title: 'Cookie Policy', parent: '/' },
+    'accessibility': { path: '/accessibility', title: 'Accessibility', parent: '/' }
 };
 
 // Function to generate breadcrumb HTML and JSON-LD

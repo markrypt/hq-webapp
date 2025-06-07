@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessibility | Markrypt</title>
+    <meta name="description" content="Markrypt's commitment to digital accessibility and compliance with web accessibility standards.">
+    <meta name="keywords" content="Accessibility, Web Accessibility, WCAG, ADA Compliance, Inclusive Design, Digital Accessibility">
+    <meta name="author" content="Markrypt">
+    <meta property="og:title" content="Accessibility | Markrypt">
+    <meta property="og:description" content="Learn about Markrypt's commitment to digital accessibility and our ongoing efforts to ensure our website is accessible to all users.">
+    <meta property="og:image" content="assets/mainpage/logo/logo.png">
+    <meta property="og:url" content="https://markrypt.com/accessibility">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Accessibility | Markrypt">
+    <meta name="twitter:description" content="Learn about Markrypt's commitment to digital accessibility and our ongoing efforts to ensure our website is accessible to all users.">
+    <link rel="canonical" href="https://markrypt.com/accessibility">
+    <link rel="icon" href="assets/mainpage/logo/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .accessibility-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        
+        .accessibility-content h1 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .accessibility-content h2 {
+            color: var(--primary-color);
+            margin: 2rem 0 1rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+        
+        .accessibility-content p, .accessibility-content ul {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .accessibility-content ul {
+            padding-left: 2rem;
+        }
+        
+        .accessibility-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .keyboard-shortcuts {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        
+        .keyboard-shortcuts h3 {
+            margin-top: 0;
+            color: var(--secondary-color);
+        }
+        
+        .shortcut {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .shortcut:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .key {
+            background-color: #eee;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-family: monospace;
+            margin: 0 0.25rem;
+        }
+        
+        .last-updated {
+            font-style: italic;
+            color: #666;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="modern-header">
+        <div class="container">
+            <div class="logo">
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav id="mobileNav">
+            </nav>
+            
+            <nav class="desktop-nav" id="desktopNav">
+            </nav>
+        </div>
+    </header>
+    
+    <div class="menu-overlay" id="menuOverlay"></div>
+    
+    <section class="main-content-section">
+        <div class="container">
+            <div class="accessibility-content">
+                <h1>Accessibility Statement</h1>
+                
+                <p>Markrypt is committed to ensuring digital accessibility for people with disabilities. We are continually improving the user experience for everyone, and applying the relevant accessibility standards.</p>
+                
+                <h2>Conformance status</h2>
+                
+                <p>The Web Content Accessibility Guidelines (WCAG) defines requirements for designers and developers to improve accessibility for people with disabilities. It defines three levels of conformance: Level A, Level AA, and Level AAA. Markrypt is partially conformant with WCAG 2.1 level AA. Partially conformant means that some parts of the content do not fully conform to the accessibility standard.</p>
+                
+                <h2>Compatibility with browsers and assistive technology</h2>
+                
+                <p>Markrypt is designed to be compatible with the following assistive technologies:</p>
+                
+                <ul>
+                    <li>Screen readers including JAWS, NVDA, VoiceOver, and TalkBack</li>
+                    <li>Screen magnification software</li>
+                    <li>Speech recognition software</li>
+                    <li>Keyboard-only navigation</li>
+                </ul>
+                
+                <p>Our website is compatible with recent versions of:</p>
+                
+                <ul>
+                    <li>Chrome and Chrome for Android</li>
+                    <li>Firefox</li>
+                    <li>Safari and iOS Safari</li>
+                    <li>Edge</li>
+                </ul>
+                
+                <h2>Technical specifications</h2>
+                
+                <p>Accessibility of Markrypt relies on the following technologies to work with the particular combination of web browser and any assistive technologies or plugins installed on your computer:</p>
+                
+                <ul>
+                    <li>HTML</li>
+                    <li>WAI-ARIA</li>
+                    <li>CSS</li>
+                    <li>JavaScript</li>
+                </ul>
+                
+                <p>These technologies are relied upon for conformance with the accessibility standards used.</p>
+                
+                <h2>Accessibility features</h2>
+                
+                <p>Markrypt includes the following accessibility features:</p>
+                
+                <ul>
+                    <li>Semantic HTML: We use appropriate HTML elements to ensure content structure is conveyed to assistive technology.</li>
+                    <li>ARIA landmarks: We use ARIA landmark roles to help users navigate the site.</li>
+                    <li>Accessible forms: Our forms include proper labels and error messages.</li>
+                    <li>Keyboard accessibility: All interactive elements are accessible using a keyboard.</li>
+                    <li>Text alternatives: We provide text alternatives for non-text content.</li>
+                    <li>Color contrast: We strive for WCAG AA compliant contrast ratios.</li>
+                    <li>Resizable text: The website supports standard zoom functionality and text resizing without loss of content or functionality.</li>
+                    <li>Focus indicators: Visible focus indicators are provided for keyboard users.</li>
+                </ul>
+                
+                <div class="keyboard-shortcuts">
+                    <h3>Keyboard shortcuts</h3>
+                    <p>The following keyboard shortcuts are available throughout the site:</p>
+                    
+                    <div class="shortcut">
+                        <span>Skip to main content:</span>
+                        <span><span class="key">Tab</span> (when page loads)</span>
+                    </div>
+                    
+                    <div class="shortcut">
+                        <span>Navigate to links and interactive elements:</span>
+                        <span><span class="key">Tab</span></span>
+                    </div>
+                    
+                    <div class="shortcut">
+                        <span>Go back to previous element:</span>
+                        <span><span class="key">Shift</span> + <span class="key">Tab</span></span>
+                    </div>
+                    
+                    <div class="shortcut">
+                        <span>Activate a link or button:</span>
+                        <span><span class="key">Enter</span> or <span class="key">Space</span></span>
+                    </div>
+                    
+                    <div class="shortcut">
+                        <span>Navigate dropdown menus:</span>
+                        <span><span class="key">Arrow</span> keys</span>
+                    </div>
+                </div>
+                
+                <h2>Limitations and alternatives</h2>
+                
+                <p>Despite our best efforts to ensure accessibility of Markrypt, there may be some limitations. Below is a description of known limitations, and potential solutions.</p>
+                
+                <p>Some documents are provided in PDF format. We're working to make all documents accessible, but if you encounter an inaccessible PDF, please <a href="mailto:accessibility@markrypt.com">contact us</a> and we'll provide the information in an alternative format.</p>
+                
+                <h2>Assessment approach</h2>
+                
+                <p>Markrypt has assessed the accessibility of this website by the following approaches:</p>
+                
+                <ul>
+                    <li>Self-evaluation: Our development team regularly evaluates our website against WCAG 2.1 standards.</li>
+                    <li>External evaluation: We work with external accessibility consultants to conduct periodic audits of our site.</li>
+                </ul>
+                
+                <h2>Feedback</h2>
+                
+                <p>We welcome your feedback on the accessibility of Markrypt. Please let us know if you encounter accessibility barriers:</p>
+                
+                <p>
+                Phone: (800) 123-4567<br>
+                Email: <a href="mailto:accessibility@markrypt.com">accessibility@markrypt.com</a><br>
+                Visitor address: 123 Tech Plaza, Innovation City, CA 94100<br>
+                Postal address: PO Box 12345, Innovation City, CA 94100
+                </p>
+                
+                <p>We try to respond to feedback within 5 business days.</p>
+                
+                <h2>Our ongoing efforts</h2>
+                
+                <p>At Markrypt, we are committed to making our website accessible to all users and are continuously working to improve the accessibility and usability of our site. Our ongoing efforts include:</p>
+                
+                <ul>
+                    <li>Training our staff about accessibility</li>
+                    <li>Including accessibility as part of our internal policies</li>
+                    <li>Involving users with disabilities in our testing processes</li>
+                    <li>Regularly reviewing and updating our website to improve accessibility</li>
+                </ul>
+                
+                <p class="last-updated">Last Updated: June 7, 2025</p>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="/surface">Surface</a>
+                    <a href="/windows11">Windows 11</a>
+                    <a href="/microsoft365">Microsoft 365</a>
+                    <a href="/gaming">Gaming</a>
+                    <a href="/deals">Deals</a>
+                    <a href="/sitemap">Sitemap</a>
+                </div>
+                <div class="footer-legal">
+                    <a href="/privacy">Privacy Policy</a>
+                    <a href="/terms">Terms of Use</a>
+                    <a href="/cookies">Cookie Policy</a>
+                    <a href="/accessibility">Accessibility</a>
+                </div>
+                <p>&copy; 2025 Markrypt. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="breadcrumbs.js"></script>
+</body>
+</html>

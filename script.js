@@ -55,9 +55,7 @@ const NAVIGATION_CONFIG = {
                 { name: 'Surface Deals', url: 'deals#surface-deals' },
                 { name: 'Microsoft 365 Deals', url: 'deals#office-deals' }
             ]
-        },
-        { name: 'Gaming', url: 'gaming', hasDropdown: false },
-        { name: 'Sitemap', url: 'sitemap', hasDropdown: false }
+        },        { name: 'Gaming', url: 'gaming', hasDropdown: false }
     ]
 };
 
