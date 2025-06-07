@@ -14,8 +14,7 @@
     <link rel="canonical" href="https://markrypt.com">
     <link rel="icon" href="assets/mainpage/logo/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script type="application/ld+json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">    <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Organization",
@@ -27,6 +26,62 @@
         "https://twitter.com/markrypt",
         "https://www.linkedin.com/company/markrypt",
         "https://www.facebook.com/markrypt"
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Markrypt",
+      "url": "https://markrypt.com",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://markrypt.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "itemListElement": [
+        {
+          "@type": "SiteNavigationElement",
+          "position": 1,
+          "name": "Surface",
+          "description": "Microsoft Surface Copilot+ PCs, 2-in-1 laptops & tablets",
+          "url": "https://markrypt.com/surface"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 2,
+          "name": "Windows 11",
+          "description": "Windows 11 with Copilot AI integration for personal computing",
+          "url": "https://markrypt.com/windows11"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 3,
+          "name": "Microsoft 365",
+          "description": "Microsoft 365 subscription plans & Office licenses",
+          "url": "https://markrypt.com/microsoft365"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 4,
+          "name": "Gaming",
+          "description": "Gaming on Windows with DirectX technology & Xbox Game Pass",
+          "url": "https://markrypt.com/gaming"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 5,
+          "name": "Deals",
+          "description": "Microsoft deals on Surface, Windows & Microsoft 365",
+          "url": "https://markrypt.com/deals"
+        }
       ]
     }
     </script>
@@ -59,24 +114,26 @@
                 </div>
             </div>
         </div>
-    </section>
-
-    <section id="solutions" class="image-showcase-section">
-        <div class="container">            <div class="image-grid"><div class="image-row">                    <a href="surface" class="squared-image-container">
+    </section>    <section id="solutions" class="image-showcase-section">
+        <div class="container">
+            <h2 class="section-title">Featured Microsoft Products</h2>
+            <div class="image-grid"><div class="image-row">                    
+                    <a href="surface" class="squared-image-container" aria-label="Explore Microsoft Surface devices">
                         <div class="squared-image" style="background-image: url('assets/mainpage/Microsoft Surface.jpeg'); background-size: cover; background-position: center;"></div>
                         <h3>Microsoft Surface</h3>
                     </a>
-                    <a href="windows11" class="squared-image-container">
+                    <a href="windows11" class="squared-image-container" aria-label="Learn about Windows 11">
                         <div class="squared-image" style="background-image: url('assets/mainpage/Windows 11.jpg'); background-size: cover; background-position: center;"></div>
                         <h3>Windows 11</h3>
                     </a>
-                </div>                <a href="microsoft365" class="wide-image-container">
+                </div>                
+                <a href="microsoft365" class="wide-image-container" aria-label="Explore Microsoft 365 subscription options">
                     <div class="wide-image" style="background-image: url('assets/mainpage/microsoft365.jpg'); background-size: cover; background-position: center;"></div>
                     <h3>Microsoft 365</h3>
                 </a>
             </div>
         </div>
-    </section>    <section id="categories" class="categories-section">
+    </section><section id="categories" class="categories-section">
         <div class="container">            <h2 class="section-title">Shop by Category</h2>            <div class="categories-grid">                <a href="windows11" class="squared-image-container">
                     <div class="squared-image" style="background-image: url('assets/mainpage/windows11.png'); background-size: cover; background-position: center;"></div>
                     <h3>Windows PC</h3>
@@ -93,13 +150,21 @@
             </div>
         </div>
     </section>
-    
-    <footer>
+      <footer>
         <div class="container">
-            <p>&copy; 2025 Markrypt. All Rights Reserved.</p>
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="/surface">Surface</a>
+                    <a href="/windows11">Windows 11</a>
+                    <a href="/microsoft365">Microsoft 365</a>
+                    <a href="/gaming">Gaming</a>
+                    <a href="/deals">Deals</a>
+                    <a href="/sitemap">Sitemap</a>
+                </div>
+                <p>&copy; 2025 Markrypt. All Rights Reserved.</p>
+            </div>
         </div>
-    </footer>
-
-    <script src="script.js"></script>
+    </footer><script src="script.js"></script>
+    <script src="breadcrumbs.js"></script>
 </body>
 </html>

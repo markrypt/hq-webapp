@@ -6,7 +6,7 @@ function addStructuredDataNavigation() {
         "@context": "https://schema.org",
         "@type": "SiteNavigationElement",
         "name": NAVIGATION_CONFIG.pages.map(page => page.name),
-        "url": NAVIGATION_CONFIG.pages.map(page => `https://markrypt.com/${page.url}`)
+        "url": NAVIGATION_CONFIG.pages.map(page => `https://markrypt.com${page.url === '/' ? '' : '/'}${page.url}`)
     };
     
     const script = document.createElement('script');
@@ -18,9 +18,9 @@ function addStructuredDataNavigation() {
 // Navigation Configuration - Update this to change navigation across all pages
 const NAVIGATION_CONFIG = {
     pages: [
-        { name: 'Home', url: 'index.html', hasDropdown: false },        { 
+        { name: 'Home', url: '/', hasDropdown: false },        { 
             name: 'Surface', 
-            url: 'surface.html', 
+            url: 'surface', 
             hasDropdown: true,
             dropdownItems: [
                 { name: 'Surface Pro (13")', url: 'https://www.amazon.com/Microsoft-Surface-Touchscreen-Snapdragon-Platinum/dp/B0DZ5DBD83?th=1&linkCode=ll1&tag=1914061-20&linkId=599cff4e706175470ade009a76c8ea2e&language=en_US&ref_=as_li_ss_tl' },
@@ -32,34 +32,32 @@ const NAVIGATION_CONFIG = {
         },
         { 
             name: 'Windows 11', 
-            url: 'windows11.html', 
+            url: 'windows11', 
             hasDropdown: true,
-            dropdownItems: [
-                { name: 'Discover Windows 11', url: '#discover-windows11' },
-                { name: 'Windows Copilot+ PCs', url: '#copilot-pcs' },
-                { name: 'Compatibility on ARM', url: '#arm-compatibility' },
-                { name: 'Windows Features', url: '#windows-features' }
+            dropdownItems: [                { name: 'Discover Windows 11', url: 'windows11#discover-windows11' },
+                { name: 'Windows Copilot+ PCs', url: 'windows11#copilot-pcs' },
+                { name: 'Compatibility on ARM', url: 'windows11#arm-compatibility' },
+                { name: 'Windows Features', url: 'windows11#windows-features' }
             ]
         },        { 
             name: 'Microsoft 365', 
-            url: 'microsoft365.html', 
-            hasDropdown: true,            dropdownItems: [                { name: 'Microsoft 365 Personal', url: 'https://www.amazon.com/Microsoft-Personal-12-month-subscription-Auto-renewal/dp/B07F3TQ6DQ?dib=eyJ2IjoiMSJ9.2odV9HvJ3U7EuRhxuAiX_lcOl39k0f_RrxRDjuGIH1nziAwSyNDwAk1yvwVzMin0Q3tAdx91XJpgczvl5wBXEiEj3MFe-2dlGvKW4JLeSyJ4ZCtnjj2q4GQe-RG3hU1jZQKCeSmLJz8ZiQWcEtTeHnSprPWCSZh9B-77cmXLjSg3u_Pt_66J-J7zLbLGUMdUR2OHEX1ftjpLqZW3Mtcbcj-gFHHINmyCQxrWkVeXXDc.pm7EtCRfWyEDn9B_26FEGUzEiOD17OgPsQ5ayGc3kXI&dib_tag=se&keywords=microsoft%2B365&qid=1749247839&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1&linkCode=ll1&tag=1914061-20&linkId=76ed3c9ab7c7dc05badd162e30ed0639&language=en_US&ref_=as_li_ss_tl' },
+            url: 'microsoft365', 
+            hasDropdown: true,dropdownItems: [                { name: 'Microsoft 365 Personal', url: 'https://www.amazon.com/Microsoft-Personal-12-month-subscription-Auto-renewal/dp/B07F3TQ6DQ?dib=eyJ2IjoiMSJ9.2odV9HvJ3U7EuRhxuAiX_lcOl39k0f_RrxRDjuGIH1nziAwSyNDwAk1yvwVzMin0Q3tAdx91XJpgczvl5wBXEiEj3MFe-2dlGvKW4JLeSyJ4ZCtnjj2q4GQe-RG3hU1jZQKCeSmLJz8ZiQWcEtTeHnSprPWCSZh9B-77cmXLjSg3u_Pt_66J-J7zLbLGUMdUR2OHEX1ftjpLqZW3Mtcbcj-gFHHINmyCQxrWkVeXXDc.pm7EtCRfWyEDn9B_26FEGUzEiOD17OgPsQ5ayGc3kXI&dib_tag=se&keywords=microsoft%2B365&qid=1749247839&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1&linkCode=ll1&tag=1914061-20&linkId=76ed3c9ab7c7dc05badd162e30ed0639&language=en_US&ref_=as_li_ss_tl' },
                 { name: 'Office Home 2024', url: 'https://www.amazon.com/Microsoft-Personal-12-month-subscription-Auto-renewal/dp/B0DGVQMGBB?dib=eyJ2IjoiMSJ9.2odV9HvJ3U7EuRhxuAiX_lcOl39k0f_RrxRDjuGIH1nziAwSyNDwAk1yvwVzMin0Q3tAdx91XJpgczvl5wBXEiEj3MFe-2dlGvKW4JLeSyJ4ZCtnjj2q4GQe-RG3hU1jZQKCeSmLJz8ZiQWcEtTeHnSprPWCSZh9B-77cmXLjSg3u_Pt_66J-J7zLbLGUMdUR2OHEX1ftjpLqZW3Mtcbcj-gFHHINmyCQxrWkVeXXDc.pm7EtCRfWyEDn9B_26FEGUzEiOD17OgPsQ5ayGc3kXI&dib_tag=se&keywords=microsoft%2B365&qid=1749247839&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1&linkCode=ll1&tag=1914061-20&linkId=196a53b9503e00e32a42cd2d64bed160&language=en_US&ref_=as_li_ss_tl' },                { name: 'Microsoft 365 Family', url: 'https://www.amazon.com/dp/B07F3SNQT5?th=1&linkCode=ll1&tag=1914061-20&linkId=06be7ec93dc67268fb43e0e72dfad4cd&language=en_US&ref_=as_li_ss_tl' },
                 { name: 'Microsoft 365 Business', url: 'https://www.amazon.com/Microsoft-Business-12-month-subscription-Download/dp/B07H5C1X31?crid=1YPNE46XYRBEV&dib=eyJ2IjoiMSJ9.bHXY403Zu5_fpPWrUPFzaPdjK3ciccS8a3iFLHrIsiVOPF7udv4PE_nkKwJGk05MAMAmzPKxsUFInd18O_RP_B9eAKQ9A5aZkZtWrqBhKIArx8xXl1I0wt3NE1lclGOUQR5FN_RrXl65tRsrCWN1eaW73Qmykg8UKJiTSouKFPZvo0GVQiHmXNuhY4AsMmSs-Cw0p4sNdoU_x2Edm6WeWB4u5lcTDfjnvLO1Yq0TpXY.Y-ZJHUaADTST8qjL81TC9x4SH1BX6iOSFeJlGdzC6D8&dib_tag=se&keywords=microsoft+365+business+standard&qid=1749248553&sprefix=microsoft+365+business%2Caps%2C181&sr=8-3&linkCode=ll1&tag=1914061-20&linkId=b9de40c7005dcf4d76e7780c288d9a1d&language=en_US&ref_=as_li_ss_tl' }
-            ]
-        },
+            ]        },
         { 
             name: 'Deals', 
-            url: 'deals.html', 
+            url: 'deals', 
             hasDropdown: true,
-            dropdownItems: [
-                { name: 'Windows Deals', url: '#windows-deals' },
-                { name: 'Gaming Deals', url: '#gaming-deals' },
-                { name: 'Surface Deals', url: '#surface-deals' },
-                { name: 'Microsoft 365 Deals', url: '#office-deals' }
+            dropdownItems: [                { name: 'Windows Deals', url: 'deals#windows-deals' },
+                { name: 'Gaming Deals', url: 'deals#gaming-deals' },
+                { name: 'Surface Deals', url: 'deals#surface-deals' },
+                { name: 'Microsoft 365 Deals', url: 'deals#office-deals' }
             ]
         },
-        { name: 'Gaming', url: 'gaming.html', hasDropdown: false }
+        { name: 'Gaming', url: 'gaming', hasDropdown: false },
+        { name: 'Sitemap', url: 'sitemap', hasDropdown: false }
     ]
 };
 
@@ -68,7 +66,7 @@ function generateLogo() {
     const logoContainer = document.querySelector('.logo');
     if (logoContainer) {
         logoContainer.innerHTML = `
-            <a href="index.html">
+            <a href="/">
                 <img src="assets/mainpage/logo/logo.png" alt="Markrypt Logo" class="logo-image">
                 <h1 class="company-name">Mar<span class="k-blue">k</span><span>rypt</span></h1>
             </a>
@@ -78,7 +76,10 @@ function generateLogo() {
 
 // Function to generate navigation HTML
 function generateNavigation() {
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    // Get current path and transform for clean URL comparison
+    let currentPath = window.location.pathname.split('/').pop();
+    // Handle root path specially
+    const currentPage = currentPath ? (currentPath.includes('.html') ? currentPath : currentPath) : '/';
       // Generate Mobile Navigation
     const mobileNavContainer = document.getElementById('mobileNav');
     if (mobileNavContainer) {
