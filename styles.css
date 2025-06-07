@@ -1025,6 +1025,63 @@ nav a.active {
     padding-top: 90px;
 }
 
+/* Windows 11 Hero Section Styles */
+.windows11-hero {
+    background: #ffffff;
+    color: #333333;
+    padding: 3rem 0 0;
+    text-align: center;
+}
+
+.windows11-hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1400px; /* Increased from 900px to match the image container width */
+    margin: 0 auto;
+}
+
+.windows11-hero-content h1 {
+    color: #0078d4;
+    font-size: 3.4rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: 700;
+}
+
+.windows11-hero-content p {
+    color: #666666;
+    font-size: 1.3rem;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    max-width: 800px;
+    text-align: center;
+}
+
+.windows11-hero .hero-buttons {
+    margin-bottom: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.windows11-hero-image {
+    width: 100%;
+    max-width: 1400px; /* Increased further to make it even wider */
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.1);
+}
+
+.win11-hero-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-height: 450px; /* Reduced height to create a wider aspect ratio */
+    object-fit: cover; /* Ensures image fills the container while maintaining aspect ratio */
+}
+
 .hero-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1260,6 +1317,35 @@ nav a.active {
       .hero-section {
         padding: 90px 0 3rem 0;
         margin-top: -90px;
+    }
+      /* Windows 11 Hero Section mobile styles */
+    .windows11-hero {
+        padding: 100px 0 0 0;
+    }
+    
+    .windows11-hero-content h1 {
+        font-size: 2.2rem;
+        margin-bottom: 1.2rem;
+    }
+    
+    .windows11-hero-content p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        padding: 0 1.5rem;
+    }
+    
+    .windows11-hero .hero-buttons {
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 2.5rem;
+        padding: 0 1.5rem;
+    }    .windows11-hero-image {
+        border-radius: 8px 8px 0 0;
+        max-width: 98%; /* Increased from 95% to take up more width */
+    }
+    
+    .win11-hero-img {
+        max-height: 250px; /* Further reduced height for mobile to create an even wider aspect ratio */
     }
     
     /* Mobile grid styles */
@@ -1967,4 +2053,324 @@ footer p {
     text-align: center;
     font-size: 0.9rem;
     color: #aaa;
+}
+
+/* Windows 11 Features Section */
+.win11-features-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1rem;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #0078d4;
+    margin-bottom: 1rem;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #666;
+}
+
+.win11-features-grid {
+    display: grid;
+    grid-template-columns: 60% 38%;
+    gap: 2%;
+    margin-bottom: 4rem;
+}
+
+.feature-card {
+    background: #f9f9f9;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.feature-card-large {
+    height: 520px;
+}
+
+.feature-card-medium {
+    height: 520px;
+}
+
+.feature-image {
+    height: 60%;
+    overflow: hidden;
+}
+
+.feature-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.feature-card:hover .feature-image img {
+    transform: scale(1.03);
+}
+
+.feature-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    height: 40%;
+}
+
+.feature-content h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.8rem;
+}
+
+.feature-content p {
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 1.2rem;
+    flex-grow: 1;
+}
+
+.learn-more-link {
+    color: #0078d4;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.2s ease;
+}
+
+.feature-card:hover .learn-more-link {
+    color: #005a9e;
+}
+
+.learn-more-link::after {
+    content: '→';
+    margin-left: 5px;
+    transition: transform 0.2s ease;
+}
+
+.feature-card:hover .learn-more-link::after {
+    transform: translateX(3px);
+}
+
+/* Windows 11 2x2 Feature Grid */
+.win11-subheader {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.win11-grid-features {
+    margin-bottom: 5rem;
+}
+
+.win11-features-grid-2x2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.win11-feature-card {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+    position: relative;
+}
+
+.feature-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0078d4, #106ebe);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    color: white;
+    font-size: 1.6rem;
+    box-shadow: 0 8px 16px rgba(0, 104, 189, 0.2);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.feature-icon::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.3), transparent 70%);
+    opacity: 0.8;
+    z-index: 1;
+}
+
+.feature-icon::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), transparent);
+    border-radius: 50% 50% 0 0;
+    z-index: 2;
+}
+
+.win11-feature-card:hover .feature-icon {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 20px rgba(0, 120, 212, 0.35);
+    background: linear-gradient(135deg, #0078d4, #0091ff);
+}
+
+.win11-feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+.win11-feature-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: #f0f9ff;
+    border-radius: 50%;
+    margin-bottom: 1.5rem;
+    color: #0078d4;
+    font-size: 1.5rem;
+}
+
+.win11-feature-content h4 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.win11-feature-content p {
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+/* Microsoft Products 3-in-a-row Cards */
+.microsoft-products-row {
+    margin-bottom: 5rem;
+}
+
+.microsoft-products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.ms-product-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+}
+
+.ms-product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.ms-product-image {
+    height: 200px;
+    overflow: hidden;
+}
+
+.ms-product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.ms-product-card:hover .ms-product-image img {
+    transform: scale(1.05);
+}
+
+.ms-product-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.ms-product-content h4 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    color: #0078d4;
+}
+
+.ms-product-content p {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+/* Responsive Styles for 3-in-a-row */
+@media (max-width: 992px) {
+    .microsoft-products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .microsoft-products-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .ms-product-image {
+        height: 180px;
+    }
 }
