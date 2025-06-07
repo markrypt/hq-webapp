@@ -1,37 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://markrypt.com/index.html</loc>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">  <url>
+    <loc>https://markrypt.com/</loc>
     <lastmod>2025-06-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://markrypt.com/surface.html</loc>
+  </url>  <url>
+    <loc>https://markrypt.com/surface</loc>
     <lastmod>2025-06-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://markrypt.com/windows11.html</loc>
+    <loc>https://markrypt.com/windows11</loc>
     <lastmod>2025-06-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://markrypt.com/microsoft365.html</loc>
+    <loc>https://markrypt.com/microsoft365</loc>
     <lastmod>2025-06-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://markrypt.com/gaming.html</loc>
+    <loc>https://markrypt.com/gaming</loc>
     <lastmod>2025-06-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://markrypt.com/deals.html</loc>
+    <loc>https://markrypt.com/deals</loc>
     <lastmod>2025-06-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
