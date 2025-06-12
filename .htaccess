@@ -59,8 +59,8 @@ RewriteRule ^(.*)$ $1.html [NC,L]
 # Add sitemap.xml to XML mime type
 AddType application/xml .xml
 
-# Add sitemap.html to sitemap URL
-RewriteRule ^sitemap$ sitemap.html [L]
+# Add site-map-page.html to sitemap URL
+RewriteRule ^sitemap$ site-map-page.html [L]
 
 # Custom error pages
 ErrorDocument 404 /404
